@@ -10,6 +10,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
+import HoverRevealMenu from './components/HoverRevealMenu';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -20,6 +21,10 @@ export default function App() {
   const [font, setFont] = useState(() => localStorage.getItem('portfolio-font') || 'sans');
   const [palette, setPalette] = useState(() => localStorage.getItem('portfolio-palette') || 'emerald');
   const [soundMuted, setSoundMuted] = useState(() => sound.isMuted());
+  const [showFloatingMenu, setShowFloatingMenu] = useState(() => {
+    const saved = localStorage.getItem('portfolio-floating-menu');
+    return saved !== null ? saved === 'true' : true;
+  });
 
   // Modal & Drawer State
   const [isCommandOpen, setIsCommandOpen] = useState(false);
@@ -122,6 +127,8 @@ export default function App() {
         setPalette={setPalette}
         soundMuted={soundMuted}
         setSoundMuted={setSoundMuted}
+        showFloatingMenu={showFloatingMenu}
+        setShowFloatingMenu={setShowFloatingMenu}
         isOpen={isSettingsOpen}
         setIsOpen={setIsSettingsOpen}
       />
@@ -182,6 +189,18 @@ export default function App() {
         project={selectedCaseStudy}
         onClose={() => setSelectedCaseStudy(null)}
       />
+
+      {/* Toggle Supply Style Hover Reveal Menu (Floating Dock) */}
+      {showFloatingMenu && (
+        <HoverRevealMenu
+          variant="floating"
+          onOpenCommand={() => setIsCommandOpen(true)}
+          theme={theme}
+          setTheme={setTheme}
+          soundMuted={soundMuted}
+          setSoundMuted={setSoundMuted}
+        />
+      )}
 
       {/* Instant Toast Notification */}
       <Toast toast={toast} onClose={() => setToast(null)} />

@@ -27,6 +27,30 @@ class SoundEngine {
     return this.muted;
   }
 
+  // Subtle tactile tick on menu hover
+  playHover() {
+    if (this.muted) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(680, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(820, this.ctx.currentTime + 0.025);
+
+      gain.gain.setValueAtTime(0.015, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.025);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.025);
+    } catch (_) {}
+  }
+
   // Subtle tactile tap for UI buttons
   playClick() {
     if (this.muted) return;

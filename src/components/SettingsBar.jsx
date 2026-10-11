@@ -11,6 +11,8 @@ export default function SettingsBar({
   setPalette,
   soundMuted,
   setSoundMuted,
+  showFloatingMenu,
+  setShowFloatingMenu,
   isOpen,
   setIsOpen
 }) {
@@ -216,6 +218,36 @@ export default function SettingsBar({
           <span>{soundMuted ? 'Muted' : 'Enabled'}</span>
         </button>
       </div>
+
+      {/* Floating Hover Reveal Dock Toggle */}
+      {setShowFloatingMenu && (
+        <div style={{ paddingTop: '10px', borderTop: '1px solid var(--border-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: '0.78rem', fontWeight: 500 }}>Hover Reveal Dock</div>
+            <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Toggle Supply floating menu</div>
+          </div>
+          <button
+            onClick={() => {
+              sound.playToggle();
+              setShowFloatingMenu((prev) => !prev);
+            }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '5px 10px',
+              borderRadius: 'var(--radius-sm)',
+              fontSize: '0.75rem',
+              background: showFloatingMenu ? 'var(--accent-tint)' : 'var(--bg-muted)',
+              border: `1px solid ${showFloatingMenu ? 'var(--accent)' : 'var(--border-secondary)'}`,
+              color: showFloatingMenu ? 'var(--accent)' : 'var(--text-muted)',
+              cursor: 'pointer'
+            }}
+          >
+            <span>{showFloatingMenu ? 'Visible' : 'Hidden'}</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
