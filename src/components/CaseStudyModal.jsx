@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { X, ExternalLink, CheckCircle2, Cpu, BarChart3, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
