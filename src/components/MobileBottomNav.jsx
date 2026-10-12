@@ -215,16 +215,17 @@ export default function MobileBottomNav() {
         aria-label="Mobile Bottom Navigation"
         ref={menuContainerRef}
       >
-        {/* Expandable Menu Panel (Spring animated upward) */}
+        {/* Expandable Menu Panel (Centered directly above pill) */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               id="mobile-nav-panel"
               key="mobile-nav-panel"
-              initial={{ opacity: 0, y: 16, scale: 0.88, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: 16, scale: 0.88, filter: 'blur(10px)' }}
+              initial={{ opacity: 0, x: '-50%', y: 16, scale: 0.88, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, x: '-50%', y: 0, scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, x: '-50%', y: 16, scale: 0.88, filter: 'blur(10px)' }}
               transition={{ type: 'spring', stiffness: 450, damping: 26, mass: 0.9 }}
+              style={{ left: '50%', transformOrigin: 'bottom center' }}
               className="mobile-nav-menu-panel"
               role="menu"
             >
