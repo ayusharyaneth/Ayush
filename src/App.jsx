@@ -126,6 +126,7 @@ export default function App() {
         setSoundMuted={setSoundMuted}
         isOpen={isSettingsOpen}
         setIsOpen={setIsSettingsOpen}
+        onOpenConsent={() => setIsConsentOpen(true)}
       />
 
       {/* Main Content Assembly */}
@@ -160,7 +161,10 @@ export default function App() {
       </main>
 
       {/* Footer & Signature */}
-      <Footer personal={portfolioData.personal} />
+      <Footer
+        personal={portfolioData.personal}
+        onOpenConsent={() => setIsConsentOpen(true)}
+      />
 
       {/* Command Palette Modal (⌘K) */}
       <CommandPalette
@@ -177,12 +181,20 @@ export default function App() {
         setSoundMuted={setSoundMuted}
         projects={portfolioData.projects}
         onOpenCaseStudy={(project) => setSelectedCaseStudy(project)}
+        onOpenConsent={() => setIsConsentOpen(true)}
       />
 
       {/* Case Study Deep Dive Modal */}
       <CaseStudyModal
         project={selectedCaseStudy}
         onClose={() => setSelectedCaseStudy(null)}
+      />
+
+      {/* Cookie & Telemetry Consent Manager (c15t / Chanh Dai) */}
+      <ConsentManager
+        isOpen={isConsentOpen}
+        setIsOpen={setIsConsentOpen}
+        onShowToast={showToast}
       />
 
       {/* Instant Toast Notification */}
