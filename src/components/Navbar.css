@@ -75,9 +75,27 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-line);
   box-shadow: 
-    0 12px 32px -4px rgba(0, 0, 0, 0.45),
+    0 14px 34px -4px rgba(0, 0, 0, 0.45),
     0 0 0 1px var(--border-primary),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.theme-dark .navbar-header.scrolled .navbar-pill {
+  background: rgba(20, 20, 24, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 16px 36px -4px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.theme-light .navbar-header.scrolled .navbar-pill {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 12px 30px -4px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Divider lines between brand, links, and actions */
