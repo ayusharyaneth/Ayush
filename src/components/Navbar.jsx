@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Sliders,
   Moon,
@@ -9,6 +9,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
+import './Navbar.css';
 
 export default function Navbar({
   theme,
@@ -19,6 +20,44 @@ export default function Navbar({
   onToggleSettings,
   isSettingsOpen
 }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+
+  // Scroll listener: morphs to floating pill on scroll and tracks active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      
+      // Trigger floating dock pill mode once scrolled past 25px
+      setIsScrolled(scrollY > 25);
+
+      // Section scrollspy for active indicator dot
+      const sections = [
+        { id: 'contact', offset: 280 },
+        { id: 'collection', offset: 280 },
+        { id: 'experience', offset: 280 },
+        { id: 'work', offset: 280 }
+      ];
+
+      if (scrollY < 180) {
+        setActiveSection('');
+        return;
+      }
+
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (el && scrollY + section.offset >= el.offsetTop) {
+          setActiveSection(section.id);
+          return;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const toggleTheme = () => {
     sound.playToggle();
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
@@ -30,51 +69,33 @@ export default function Navbar({
     if (!isMuted) sound.playClick();
   };
 
+  const handleNavClick = (e, targetId) => {
+    e.preventDefault();
+    sound.playClick();
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else if (targetId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 80,
-        width: '100%',
-        background: 'var(--bg-glass)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px dashed var(--border-dashed)',
-        transition: 'background var(--duration-normal) var(--ease-smooth)'
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          height: 'var(--header-height)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '16px'
-        }}
-      >
+    <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
+      <div className="navbar-pill">
         {/* Brand Monogram & Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <a
             href="#top"
-            onClick={() => sound.playClick()}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontFamily: 'var(--font-heading)',
-              fontSize: '1.05rem',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              color: 'var(--text-primary)'
-            }}
+            onClick={(e) => handleNavClick(e, 'top')}
+            className="navbar-brand"
+            title="Alex Rivera Portfolio"
           >
             <span>alex</span>
             <span style={{ color: 'var(--accent)' }}>rivera.</span>
           </a>
 
-          {/* Online Radar Badge (Vikrant Kadam style) */}
+          {/* Online Radar Badge */}
           <div
             style={{
               display: 'inline-flex',
@@ -95,57 +116,56 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Section Navigation */}
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '20px',
-            fontSize: '0.84rem',
-            color: 'var(--text-secondary)'
-          }}
-          className="nav-links"
-        >
+        {/* Divider 1 */}
+        <div className="navbar-divider" />
+
+        {/* Section Navigation Links */}
+        <nav className="navbar-nav">
           <a
             href="#work"
-            onClick={() => sound.playClick()}
-            style={{ transition: 'color 0.15s' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onClick={(e) => handleNavClick(e, 'work')}
+            onMouseEnter={() => sound.playHover()}
+            className={`navbar-link ${activeSection === 'work' ? 'active' : ''}`}
           >
             Work
+            {activeSection === 'work' && <span className="navbar-link-dot" />}
           </a>
           <a
             href="#experience"
-            onClick={() => sound.playClick()}
-            style={{ transition: 'color 0.15s' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onClick={(e) => handleNavClick(e, 'experience')}
+            onMouseEnter={() => sound.playHover()}
+            className={`navbar-link ${activeSection === 'experience' ? 'active' : ''}`}
           >
             Experience
+            {activeSection === 'experience' && <span className="navbar-link-dot" />}
           </a>
           <a
             href="#collection"
-            onClick={() => sound.playClick()}
-            style={{ transition: 'color 0.15s' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onClick={(e) => handleNavClick(e, 'collection')}
+            onMouseEnter={() => sound.playHover()}
+            className={`navbar-link ${activeSection === 'collection' ? 'active' : ''}`}
           >
             The Collection
+            {activeSection === 'collection' && <span className="navbar-link-dot" />}
           </a>
           <a
             href="#contact"
-            onClick={() => sound.playClick()}
-            style={{ transition: 'color 0.15s' }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onClick={(e) => handleNavClick(e, 'contact')}
+            onMouseEnter={() => sound.playHover()}
+            className={`navbar-link ${activeSection === 'contact' ? 'active' : ''}`}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}
           >
-            Contact ↗
+            Contact
+            <ArrowUpRight size={13} style={{ opacity: 0.8 }} />
+            {activeSection === 'contact' && <span className="navbar-link-dot" />}
           </a>
         </nav>
 
+        {/* Divider 2 */}
+        <div className="navbar-divider" />
+
         {/* Action Controls & Triggers */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="navbar-actions">
           {/* Command Palette Trigger */}
           <button
             onClick={() => {
@@ -211,14 +231,6 @@ export default function Navbar({
           </button>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 680px) {
-          .nav-links {
-            display: none !important;
-          }
-        }
-      `}</style>
     </header>
   );
 }

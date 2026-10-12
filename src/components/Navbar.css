@@ -1,0 +1,180 @@
+/* ==========================================================================
+   MORPHING SCROLL-ADAPTIVE NAVBAR
+   Seamless morph from full-width top header to floating dock pill
+   ========================================================================== */
+
+.navbar-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  width: 100%;
+  pointer-events: none;
+  transition: 
+    background var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth),
+    padding 0.35s var(--ease-spring);
+}
+
+/* State 1: Flush Header at Top (Screenshot 1) */
+.navbar-header:not(.scrolled) {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px dashed var(--border-dashed);
+  padding: 0;
+}
+
+/* State 2: Scrolled Floating Dock Mode (Screenshot 2) */
+.navbar-header.scrolled {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  padding: 12px 16px 0;
+}
+
+/* Inner Container that morphs into a floating pill */
+.navbar-pill {
+  pointer-events: auto;
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  box-sizing: border-box;
+  transition: 
+    height 0.35s var(--ease-spring),
+    padding 0.35s var(--ease-spring),
+    border-radius 0.35s var(--ease-spring),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.35s var(--ease-spring),
+    transform 0.35s var(--ease-spring);
+}
+
+/* Unscrolled Pill Styling */
+.navbar-header:not(.scrolled) .navbar-pill {
+  height: var(--header-height);
+  padding: 0 20px;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+/* Scrolled Pill Styling (Screenshot 2) */
+.navbar-header.scrolled .navbar-pill {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-line);
+  box-shadow: 
+    0 12px 32px -4px rgba(0, 0, 0, 0.45),
+    0 0 0 1px var(--border-primary),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Divider lines between brand, links, and actions */
+.navbar-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border-line);
+  flex-shrink: 0;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.navbar-header:not(.scrolled) .navbar-divider {
+  opacity: 0.35;
+}
+
+.navbar-header.scrolled .navbar-divider {
+  opacity: 0.85;
+}
+
+/* Brand Link */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.9;
+}
+
+/* Navigation Links Container */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 0.84rem;
+}
+
+/* Individual Nav Item */
+.navbar-link {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 2px;
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover,
+.navbar-link.active {
+  color: var(--text-primary);
+}
+
+/* Active Section Dot (Screenshot 2 Indicator) */
+.navbar-link-dot {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  transition: transform 0.25s var(--ease-spring), opacity 0.2s ease;
+}
+
+/* Actions Section */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 720px) {
+  .navbar-nav {
+    display: none !important;
+  }
+  .navbar-divider {
+    display: none !important;
+  }
+  .navbar-header.scrolled {
+    padding: 8px 12px 0;
+  }
+  .navbar-header.scrolled .navbar-pill {
+    height: 46px;
+    padding: 0 12px;
+  }
+}
