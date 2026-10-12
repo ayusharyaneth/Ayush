@@ -46,55 +46,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     setAvatarIndex((prev) => (prev + 1) % avatarPhotos.length);
   };
 
-  // 4. Live Clock & Timezone Offset relative to user (Chanh Dai style)
-  const [localTime, setLocalTime] = useState('');
-  const [timeDiffText, setTimeDiffText] = useState('');
-  const [clockDegrees, setClockDegrees] = useState({ hour: 0, minute: 0, second: 0 });
 
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      // Format time in San Francisco (America/Los_Angeles)
-      const options = {
-        timeZone: personal.timeZone || 'America/Los_Angeles',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      };
-      const formatter = new Intl.DateTimeFormat('en-US', options);
-      setLocalTime(formatter.format(now));
-
-      // Calculate hour & minute hands for analog SVG
-      const sfDate = new Date(now.toLocaleString('en-US', { timeZone: personal.timeZone || 'America/Los_Angeles' }));
-      const s = sfDate.getSeconds();
-      const m = sfDate.getMinutes() + s / 60;
-      const h = (sfDate.getHours() % 12) + m / 60;
-
-      setClockDegrees({
-        hour: (h / 12) * 360,
-        minute: (m / 60) * 360,
-        second: (s / 60) * 360
-      });
-
-      // Compute offset between visitor browser and SF
-      const visitorOffsetMin = -now.getTimezoneOffset();
-      const sfOffsetMin = -420; // approximate PDT (-7h = -420m)
-      const diffHours = Math.round((sfOffsetMin - visitorOffsetMin) / 60);
-
-      if (diffHours === 0) {
-        setTimeDiffText('// same timezone as you');
-      } else if (diffHours > 0) {
-        setTimeDiffText(`// ${diffHours}h ahead of you`);
-      } else {
-        setTimeDiffText(`// ${Math.abs(diffHours)}h behind you`);
-      }
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, [personal.timeZone]);
 
   return (
     <section
@@ -360,92 +312,8 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               <InteractiveCanvas />
             </div>
 
-            {/* Timezone & Clock Widget Card (Chanh Dai style) */}
-            <div
-              className="screen-box"
-              style={{
-                padding: '16px 20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '14px'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                {/* Working Analog Clock SVG */}
-                <svg
-                  width="38"
-                  height="38"
-                  viewBox="0 0 40 40"
-                  style={{ flexShrink: 0 }}
-                  aria-label="Analog local clock"
-                >
-                  <circle
-                    cx="20"
-                    cy="20"
-                    r="18"
-                    fill="var(--bg-muted)"
-                    stroke="var(--border-line)"
-                    strokeWidth="1.5"
-                  />
-                  {/* Hour hand */}
-                  <line
-                    x1="20"
-                    y1="20"
-                    x2={20 + 8 * Math.sin((clockDegrees.hour * Math.PI) / 180)}
-                    y2={20 - 8 * Math.cos((clockDegrees.hour * Math.PI) / 180)}
-                    stroke="var(--text-primary)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  {/* Minute hand */}
-                  <line
-                    x1="20"
-                    y1="20"
-                    x2={20 + 12 * Math.sin((clockDegrees.minute * Math.PI) / 180)}
-                    y2={20 - 12 * Math.cos((clockDegrees.minute * Math.PI) / 180)}
-                    stroke="var(--accent)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  {/* Center dot */}
-                  <circle cx="20" cy="20" r="1.8" fill="var(--text-primary)" />
-                </svg>
-
-                <div>
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-family-mono)',
-                      fontSize: '0.88rem',
-                      fontWeight: 600,
-                      color: 'var(--text-primary)'
-                    }}
-                  >
-                    {localTime || 'Loading time...'}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-family-mono)',
-                      fontSize: '0.7rem',
-                      color: 'var(--text-muted)'
-                    }}
-                  >
-                    {personal.location} <span style={{ color: 'var(--accent)' }}>{timeDiffText}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                style={{
-                  fontFamily: 'var(--font-family-mono)',
-                  fontSize: '0.72rem',
-                  color: 'var(--text-dim)',
-                  textAlign: 'right'
-                }}
-              >
-                PST / UTC-7
-              </div>
-            </div>
+            {/* Timezone & Clock Widget Card (Isolated for performance) */}
+            <LiveClockWidget timeZone={personal.timeZone} location={personal.location} />
 
             {/* Quick Metrics Bar (hiartem.com deal/impact metrics) */}
             <div
@@ -488,3 +356,136 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     </section>
   );
 }
+
+function LiveClockWidget({ timeZone, location }) {
+  const [localTime, setLocalTime] = useState('');
+  const [timeDiffText, setTimeDiffText] = useState('');
+  const [clockDegrees, setClockDegrees] = useState({ hour: 0, minute: 0, second: 0 });
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options = {
+        timeZone: timeZone || 'America/Los_Angeles',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      };
+      const formatter = new Intl.DateTimeFormat('en-US', options);
+      setLocalTime(formatter.format(now));
+
+      const sfDate = new Date(now.toLocaleString('en-US', { timeZone: timeZone || 'America/Los_Angeles' }));
+      const s = sfDate.getSeconds();
+      const m = sfDate.getMinutes() + s / 60;
+      const h = (sfDate.getHours() % 12) + m / 60;
+
+      setClockDegrees({
+        hour: (h / 12) * 360,
+        minute: (m / 60) * 360,
+        second: (s / 60) * 360
+      });
+
+      const visitorOffsetMin = -now.getTimezoneOffset();
+      const sfOffsetMin = -420;
+      const diffHours = Math.round((sfOffsetMin - visitorOffsetMin) / 60);
+
+      if (diffHours === 0) {
+        setTimeDiffText('// same timezone as you');
+      } else if (diffHours > 0) {
+        setTimeDiffText(`// ${diffHours}h ahead of you`);
+      } else {
+        setTimeDiffText(`// ${Math.abs(diffHours)}h behind you`);
+      }
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [timeZone]);
+
+  return (
+    <div
+      className="screen-box"
+      style={{
+        padding: '16px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '14px'
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <svg
+          width="38"
+          height="38"
+          viewBox="0 0 40 40"
+          style={{ flexShrink: 0 }}
+          aria-label="Analog local clock"
+        >
+          <circle
+            cx="20"
+            cy="20"
+            r="18"
+            fill="var(--bg-muted)"
+            stroke="var(--border-line)"
+            strokeWidth="1.5"
+          />
+          <line
+            x1="20"
+            y1="20"
+            x2={20 + 8 * Math.sin((clockDegrees.hour * Math.PI) / 180)}
+            y2={20 - 8 * Math.cos((clockDegrees.hour * Math.PI) / 180)}
+            stroke="var(--text-primary)"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <line
+            x1="20"
+            y1="20"
+            x2={20 + 12 * Math.sin((clockDegrees.minute * Math.PI) / 180)}
+            y2={20 - 12 * Math.cos((clockDegrees.minute * Math.PI) / 180)}
+            stroke="var(--accent)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+          <circle cx="20" cy="20" r="1.8" fill="var(--text-primary)" />
+        </svg>
+
+        <div>
+          <div
+            style={{
+              fontFamily: 'var(--font-family-mono)',
+              fontSize: '0.88rem',
+              fontWeight: 600,
+              color: 'var(--text-primary)'
+            }}
+          >
+            {localTime || 'Loading time...'}
+          </div>
+          <div
+            style={{
+              fontFamily: 'var(--font-family-mono)',
+              fontSize: '0.7rem',
+              color: 'var(--text-muted)'
+            }}
+          >
+            {location} <span style={{ color: 'var(--accent)' }}>{timeDiffText}</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          fontFamily: 'var(--font-family-mono)',
+          fontSize: '0.72rem',
+          color: 'var(--text-dim)',
+          textAlign: 'right'
+        }}
+      >
+        PST / UTC-7
+      </div>
+    </div>
+  );
+}
+
