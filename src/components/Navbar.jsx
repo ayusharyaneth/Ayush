@@ -89,10 +89,10 @@ export default function Navbar({
             href="#top"
             onClick={(e) => handleNavClick(e, 'top')}
             className="navbar-brand"
-            title="Alex Rivera Portfolio"
+            title="Ayush Aryan Portfolio"
           >
-            <span>alex</span>
-            <span style={{ color: 'var(--accent)' }}>rivera.</span>
+            <span>ayush</span>
+            <span style={{ color: 'var(--accent)' }}>aryan.</span>
           </a>
 
           {/* Online Radar Badge */}

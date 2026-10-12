@@ -1,7 +1,7 @@
 export const portfolioData = {
   personal: {
-    name: "Alex Rivera",
-    preferredName: "Alex",
+    name: "Ayush Aryan",
+    preferredName: "Ayush",
     pronouns: "he/him",
     title: "Product Engineer & Design Architect",
     roleTaglines: [
@@ -15,8 +15,8 @@ export const portfolioData = {
     location: "San Francisco, CA",
     timeZone: "America/Los_Angeles",
     utcOffset: -7, // PDT / -8 PST
-    email: "alex@alexrivera.dev",
-    calLink: "https://cal.com/alexrivera/intro",
+    email: "ayush@ayusharyan.dev",
+    calLink: "https://cal.com/ayusharyan/intro",
     statusText: "Available for select opportunities & advisory",
     shortBio:
       "Bridging design engineering and resilient distributed systems. Obsessed with 60fps micro-interactions, typographic rhythm, and scalable architectures that make complex software feel effortless.",
@@ -38,28 +38,28 @@ export const portfolioData = {
   socials: [
     {
       name: "GitHub",
-      username: "@alexrivera",
+      username: "@ayusharyan",
       url: "https://github.com",
       stats: { primary: "12.4k stars", secondary: "1,420 commits this year" },
       bio: "Crafting open-source developer tooling, React primitives, and Rust engines."
     },
     {
       name: "Twitter / X",
-      username: "@alexrivera_ui",
+      username: "@ayusharyan_ui",
       url: "https://x.com",
       stats: { primary: "18.5k followers", secondary: "Daily design & code" },
       bio: "Sharing micro-interactions, UI teardowns, and engineering architectures."
     },
     {
       name: "LinkedIn",
-      username: "alex-rivera-dev",
+      username: "ayush-aryan-dev",
       url: "https://linkedin.com",
       stats: { primary: "500+ connections", secondary: "Design Engineering" },
       bio: "Founding Engineer & Product Architect. Building high-growth tech companies."
     },
     {
       name: "LeetCode",
-      username: "alexrivera_algo",
+      username: "ayusharyan_algo",
       url: "https://leetcode.com",
       stats: { primary: "Rating 2,140", secondary: "Top 0.8% worldwide" },
       bio: "Competitive programming, distributed graph algorithms, and systems design."
