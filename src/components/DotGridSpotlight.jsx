@@ -126,7 +126,9 @@ export default function DotGridSpotlight({
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', handlePointerLeave);
 
-    const resizeObserver = new ResizeObserver(() => resizeCanvas());
+    const resizeObserver = new ResizeObserver(() => {
+      requestAnimationFrame(() => resizeCanvas());
+    });
     if (canvas.parentElement) {
       resizeObserver.observe(canvas.parentElement);
     }

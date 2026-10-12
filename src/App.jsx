@@ -12,6 +12,7 @@ import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
 import ConsentManager from './components/ConsentManager';
 import DotGridSpotlight from './components/DotGridSpotlight';
+import AppleHelloPreloader from './components/AppleHelloPreloader';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -230,6 +231,9 @@ export default function App() {
         setIsOpen={setIsConsentOpen}
         onShowToast={showToast}
       />
+
+      {/* Apple Hello Screen Handwriting Preloader (English) */}
+      <AppleHelloPreloader />
 
       {/* Instant Toast Notification */}
       <Toast toast={toast} onClose={() => setToast(null)} />
