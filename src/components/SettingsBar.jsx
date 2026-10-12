@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Sun, Moon, Volume2, VolumeX, Type, Palette, Sliders, Check, ShieldCheck } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
@@ -15,6 +15,37 @@ export default function SettingsBar({
   setIsOpen,
   onOpenConsent
 }) {
+  const panelRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event) => {
+      if (panelRef.current && panelRef.current.contains(event.target)) {
+        return;
+      }
+      // If clicking the settings toggle button itself in the navbar, let its own click handler toggle it
+      if (event.target.closest && event.target.closest('[aria-label="Settings"]')) {
+        return;
+      }
+      setIsOpen(false);
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, setIsOpen]);
+
   const themes = [
     { id: 'dark', label: 'Dark', icon: Moon },
     { id: 'light', label: 'Light', icon: Sun }
@@ -59,6 +90,7 @@ export default function SettingsBar({
 
   return (
     <div
+      ref={panelRef}
       style={{
         position: 'fixed',
         top: '64px',
