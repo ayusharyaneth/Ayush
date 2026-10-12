@@ -10,7 +10,6 @@ import {
   Check,
   BadgeCheck
 } from 'lucide-react';
-import InteractiveCanvas from './InteractiveCanvas';
 import { sound } from '../utils/soundEffects';
 
 export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
@@ -82,27 +81,14 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
           </div>
         </div>
 
-        {/* Main Hero Card Grid (Bento Structure) */}
+        {/* Main Hero Card */}
         <div
+          className="screen-box hero-card"
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)',
-            gap: '24px',
-            alignItems: 'stretch'
+            padding: '36px 32px'
           }}
-          className="hero-grid"
         >
-          {/* Left Column: Identity, Dynamic Switcher & Story */}
-          <div
-            className="screen-box"
-            style={{
-              padding: '32px 28px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div>
+          <div>
               {/* Profile Bar with Dual Avatar Reveal */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
                 <div
