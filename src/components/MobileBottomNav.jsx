@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Moon,
-  Sun,
-  Search,
   ChevronUp,
   ArrowUpRight
 } from 'lucide-react';
@@ -18,11 +15,7 @@ const NAV_ITEMS = [
   { id: 'contact', label: 'Contact', hasArrow: true }
 ];
 
-export default function MobileBottomNav({
-  theme,
-  setTheme,
-  onOpenCommand
-}) {
+export default function MobileBottomNav() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -192,21 +185,6 @@ export default function MobileBottomNav({
     sound.playClick();
     setIsOpen((prev) => !prev);
   }, []);
-
-  // Toggle theme handler
-  const handleToggleTheme = useCallback(() => {
-    sound.playToggle();
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  }, [setTheme]);
-
-  // Command palette handler
-  const handleOpenCommand = useCallback(() => {
-    sound.playClick();
-    setIsOpen(false);
-    if (onOpenCommand) {
-      onOpenCommand();
-    }
-  }, [onOpenCommand]);
 
   // SVG Progress circle calculations (radius = 12, circumference ~ 75.4)
   const radius = 11;
