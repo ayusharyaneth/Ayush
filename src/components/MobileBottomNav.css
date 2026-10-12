@@ -1,0 +1,329 @@
+/* ==========================================================================
+   MOBILE BOTTOM NAVIGATION & EXPANDABLE MENU (Inspired by srbh.site)
+   Strictly mobile-only: Hidden on screens > 720px
+   ========================================================================== */
+
+/* Desktop: strictly hidden */
+@media (min-width: 721px) {
+  .mobile-bottom-nav-root,
+  .mobile-nav-backdrop {
+    display: none !important;
+  }
+}
+
+/* Mobile: active on <= 720px */
+@media (max-width: 720px) {
+  .mobile-bottom-nav-root {
+    position: fixed;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 990;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    user-select: none;
+    -webkit-user-select: none;
+    width: max-content;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* Dismiss backdrop when menu is open */
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 980;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* Dock Row Layout */
+  .mobile-dock-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+
+  /* Common dock button styles (Action & Theme toggles) */
+  .mobile-dock-btn {
+    display: flex;
+    height: 44px;
+    width: 44px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+    background: var(--bg-card, rgba(16, 16, 20, 0.88));
+    color: var(--text-secondary, #94a3b8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease;
+    padding: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-dock-btn:hover {
+    color: var(--text-primary, #ffffff);
+    transform: scale(1.04);
+  }
+
+  .mobile-dock-btn:active {
+    transform: scale(0.94);
+  }
+
+  .mobile-dock-btn:focus-visible {
+    outline: 2px solid var(--accent, #38bdf8);
+    outline-offset: 2px;
+  }
+
+  /* Center Nav Pill */
+  .mobile-nav-pill-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+  }
+
+  .mobile-nav-pill {
+    display: flex;
+    height: 44px;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+    background: var(--bg-card, rgba(16, 16, 20, 0.88));
+    padding-left: 10px;
+    padding-right: 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    user-select: none;
+  }
+
+  /* Scroll-to-top / Progress Button */
+  .mobile-nav-progress-btn {
+    position: relative;
+    display: flex;
+    height: 26px;
+    width: 26px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--text-primary, #ffffff);
+    border-radius: 9999px;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav-progress-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+
+  .mobile-nav-progress-btn:active {
+    transform: scale(0.92);
+  }
+
+  .mobile-progress-svg {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .mobile-progress-track {
+    color: var(--border-color, rgba(255, 255, 255, 0.12));
+  }
+
+  .mobile-progress-bar {
+    color: var(--accent, #38bdf8);
+    transition: stroke-dashoffset 0.1s linear;
+  }
+
+  .mobile-progress-icon {
+    position: absolute;
+    color: var(--text-primary, #ffffff);
+    pointer-events: none;
+  }
+
+  /* Trigger button for menu containing Section Name */
+  .mobile-nav-trigger-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav-section-title {
+    display: block;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-primary, #e2e8f0);
+    user-select: none;
+  }
+
+  .mobile-nav-chevron {
+    color: var(--text-muted, #64748b);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.2s ease;
+  }
+
+  .mobile-nav-chevron.open {
+    transform: rotate(180deg);
+    color: var(--accent, #38bdf8);
+  }
+
+  /* Expandable Menu Panel (Popup above pill) */
+  .mobile-nav-menu-panel {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    min-width: 180px;
+    max-width: calc(100vw - 32px);
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 18px;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+    background: var(--bg-card, rgba(16, 16, 20, 0.94));
+    padding: 6px;
+    box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    user-select: none;
+    z-index: 995;
+  }
+
+  /* Menu Header inside panel */
+  .mobile-nav-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px 4px;
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    margin-bottom: 4px;
+  }
+
+  .mobile-nav-menu-header-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted, #64748b);
+  }
+
+  .mobile-nav-menu-header-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--accent, #38bdf8);
+    box-shadow: 0 0 8px var(--accent-glow, rgba(56, 189, 248, 0.6));
+  }
+
+  /* Menu Item Button */
+  .mobile-nav-menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-secondary, #94a3b8);
+    transition: background-color 0.15s ease,
+                color 0.15s ease,
+                transform 0.15s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav-menu-item:hover,
+  .mobile-nav-menu-item:focus-visible {
+    background: var(--bg-hover, rgba(255, 255, 255, 0.06));
+    color: var(--text-primary, #ffffff);
+  }
+
+  .mobile-nav-menu-item.active {
+    color: var(--text-primary, #ffffff);
+    background: var(--bg-hover, rgba(255, 255, 255, 0.08));
+    font-weight: 600;
+  }
+
+  .mobile-nav-menu-item-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .mobile-nav-item-active-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: var(--accent, #38bdf8);
+    box-shadow: 0 0 6px var(--accent-glow, rgba(56, 189, 248, 0.8));
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-item-inactive-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-menu-item-badge {
+    font-size: 11px;
+    color: var(--text-muted, #64748b);
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-dock-btn,
+  .mobile-nav-chevron,
+  .mobile-nav-menu-item,
+  .mobile-progress-bar {
+    transition: none !important;
+    animation: none !important;
+  }
+}
