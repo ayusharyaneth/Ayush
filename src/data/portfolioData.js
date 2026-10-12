@@ -248,35 +248,5 @@ export const portfolioData = {
         { title: "Featured on The Pragmatic Engineer", desc: "Case study on building high-density desktop dashboards", url: "#" }
       ]
     }
-  ],
-
-  musicTracks: [
-    {
-      id: "lofi-midnight",
-      title: "Midnight Rain",
-      artist: "Lofi Study Beats",
-      genre: "Ambient Lofi",
-      bpm: 78,
-      duration: "2:45",
-      frequencies: [220, 277.18, 329.63, 440, 554.37] // A minor 7 / C#m chords
-    },
-    {
-      id: "velvet-chords",
-      title: "Velvet Horizons",
-      artist: "Analog Synth Collective",
-      genre: "Synthwave Chill",
-      bpm: 85,
-      duration: "3:12",
-      frequencies: [174.61, 220, 261.63, 349.23, 440] // F major 7
-    },
-    {
-      id: "deep-focus",
-      title: "Deep Flow 432Hz",
-      artist: "Modular Resonance",
-      genre: "Binaural Focus",
-      bpm: 64,
-      duration: "3:40",
-      frequencies: [130.81, 164.81, 196.0, 261.63, 392.0] // C major 9
-    }
   ]
 };

@@ -260,10 +260,10 @@ export default function ConsentManager({
                   </button>
                 </div>
                 <p className="consent-category-desc">
-                  Preserves interactive vinyl track position, schematic particle speed settings, and command palette search history.
+                  Preserves interactive sound preferences, schematic particle speed settings, and command palette search history.
                 </p>
                 <div className="consent-category-tags">
-                  <span className="consent-tag">vinyl_playback</span>
+                  <span className="consent-tag">sound_effects</span>
                   <span className="consent-tag">canvas_particles</span>
                 </div>
               </div>

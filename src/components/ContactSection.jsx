@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Mail, Calendar, ArrowUpRight, Copy, Check, Sparkles, MessageSquare } from 'lucide-react';
+import { Mail, Calendar, ArrowUpRight, Check } from 'lucide-react';
 import SocialCards from './SocialCards';
-import VinylPlayer from './VinylPlayer';
 import { sound } from '../utils/soundEffects';
 
-export default function ContactSection({ personal, socials, musicTracks, onCopyEmail, onBookCall }) {
+export default function ContactSection({ personal, socials, onCopyEmail, onBookCall }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -17,22 +16,6 @@ export default function ContactSection({ personal, socials, musicTracks, onCopyE
   return (
     <section id="contact" style={{ paddingTop: '56px', paddingBottom: '72px' }}>
       <div className="container">
-        {/* Vinyl Music Station Widget in Contact Section */}
-        <div style={{ marginBottom: '40px' }}>
-          <div
-            style={{
-              fontSize: '0.72rem',
-              fontFamily: 'var(--font-family-mono)',
-              color: 'var(--text-muted)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              marginBottom: '10px'
-            }}
-          >
-            On my desk lately • Ambient Soundscape
-          </div>
-          <VinylPlayer tracks={musicTracks} />
-        </div>
 
         {/* Big Editorial CTA Card */}
         <div

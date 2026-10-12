@@ -199,11 +199,10 @@ export default function App() {
         {/* The Collection: Security Research, Milestones & Writing */}
         <TheCollection collection={portfolioData.theCollection} />
 
-        {/* Contact CTA & Vinyl Turntable Station */}
+        {/* Contact CTA */}
         <ContactSection
           personal={portfolioData.personal}
           socials={portfolioData.socials}
-          musicTracks={portfolioData.musicTracks}
           onCopyEmail={handleCopyEmail}
           onBookCall={handleBookCall}
         />

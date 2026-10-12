@@ -124,54 +124,6 @@ class SoundEngine {
       });
     } catch (_) {}
   }
-
-  // Ambient chords player for vinyl demo
-  createLofiPlayer(frequencies = [220, 277.18, 329.63, 440], bpm = 75) {
-    this.init();
-    if (!this.ctx) return null;
-
-    let isPlaying = true;
-    const ctx = this.ctx;
-    const intervalSec = (60 / bpm) * 2;
-    let timerId = null;
-
-    const playChord = () => {
-      if (!isPlaying || this.muted) return;
-      const now = ctx.currentTime;
-      frequencies.forEach((freq, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const filter = ctx.createBiquadFilter();
-
-        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.setValueAtTime(freq + (Math.random() * 2 - 1), now);
-
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(700, now);
-
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.linearRampToValueAtTime(0.015, now + 0.8);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + intervalSec * 0.95);
-
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(now);
-        osc.stop(now + intervalSec);
-      });
-    };
-
-    playChord();
-    timerId = setInterval(playChord, intervalSec * 1000);
-
-    return {
-      stop: () => {
-        isPlaying = false;
-        if (timerId) clearInterval(timerId);
-      }
-    };
-  }
 }
 
 export const sound = new SoundEngine();
