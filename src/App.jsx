@@ -161,12 +161,8 @@ export default function App() {
         isSettingsOpen={isSettingsOpen}
       />
 
-      {/* Mobile Bottom Navigation Dock & Expandable Menu (srbh.site reference) */}
-      <MobileBottomNav
-        theme={theme}
-        setTheme={handleThemeChange}
-        onOpenCommand={() => setIsCommandOpen(true)}
-      />
+      {/* Mobile Bottom Navigation Pill & Expandable Menu (srbh.site reference) */}
+      <MobileBottomNav />
 
       {/* Header layout spacer so page flow begins naturally beneath fixed navbar on desktop */}
       <div className="navbar-spacer" style={{ height: 'var(--header-height)' }} aria-hidden="true" />
