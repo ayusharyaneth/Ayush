@@ -7,16 +7,7 @@ import {
 import { sound } from '../utils/soundEffects';
 
 export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
-  // 1. Dynamic Greeting based on visitor's current hour
-  const [greeting, setGreeting] = useState('Hello');
-  useEffect(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) setGreeting('Good morning');
-    else if (hour < 17) setGreeting('Good afternoon');
-    else setGreeting('Good Evening Dear');
-  }, []);
-
-  // 2. Animated Verb Switcher (Rahul M style: "I build / design / scale products")
+  // 1. Animated Verb Switcher (Rahul M style: "I build / design / scale products")
   const verbs = personal.verbList || ['build', 'design', 'scale', 'ship'];
   const [verbIndex, setVerbIndex] = useState(0);
 
@@ -51,30 +42,6 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
       }}
     >
       <div className="container">
-        {/* Schematic Top Meta Header */}
-        <div
-          className="screen-line-bottom"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingBottom: '14px',
-            marginBottom: '28px',
-            fontSize: '0.78rem',
-            fontFamily: 'var(--font-family-mono)',
-            color: 'var(--text-muted)'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ color: 'var(--accent)' }}>●</span>
-            <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{greeting}</span>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>LOC: {personal.location}</span>
-          </div>
-        </div>
-
         {/* Main Hero Card */}
         <div
           className="screen-box hero-card"
