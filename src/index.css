@@ -94,12 +94,21 @@
 }
 
 /* ACCENT PALETTES */
+.palette-azure,
 .palette-emerald {
-  --accent: #10b981;
-  --accent-rgb: 16, 185, 129;
-  --accent-light: #34d399;
-  --accent-tint: rgba(16, 185, 129, 0.12);
-  --accent-glow: rgba(16, 185, 129, 0.35);
+  --accent: #0ea5e9;
+  --accent-rgb: 14, 165, 233;
+  --accent-light: #38bdf8;
+  --accent-tint: rgba(14, 165, 233, 0.12);
+  --accent-glow: rgba(14, 165, 233, 0.35);
+}
+.theme-light.palette-azure,
+.theme-light.palette-emerald {
+  --accent: #0284c7;
+  --accent-rgb: 2, 132, 199;
+  --accent-light: #38bdf8;
+  --accent-tint: rgba(2, 132, 199, 0.12);
+  --accent-glow: rgba(2, 132, 199, 0.3);
 }
 
 .palette-violet {

@@ -21,7 +21,11 @@ export default function App() {
   // Theme & Appearance State
   const [theme, setTheme] = useState(() => localStorage.getItem('portfolio-theme') || 'dark');
   const [font, setFont] = useState(() => localStorage.getItem('portfolio-font') || 'sans');
-  const [palette, setPalette] = useState(() => localStorage.getItem('portfolio-palette') || 'emerald');
+  const [palette, setPalette] = useState(() => {
+    const saved = localStorage.getItem('portfolio-palette');
+    if (!saved || saved === 'emerald') return 'azure';
+    return saved;
+  });
   const [soundMuted, setSoundMuted] = useState(() => sound.isMuted());
 
   // Modal & Drawer State
