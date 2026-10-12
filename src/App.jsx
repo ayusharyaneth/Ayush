@@ -43,10 +43,17 @@ export default function App() {
     localStorage.setItem('portfolio-palette', palette);
   }, [theme, font, palette]);
 
-  // Track scroll position for site-wide scroll fade vignette
+  // Track scroll position for site-wide scroll fade vignette (throttled via rAF)
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 25);
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 25);
+          ticking = false;
+        });
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
