@@ -94,38 +94,16 @@ export default function Navbar({
   return (
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-pill">
-        {/* Brand Monogram & Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <a
-            href="#top"
-            onClick={(e) => handleNavClick(e, 'top')}
-            className="navbar-brand"
-            title="Ayush Aryan Portfolio"
-          >
-            <span>ayush</span>
-            <span style={{ color: 'var(--accent)' }}>aryan.</span>
-          </a>
-
-          {/* Online Radar Badge */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '2px 8px',
-              borderRadius: 'var(--radius-full)',
-              background: 'var(--bg-muted)',
-              border: '1px solid var(--border-secondary)',
-              fontSize: '0.68rem',
-              color: 'var(--text-secondary)',
-              fontFamily: 'var(--font-family-mono)'
-            }}
-            title="Active portfolio session"
-          >
-            <span className="pulsing-dot" />
-            <span style={{ fontWeight: 500 }}>online</span>
-          </div>
-        </div>
+        {/* Brand Monogram */}
+        <a
+          href="#top"
+          onClick={(e) => handleNavClick(e, 'top')}
+          className="navbar-brand"
+          title="Ayush Aryan Portfolio"
+        >
+          <span>ayush</span>
+          <span style={{ color: 'var(--accent)' }}>aryan.</span>
+        </a>
 
         {/* Divider 1 */}
         <div className="navbar-divider" />
