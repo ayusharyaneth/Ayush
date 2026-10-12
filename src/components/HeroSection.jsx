@@ -230,7 +230,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                   lineHeight: 1.65,
                   color: 'var(--text-secondary)',
                   marginBottom: '24px',
-                  maxWidth: '520px'
+                  maxWidth: '640px'
                 }}
               >
                 {personal.shortBio}
@@ -289,187 +289,17 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               </div>
             </div>
           </div>
-
-          {/* Right Column: Interactive 3D Canvas, Clock & Live Metrics */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* 3D Interactive Canvas Widget */}
-            <div className="screen-box" style={{ padding: '4px', overflow: 'hidden' }}>
-              <InteractiveCanvas />
-            </div>
-
-            {/* Timezone & Clock Widget Card (Isolated for performance) */}
-            <LiveClockWidget timeZone={personal.timeZone} location={personal.location} />
-
-            {/* Quick Metrics Bar (hiartem.com deal/impact metrics) */}
-            <div
-              className="screen-box"
-              style={{
-                padding: '16px 20px',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '16px'
-              }}
-            >
-              {personal.stats.slice(0, 2).map((stat, i) => (
-                <div key={i}>
-                  <div
-                    style={{
-                      fontSize: '1.25rem',
-                      fontWeight: 700,
-                      fontFamily: 'var(--font-family-mono)',
-                      color: 'var(--text-primary)'
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{stat.label}</div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)' }}>{stat.detail}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 780px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
+        @media (max-width: 640px) {
+          .hero-card {
+            padding: 24px 20px !important;
           }
         }
       `}</style>
     </section>
-  );
-}
-
-function LiveClockWidget({ timeZone, location }) {
-  const [localTime, setLocalTime] = useState('');
-  const [timeDiffText, setTimeDiffText] = useState('');
-  const [clockDegrees, setClockDegrees] = useState({ hour: 0, minute: 0, second: 0 });
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const options = {
-        timeZone: timeZone || 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      };
-      const formatter = new Intl.DateTimeFormat('en-US', options);
-      setLocalTime(formatter.format(now));
-
-      const targetDate = new Date(now.toLocaleString('en-US', { timeZone: timeZone || 'Asia/Kolkata' }));
-      const s = targetDate.getSeconds();
-      const m = targetDate.getMinutes() + s / 60;
-      const h = (targetDate.getHours() % 12) + m / 60;
-
-      setClockDegrees({
-        hour: (h / 12) * 360,
-        minute: (m / 60) * 360,
-        second: (s / 60) * 360
-      });
-
-      const diffMin = Math.round((targetDate.getTime() - now.getTime()) / (1000 * 60));
-      const diffHours = Math.round(diffMin / 60);
-
-      if (diffHours === 0) {
-        setTimeDiffText('// same timezone as you');
-      } else if (diffHours > 0) {
-        setTimeDiffText(`// ${diffHours}h ahead of you`);
-      } else {
-        setTimeDiffText(`// ${Math.abs(diffHours)}h behind you`);
-      }
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, [timeZone]);
-
-  return (
-    <div
-      className="screen-box"
-      style={{
-        padding: '16px 20px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '14px'
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        <svg
-          width="38"
-          height="38"
-          viewBox="0 0 40 40"
-          style={{ flexShrink: 0 }}
-          aria-label="Analog local clock"
-        >
-          <circle
-            cx="20"
-            cy="20"
-            r="18"
-            fill="var(--bg-muted)"
-            stroke="var(--border-line)"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="20"
-            y1="20"
-            x2={20 + 8 * Math.sin((clockDegrees.hour * Math.PI) / 180)}
-            y2={20 - 8 * Math.cos((clockDegrees.hour * Math.PI) / 180)}
-            stroke="var(--text-primary)"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <line
-            x1="20"
-            y1="20"
-            x2={20 + 12 * Math.sin((clockDegrees.minute * Math.PI) / 180)}
-            y2={20 - 12 * Math.cos((clockDegrees.minute * Math.PI) / 180)}
-            stroke="var(--accent)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          />
-          <circle cx="20" cy="20" r="1.8" fill="var(--text-primary)" />
-        </svg>
-
-        <div>
-          <div
-            style={{
-              fontFamily: 'var(--font-family-mono)',
-              fontSize: '0.88rem',
-              fontWeight: 600,
-              color: 'var(--text-primary)'
-            }}
-          >
-            {localTime || 'Loading time...'}
-          </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-family-mono)',
-              fontSize: '0.7rem',
-              color: 'var(--text-muted)'
-            }}
-          >
-            {location} <span style={{ color: 'var(--accent)' }}>{timeDiffText}</span>
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          fontFamily: 'var(--font-family-mono)',
-          fontSize: '0.72rem',
-          color: 'var(--text-dim)',
-          textAlign: 'right'
-        }}
-      >
-        PST / UTC-7
-      </div>
-    </div>
   );
 }
 
