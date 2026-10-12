@@ -210,7 +210,8 @@ export default function SettingsBar({
             fontSize: '0.75rem',
             background: soundMuted ? 'var(--bg-muted)' : 'var(--accent-tint)',
             border: `1px solid ${soundMuted ? 'var(--border-secondary)' : 'var(--accent)'}`,
-            color: soundMuted ? 'var(--text-muted)' : 'var(--text-primary)'
+            color: soundMuted ? 'var(--text-muted)' : 'var(--text-primary)',
+            cursor: 'pointer'
           }}
         >
           {soundMuted ? <VolumeX size={13} /> : <Volume2 size={13} style={{ color: 'var(--accent)' }} />}
