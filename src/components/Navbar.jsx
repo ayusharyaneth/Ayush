@@ -21,6 +21,7 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [hasMounted, setHasMounted] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   const pillRef = useRef(null);
@@ -33,11 +34,19 @@ export default function Navbar({
   const [indicatorTarget, setIndicatorTarget] = useState({
     x: 0,
     y: 0,
-    width: 6,
-    height: 6,
+    width: 7,
+    height: 7,
     opacity: 0,
     isUnderline: false
   });
+
+  // Enable fluid transitions after initial layout geometry has computed
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasMounted(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Calculate indicator coordinates dynamically using actual DOM rects
   const updateIndicatorPosition = useCallback(() => {
@@ -70,11 +79,11 @@ export default function Navbar({
       x = Math.round(targetRect.left - pillRect.left);
       y = Math.round(targetRect.bottom - pillRect.top + 3);
     } else {
-      // Small blue dot beside "ayush aryan." logo
-      width = 6;
-      height = 6;
+      // Small glowing blue dot beside "ayush aryan" logo
+      width = 7;
+      height = 7;
       x = Math.round(targetRect.left - pillRect.left);
-      y = Math.round(targetRect.top - pillRect.top + (targetRect.height - 6) / 2);
+      y = Math.round(targetRect.top - pillRect.top + (targetRect.height - 7) / 2);
     }
 
     setIndicatorTarget({
@@ -272,9 +281,9 @@ export default function Navbar({
   return (
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-pill" ref={pillRef}>
-        {/* Single Shared Animated Indicator (Vikrant Kadam spring-physics navigation indicator) */}
+        {/* Single Shared Animated Indicator (Fluid spring-physics navigation indicator) */}
         <motion.div
-          className="navbar-indicator"
+          className={`navbar-indicator ${indicatorTarget.isUnderline ? 'is-underline' : 'is-dot'}`}
           initial={false}
           animate={{
             x: indicatorTarget.x,
@@ -284,13 +293,14 @@ export default function Navbar({
             opacity: indicatorTarget.opacity
           }}
           transition={
-            shouldReduceMotion
+            shouldReduceMotion || !hasMounted
               ? { duration: 0 }
               : {
                   type: 'spring',
-                  stiffness: 350,
-                  damping: 28,
-                  mass: 0.8
+                  stiffness: 260,
+                  damping: 27,
+                  mass: 0.7,
+                  restDelta: 0.001
                 }
           }
           style={{
@@ -299,10 +309,6 @@ export default function Navbar({
             left: 0,
             pointerEvents: 'none',
             backgroundColor: 'var(--accent)',
-            borderRadius: '9999px',
-            boxShadow: indicatorTarget.isUnderline
-              ? '0 0 6px var(--accent)'
-              : '0 0 8px var(--accent)',
             zIndex: 10
           }}
           aria-hidden="true"
@@ -316,7 +322,7 @@ export default function Navbar({
           title="Ayush Aryan Portfolio"
         >
           <span>ayush</span>
-          <span style={{ color: 'var(--accent)' }}>aryan.</span>
+          <span style={{ color: 'var(--accent)' }}>aryan</span>
           {/* Spatial Anchor for the small blue dot when at top */}
           <span
             ref={logoDotAnchorRef}
