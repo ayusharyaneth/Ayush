@@ -58,7 +58,7 @@ export default function SettingsBar({
   ];
 
   const palettes = [
-    { id: 'azure', label: 'Azure', color: '#0ea5e9' },
+    { id: 'azure', label: 'Azure', color: theme === 'light' ? '#0284C7' : '#38BDF8' },
     { id: 'violet', label: 'Violet', color: '#8b5cf6' },
     { id: 'amber', label: 'Amber', color: '#f59e0b' },
     { id: 'rose', label: 'Rose', color: '#f43f5e' },
@@ -146,7 +146,7 @@ export default function SettingsBar({
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.78rem',
                   background: active ? 'var(--accent-tint)' : 'var(--bg-muted)',
-                  border: `1px solid ${active ? 'var(--accent)' : 'var(--border-secondary)'}`,
+                  border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
                   color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: active ? 600 : 400
                 }}
@@ -176,7 +176,7 @@ export default function SettingsBar({
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.75rem',
                   background: active ? 'var(--accent-tint)' : 'var(--bg-muted)',
-                  border: `1px solid ${active ? 'var(--accent)' : 'var(--border-secondary)'}`,
+                  border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
                   color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
                   textAlign: 'center',
                   fontWeight: active ? 600 : 400
@@ -241,7 +241,7 @@ export default function SettingsBar({
             borderRadius: 'var(--radius-sm)',
             fontSize: '0.75rem',
             background: soundMuted ? 'var(--bg-muted)' : 'var(--accent-tint)',
-            border: `1px solid ${soundMuted ? 'var(--border-secondary)' : 'var(--accent)'}`,
+            border: `1px solid ${soundMuted ? 'var(--border-secondary)' : 'var(--accent-border)'}`,
             color: soundMuted ? 'var(--text-muted)' : 'var(--text-primary)'
           }}
         >
