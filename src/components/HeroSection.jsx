@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Calendar,
-  Mail,
-  MapPin,
-  Clock,
-  Sparkles,
-  ArrowUpRight,
-  Copy,
-  Check,
-  BadgeCheck
+  BadgeCheck,
+  Copy
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
@@ -290,7 +284,6 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             </div>
           </div>
         </div>
-      </div>
 
       <style>{`
         @media (max-width: 640px) {
