@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import {
   Sliders,
   Moon,
@@ -6,6 +6,7 @@ import {
   Search,
   ArrowUpRight
 } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { sound } from '../utils/soundEffects';
 import './Navbar.css';
 
@@ -20,7 +21,7 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [isReady, setIsReady] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const pillRef = useRef(null);
   const logoDotAnchorRef = useRef(null);
@@ -28,14 +29,14 @@ export default function Navbar({
   const isClickScrollingRef = useRef(false);
   const scrollEndTimerRef = useRef(null);
 
-  // Dynamic indicator geometry state
-  const [indicatorStyle, setIndicatorStyle] = useState({
-    transform: 'translate3d(0, 0, 0)',
+  // Dynamic indicator geometry state (Motion spring-driven)
+  const [indicatorTarget, setIndicatorTarget] = useState({
+    x: 0,
+    y: 0,
     width: 6,
     height: 6,
-    borderRadius: '50%',
-    boxShadow: '0 0 8px var(--accent)',
-    opacity: 0
+    opacity: 0,
+    isUnderline: false
   });
 
   // Calculate indicator coordinates dynamically using actual DOM rects
@@ -60,38 +61,34 @@ export default function Navbar({
     const targetRect = targetElement.getBoundingClientRect();
     if (targetRect.width === 0 && targetRect.height === 0) return;
 
-    let x, y, width, height, borderRadius, boxShadow;
+    let x, y, width, height;
 
     if (isUnderline) {
       // Underline directly beneath the active navigation item's text
       width = Math.round(targetRect.width);
       height = 2;
       x = Math.round(targetRect.left - pillRect.left);
-      y = Math.round(targetRect.bottom - pillRect.top + 2);
-      borderRadius = '2px';
-      boxShadow = '0 0 6px var(--accent)';
+      y = Math.round(targetRect.bottom - pillRect.top + 3);
     } else {
       // Small blue dot beside "ayush aryan." logo
       width = 6;
       height = 6;
       x = Math.round(targetRect.left - pillRect.left);
       y = Math.round(targetRect.top - pillRect.top + (targetRect.height - 6) / 2);
-      borderRadius = '50%';
-      boxShadow = '0 0 8px var(--accent)';
     }
 
-    setIndicatorStyle({
-      transform: `translate3d(${x}px, ${y}px, 0)`,
-      width: `${width}px`,
-      height: `${height}px`,
-      borderRadius,
-      boxShadow,
-      opacity: 1
+    setIndicatorTarget({
+      x,
+      y,
+      width,
+      height,
+      opacity: 1,
+      isUnderline
     });
   }, [activeSection]);
 
   // Recalculate indicator position on section change or header morph
-  useEffect(() => {
+  useLayoutEffect(() => {
     updateIndicatorPosition();
   }, [updateIndicatorPosition, isScrolled]);
 
@@ -115,9 +112,7 @@ export default function Navbar({
       });
     }
 
-    // Enable fluid animations after initial layout is computed to avoid initial fly-in glitch
     const rafId = requestAnimationFrame(() => {
-      setIsReady(true);
       updateIndicatorPosition();
     });
 
@@ -146,7 +141,7 @@ export default function Navbar({
         return;
       }
 
-      // Return to logo dot when at the top of the page
+      // Return to logo dot when effectively at the top of the page
       if (scrollY <= 90) {
         setActiveSection('');
         ticking = false;
@@ -250,7 +245,6 @@ export default function Navbar({
     clearTimeout(scrollEndTimerRef.current);
     scrollEndTimerRef.current = setTimeout(() => {
       isClickScrollingRef.current = false;
-      // Re-confirm active section once scroll settles
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
@@ -278,16 +272,38 @@ export default function Navbar({
   return (
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-pill" ref={pillRef}>
-        {/* Single Shared Animated Indicator (Dot-to-Underline) */}
-        <div
-          className={`navbar-indicator ${isReady ? 'ready' : ''} ${activeSection ? 'is-underline' : 'is-dot'}`}
+        {/* Single Shared Animated Indicator (Vikrant Kadam spring-physics navigation indicator) */}
+        <motion.div
+          className="navbar-indicator"
+          initial={false}
+          animate={{
+            x: indicatorTarget.x,
+            y: indicatorTarget.y,
+            width: indicatorTarget.width,
+            height: indicatorTarget.height,
+            opacity: indicatorTarget.opacity
+          }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : {
+                  type: 'spring',
+                  stiffness: 350,
+                  damping: 28,
+                  mass: 0.8
+                }
+          }
           style={{
-            transform: indicatorStyle.transform,
-            width: indicatorStyle.width,
-            height: indicatorStyle.height,
-            borderRadius: indicatorStyle.borderRadius,
-            boxShadow: indicatorStyle.boxShadow,
-            opacity: indicatorStyle.opacity
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            pointerEvents: 'none',
+            backgroundColor: 'var(--accent)',
+            borderRadius: '9999px',
+            boxShadow: indicatorTarget.isUnderline
+              ? '0 0 6px var(--accent)'
+              : '0 0 8px var(--accent)',
+            zIndex: 10
           }}
           aria-hidden="true"
         />
@@ -308,8 +324,6 @@ export default function Navbar({
             aria-hidden="true"
           />
         </a>
-
-        {/* (Vertical separator 1 between logo and nav items is removed) */}
 
         {/* Section Navigation Links */}
         <nav className="navbar-nav">
