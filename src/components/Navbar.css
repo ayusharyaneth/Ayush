@@ -4,19 +4,21 @@
    ========================================================================== */
 
 .navbar-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 80;
   width: 100%;
-  pointer-events: none;
   transition: 
     background var(--duration-normal) var(--ease-smooth),
     border-color var(--duration-normal) var(--ease-smooth),
     padding 0.35s var(--ease-spring);
 }
 
-/* State 1: Flush Header at Top (Screenshot 1) */
+/* State 1: Flush Header at Top */
 .navbar-header:not(.scrolled) {
+  pointer-events: auto;
   background: var(--bg-glass);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -24,8 +26,9 @@
   padding: 0;
 }
 
-/* State 2: Scrolled Floating Dock Mode (Screenshot 2) */
+/* State 2: Scrolled Floating Dock Mode */
 .navbar-header.scrolled {
+  pointer-events: none;
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;

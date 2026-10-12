@@ -131,7 +131,7 @@ export default function App() {
   }, [handleCopyEmail, theme, showToast, handleThemeChange]);
 
   return (
-    <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
+    <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative' }}>
       {/* Interactive Dot Grid Spotlight Canvas (Chanh Dai) */}
       <DotGridSpotlight theme={theme} />
 
@@ -148,6 +148,9 @@ export default function App() {
         onToggleSettings={() => setIsSettingsOpen((prev) => !prev)}
         isSettingsOpen={isSettingsOpen}
       />
+
+      {/* Header layout spacer so page flow begins naturally beneath fixed navbar */}
+      <div style={{ height: 'var(--header-height)' }} aria-hidden="true" />
 
       {/* Floating Interface Customizer Panel (Mukund Kapoor style) */}
       <SettingsBar
