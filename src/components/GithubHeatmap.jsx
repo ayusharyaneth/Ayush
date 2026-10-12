@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Calendar, GitCommit, Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
-import { sound } from '../utils/soundEffects';
 
 export default function GithubHeatmap() {
   const [hoveredCell, setHoveredCell] = useState(null);
@@ -170,10 +169,7 @@ export default function GithubHeatmap() {
                   {week.map((day, dIdx) => (
                     <div
                       key={dIdx}
-                      onMouseEnter={() => {
-                        sound.playClick();
-                        setHoveredCell(day);
-                      }}
+                      onMouseEnter={() => setHoveredCell(day)}
                       onMouseLeave={() => setHoveredCell(null)}
                       style={{
                         aspectRatio: '1',

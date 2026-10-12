@@ -23,15 +23,22 @@ export default function Navbar({
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
-  // Scroll listener: morphs to floating pill on scroll and tracks active section
+  // Scroll listener: morphs to floating pill on scroll and tracks active section (throttled via rAF)
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateScrollSpy = () => {
       const scrollY = window.scrollY;
       
       // Trigger floating dock pill mode once scrolled past 25px
       setIsScrolled(scrollY > 25);
 
-      // Section scrollspy for active indicator dot
+      if (scrollY < 180) {
+        setActiveSection('');
+        ticking = false;
+        return;
+      }
+
       const sections = [
         { id: 'contact', offset: 280 },
         { id: 'collection', offset: 280 },
@@ -39,22 +46,26 @@ export default function Navbar({
         { id: 'work', offset: 280 }
       ];
 
-      if (scrollY < 180) {
-        setActiveSection('');
-        return;
-      }
-
       for (const section of sections) {
         const el = document.getElementById(section.id);
         if (el && scrollY + section.offset >= el.offsetTop) {
           setActiveSection(section.id);
+          ticking = false;
           return;
         }
+      }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateScrollSpy);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    updateScrollSpy();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
