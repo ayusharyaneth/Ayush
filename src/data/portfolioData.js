@@ -79,7 +79,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
       featured: true,
       demoUrl: "https://auraflow.app",
-      githubUrl: "https://github.com/alexrivera/aura-flow",
+      githubUrl: "https://github.com/ayusharyan/aura-flow",
       technologies: ["React", "TypeScript", "Tauri", "Rust", "Web Audio API", "TailwindCSS"],
       caseStudy: {
         problem: "Modern developers switch contexts over 40 times a day, severely impacting flow state and deep work endurance.",
@@ -99,7 +99,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80",
       featured: true,
       demoUrl: "https://hyperagent.ai",
-      githubUrl: "https://github.com/alexrivera/hyper-agent-studio",
+      githubUrl: "https://github.com/ayusharyan/hyper-agent-studio",
       technologies: ["Next.js", "Python", "FastAPI", "WebSockets", "Docker", "ClickHouse", "OpenTelemetry"],
       caseStudy: {
         problem: "Debugging non-deterministic LLM tool-calling loops without visual trace graphs resulted in hours wasted per incident.",
@@ -119,7 +119,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
       featured: true,
       demoUrl: "https://nexus-ui.dev",
-      githubUrl: "https://github.com/alexrivera/nexus-ui",
+      githubUrl: "https://github.com/ayusharyan/nexus-ui",
       technologies: ["TypeScript", "React", "ARIA", "CSS Custom Properties", "Vite", "Motion"],
       caseStudy: {
         problem: "Most design libraries either sacrifice deep accessibility or lock developers into opinionated styling frameworks.",
@@ -138,8 +138,8 @@ export const portfolioData = {
       metrics: "140k Ops/sec · Sub-millisecond p99 Latency",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
       featured: true,
-      demoUrl: "https://veloce.alexrivera.dev",
-      githubUrl: "https://github.com/alexrivera/veloce-engine",
+      demoUrl: "https://veloce.ayusharyan.dev",
+      githubUrl: "https://github.com/ayusharyan/veloce-engine",
       technologies: ["Rust", "Tokio", "WebAssembly", "gRPC", "SIMD", "C++"],
       caseStudy: {
         problem: "Traditional Redis setups introduce memory fragmentation and network overhead for edge microservices.",
@@ -159,7 +159,7 @@ export const portfolioData = {
       image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1200&q=80",
       featured: false,
       demoUrl: "https://chronopulse.io",
-      githubUrl: "https://github.com/alexrivera/chrono-pulse",
+      githubUrl: "https://github.com/ayusharyan/chrono-pulse",
       technologies: ["React", "TypeScript", "Cloudflare Workers", "PostgreSQL", "D1", "Prisma"],
       caseStudy: {
         problem: "Scheduling across 6+ continents causes timezone calculation errors and calendar thrash for remote teams.",
