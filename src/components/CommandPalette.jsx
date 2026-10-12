@@ -301,7 +301,7 @@ export default function CommandPalette({
                     borderRadius: 'var(--radius-md)',
                     cursor: 'pointer',
                     background: isSelected ? 'var(--accent-tint)' : 'transparent',
-                    border: `1px solid ${isSelected ? 'var(--accent)' : 'transparent'}`,
+                    border: `1px solid ${isSelected ? 'var(--accent-border)' : 'transparent'}`,
                     transition: 'all 0.12s ease'
                   }}
                 >

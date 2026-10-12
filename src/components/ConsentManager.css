@@ -52,7 +52,7 @@
   height: 34px;
   border-radius: var(--radius-md);
   background: var(--accent-tint);
-  border: 1px solid var(--accent-glow);
+  border: 1px solid var(--accent-border);
   color: var(--accent);
   display: flex;
   align-items: center;

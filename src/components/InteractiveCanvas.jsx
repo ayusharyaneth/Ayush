@@ -46,12 +46,12 @@ export default function InteractiveCanvas() {
     let time = 0;
 
     // Accent colors cached from CSS variables (never query getComputedStyle at 60fps)
-    let accent = '#0ea5e9';
+    let accent = '#38BDF8';
     let borderLine = 'rgba(255,255,255,0.12)';
 
     const updateColors = () => {
       const computedStyle = getComputedStyle(document.documentElement);
-      accent = computedStyle.getPropertyValue('--accent').trim() || '#0ea5e9';
+      accent = computedStyle.getPropertyValue('--accent').trim() || '#38BDF8';
       borderLine = computedStyle.getPropertyValue('--border-line').trim() || 'rgba(255,255,255,0.12)';
     };
     updateColors();

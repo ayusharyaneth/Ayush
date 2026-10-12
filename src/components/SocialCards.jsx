@@ -89,7 +89,7 @@ export default function SocialCards({ socials = [], email = '' }) {
                       height: '28px',
                       borderRadius: 'var(--radius-sm)',
                       background: 'var(--accent-tint)',
-                      border: '1px solid var(--accent)',
+                      border: '1px solid var(--accent-border)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',

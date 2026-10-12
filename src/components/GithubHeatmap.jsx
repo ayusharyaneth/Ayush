@@ -65,11 +65,11 @@ export default function GithubHeatmap() {
   const getCellColor = (level) => {
     switch (level) {
       case 1:
-        return 'rgba(var(--accent-rgb, 14, 165, 233), 0.25)';
+        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.25)';
       case 2:
-        return 'rgba(var(--accent-rgb, 14, 165, 233), 0.5)';
+        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.5)';
       case 3:
-        return 'rgba(var(--accent-rgb, 14, 165, 233), 0.75)';
+        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.75)';
       case 4:
         return 'var(--accent)';
       default:

@@ -262,7 +262,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                   padding: '5px 12px',
                   borderRadius: 'var(--radius-full)',
                   background: 'var(--accent-tint)',
-                  border: '1px solid var(--accent)',
+                  border: '1px solid var(--accent-border)',
                   fontSize: '0.75rem',
                   color: 'var(--text-primary)',
                   fontWeight: 500,

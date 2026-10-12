@@ -182,7 +182,7 @@ export default function Navbar({
               width: '32px',
               height: '32px',
               background: isSettingsOpen ? 'var(--accent-tint)' : 'var(--bg-muted)',
-              borderColor: isSettingsOpen ? 'var(--accent)' : 'var(--border-secondary)',
+              borderColor: isSettingsOpen ? 'var(--accent-border)' : 'var(--border-secondary)',
               color: isSettingsOpen ? 'var(--accent)' : 'inherit'
             }}
             title="Open interface customizer"

@@ -146,7 +146,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   whiteSpace: 'nowrap',
                   background: active ? 'var(--accent)' : 'var(--bg-muted)',
                   color: active ? '#000' : 'var(--text-secondary)',
-                  border: `1px solid ${active ? 'var(--accent)' : 'var(--border-secondary)'}`,
+                  border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
                   fontWeight: active ? 600 : 400,
                   transition: 'all 0.15s ease'
                 }}
