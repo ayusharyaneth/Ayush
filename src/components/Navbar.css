@@ -38,6 +38,7 @@
 
 /* Inner Container that morphs into a floating pill */
 .navbar-pill {
+  position: relative;
   pointer-events: auto;
   width: 100%;
   max-width: var(--max-content-width);
@@ -122,7 +123,7 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
@@ -134,6 +135,44 @@
 
 .navbar-brand:hover {
   opacity: 0.9;
+}
+
+/* Spatial anchor slot inside logo beside 'aryan.' */
+.navbar-brand-dot-anchor {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 3px;
+  vertical-align: middle;
+  visibility: hidden; /* Geometry anchor only; .navbar-indicator renders the actual visible dot */
+}
+
+/* Single Shared Animated Indicator (Dot-to-Underline) */
+.navbar-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background: var(--accent);
+  z-index: 10;
+  will-change: transform, width, height, border-radius;
+  opacity: 0;
+}
+
+.navbar-indicator.ready {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.28s ease,
+    box-shadow 0.3s ease,
+    opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-indicator.ready {
+    transition: none !important;
+  }
 }
 
 /* Navigation Links Container */
@@ -164,18 +203,9 @@
   color: var(--text-primary);
 }
 
-/* Active Section Dot (Screenshot 2 Indicator) */
-.navbar-link-dot {
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
-  transition: transform 0.25s var(--ease-spring), opacity 0.2s ease;
+.navbar-link-text {
+  position: relative;
+  display: inline-block;
 }
 
 /* Actions Section */

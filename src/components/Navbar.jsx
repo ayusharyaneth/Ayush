@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Sliders,
   Moon,
@@ -20,38 +20,173 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [isReady, setIsReady] = useState(false);
 
-  // Scroll listener: morphs to floating pill on scroll and tracks active section (throttled via rAF)
+  const pillRef = useRef(null);
+  const logoDotAnchorRef = useRef(null);
+  const navItemRefs = useRef({});
+  const isClickScrollingRef = useRef(false);
+  const scrollEndTimerRef = useRef(null);
+
+  // Dynamic indicator geometry state
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    transform: 'translate3d(0, 0, 0)',
+    width: 6,
+    height: 6,
+    borderRadius: '50%',
+    boxShadow: '0 0 8px var(--accent)',
+    opacity: 0
+  });
+
+  // Calculate indicator coordinates dynamically using actual DOM rects
+  const updateIndicatorPosition = useCallback(() => {
+    if (!pillRef.current) return;
+    const pillRect = pillRef.current.getBoundingClientRect();
+    const isMobileNavHidden = window.innerWidth <= 720;
+
+    let targetElement = null;
+    let isUnderline = false;
+
+    if (!isMobileNavHidden && activeSection && navItemRefs.current[activeSection]) {
+      targetElement = navItemRefs.current[activeSection];
+      isUnderline = true;
+    } else if (logoDotAnchorRef.current) {
+      targetElement = logoDotAnchorRef.current;
+      isUnderline = false;
+    }
+
+    if (!targetElement) return;
+
+    const targetRect = targetElement.getBoundingClientRect();
+    if (targetRect.width === 0 && targetRect.height === 0) return;
+
+    let x, y, width, height, borderRadius, boxShadow;
+
+    if (isUnderline) {
+      // Underline directly beneath the active navigation item's text
+      width = Math.round(targetRect.width);
+      height = 2;
+      x = Math.round(targetRect.left - pillRect.left);
+      y = Math.round(targetRect.bottom - pillRect.top + 2);
+      borderRadius = '2px';
+      boxShadow = '0 0 6px var(--accent)';
+    } else {
+      // Small blue dot beside "ayush aryan." logo
+      width = 6;
+      height = 6;
+      x = Math.round(targetRect.left - pillRect.left);
+      y = Math.round(targetRect.top - pillRect.top + (targetRect.height - 6) / 2);
+      borderRadius = '50%';
+      boxShadow = '0 0 8px var(--accent)';
+    }
+
+    setIndicatorStyle({
+      transform: `translate3d(${x}px, ${y}px, 0)`,
+      width: `${width}px`,
+      height: `${height}px`,
+      borderRadius,
+      boxShadow,
+      opacity: 1
+    });
+  }, [activeSection]);
+
+  // Recalculate indicator position on section change or header morph
+  useEffect(() => {
+    updateIndicatorPosition();
+  }, [updateIndicatorPosition, isScrolled]);
+
+  // ResizeObserver & window resize to keep coordinates pixel-perfect
+  useEffect(() => {
+    if (!pillRef.current) return;
+
+    const ro = new ResizeObserver(() => {
+      updateIndicatorPosition();
+    });
+    ro.observe(pillRef.current);
+
+    const handleResize = () => {
+      updateIndicatorPosition();
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        updateIndicatorPosition();
+      });
+    }
+
+    // Enable fluid animations after initial layout is computed to avoid initial fly-in glitch
+    const rafId = requestAnimationFrame(() => {
+      setIsReady(true);
+      updateIndicatorPosition();
+    });
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(rafId);
+    };
+  }, [updateIndicatorPosition]);
+
+  // Active section detection during manual scrolling
   useEffect(() => {
     let ticking = false;
 
     const updateScrollSpy = () => {
       const scrollY = window.scrollY;
-      
-      // Trigger floating dock pill mode once scrolled past 25px
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // Header morphs to floating pill once scrolled past 25px
       setIsScrolled(scrollY > 25);
 
-      if (scrollY < 180) {
+      // Prevent fighting with smooth scroll when user clicked a nav link
+      if (isClickScrollingRef.current) {
+        ticking = false;
+        return;
+      }
+
+      // Return to logo dot when at the top of the page
+      if (scrollY <= 90) {
         setActiveSection('');
         ticking = false;
         return;
       }
 
-      const sections = [
-        { id: 'contact', offset: 280 },
-        { id: 'collection', offset: 280 },
-        { id: 'experience', offset: 280 },
-        { id: 'work', offset: 280 }
-      ];
+      // Ensure Contact section works reliably at bottom of page
+      if (scrollY + windowHeight >= docHeight - 50) {
+        setActiveSection('contact');
+        ticking = false;
+        return;
+      }
 
-      for (const section of sections) {
-        const el = document.getElementById(section.id);
-        if (el && scrollY + section.offset >= el.offsetTop) {
-          setActiveSection(section.id);
-          ticking = false;
-          return;
+      // Focus point roughly 33% from viewport top
+      const focusPoint = windowHeight * 0.33;
+      const sections = ['work', 'experience', 'collection', 'contact'];
+
+      let detected = '';
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= focusPoint && rect.bottom > focusPoint) {
+          detected = id;
+          break;
         }
       }
+
+      if (!detected) {
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sections[i]);
+          if (el && el.getBoundingClientRect().top <= focusPoint) {
+            detected = sections[i];
+            break;
+          }
+        }
+      }
+
+      setActiveSection(detected);
       ticking = false;
     };
 
@@ -62,9 +197,26 @@ export default function Navbar({
       }
     };
 
+    const handleUserScrollInterrupt = () => {
+      if (isClickScrollingRef.current) {
+        isClickScrollingRef.current = false;
+        clearTimeout(scrollEndTimerRef.current);
+        handleScroll();
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleUserScrollInterrupt, { passive: true });
+    window.addEventListener('touchmove', handleUserScrollInterrupt, { passive: true });
+
     updateScrollSpy();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleUserScrollInterrupt);
+      window.removeEventListener('touchmove', handleUserScrollInterrupt);
+      clearTimeout(scrollEndTimerRef.current);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -75,17 +227,71 @@ export default function Navbar({
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     sound.playClick();
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    } else if (targetId === 'top') {
+
+    const targetSection = targetId === 'top' ? '' : targetId;
+    setActiveSection(targetSection);
+
+    // Lock scroll spy during smooth scroll to prevent intermediate indicator jumping
+    isClickScrollingRef.current = true;
+
+    if (targetId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
+    }
+
+    clearTimeout(scrollEndTimerRef.current);
+    scrollEndTimerRef.current = setTimeout(() => {
+      isClickScrollingRef.current = false;
+      // Re-confirm active section once scroll settles
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      if (scrollY <= 90) {
+        setActiveSection('');
+      } else if (scrollY + windowHeight >= docHeight - 50) {
+        setActiveSection('contact');
+      } else {
+        const focusPoint = windowHeight * 0.33;
+        const sections = ['work', 'experience', 'collection', 'contact'];
+        for (const id of sections) {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= focusPoint && rect.bottom > focusPoint) {
+              setActiveSection(id);
+              break;
+            }
+          }
+        }
+      }
+    }, 750);
   };
 
   return (
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-pill">
+      <div className="navbar-pill" ref={pillRef}>
+        {/* Single Shared Animated Indicator (Dot-to-Underline) */}
+        <div
+          className={`navbar-indicator ${isReady ? 'ready' : ''} ${activeSection ? 'is-underline' : 'is-dot'}`}
+          style={{
+            transform: indicatorStyle.transform,
+            width: indicatorStyle.width,
+            height: indicatorStyle.height,
+            borderRadius: indicatorStyle.borderRadius,
+            boxShadow: indicatorStyle.boxShadow,
+            opacity: indicatorStyle.opacity
+          }}
+          aria-hidden="true"
+        />
+
         {/* Brand Monogram */}
         <a
           href="#top"
@@ -95,10 +301,15 @@ export default function Navbar({
         >
           <span>ayush</span>
           <span style={{ color: 'var(--accent)' }}>aryan.</span>
+          {/* Spatial Anchor for the small blue dot when at top */}
+          <span
+            ref={logoDotAnchorRef}
+            className="navbar-brand-dot-anchor"
+            aria-hidden="true"
+          />
         </a>
 
-        {/* Divider 1 */}
-        <div className="navbar-divider" />
+        {/* (Vertical separator 1 between logo and nav items is removed) */}
 
         {/* Section Navigation Links */}
         <nav className="navbar-nav">
@@ -108,8 +319,12 @@ export default function Navbar({
             onMouseEnter={() => sound.playHover()}
             className={`navbar-link ${activeSection === 'work' ? 'active' : ''}`}
           >
-            Work
-            {activeSection === 'work' && <span className="navbar-link-dot" />}
+            <span
+              ref={(el) => (navItemRefs.current['work'] = el)}
+              className="navbar-link-text"
+            >
+              Work
+            </span>
           </a>
           <a
             href="#experience"
@@ -117,8 +332,12 @@ export default function Navbar({
             onMouseEnter={() => sound.playHover()}
             className={`navbar-link ${activeSection === 'experience' ? 'active' : ''}`}
           >
-            Experience
-            {activeSection === 'experience' && <span className="navbar-link-dot" />}
+            <span
+              ref={(el) => (navItemRefs.current['experience'] = el)}
+              className="navbar-link-text"
+            >
+              Experience
+            </span>
           </a>
           <a
             href="#collection"
@@ -126,8 +345,12 @@ export default function Navbar({
             onMouseEnter={() => sound.playHover()}
             className={`navbar-link ${activeSection === 'collection' ? 'active' : ''}`}
           >
-            The Collection
-            {activeSection === 'collection' && <span className="navbar-link-dot" />}
+            <span
+              ref={(el) => (navItemRefs.current['collection'] = el)}
+              className="navbar-link-text"
+            >
+              The Collection
+            </span>
           </a>
           <a
             href="#contact"
@@ -135,13 +358,17 @@ export default function Navbar({
             onMouseEnter={() => sound.playHover()}
             className={`navbar-link ${activeSection === 'contact' ? 'active' : ''}`}
           >
-            <span>Contact</span>
+            <span
+              ref={(el) => (navItemRefs.current['contact'] = el)}
+              className="navbar-link-text"
+            >
+              Contact
+            </span>
             <ArrowUpRight size={13} style={{ opacity: 0.8, flexShrink: 0 }} />
-            {activeSection === 'contact' && <span className="navbar-link-dot" />}
           </a>
         </nav>
 
-        {/* Divider 2 */}
+        {/* Divider 2 (Preserved between nav and actions) */}
         <div className="navbar-divider" />
 
         {/* Action Controls & Triggers */}
