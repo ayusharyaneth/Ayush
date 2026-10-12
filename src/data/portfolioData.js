@@ -12,9 +12,9 @@ export const portfolioData = {
       "Obsessive Pixels & Systems"
     ],
     verbList: ["build", "design", "scale", "ship", "refine"],
-    location: "San Francisco, CA",
-    timeZone: "America/Los_Angeles",
-    utcOffset: -7, // PDT / -8 PST
+    location: "Uttarakhand, India",
+    timeZone: "Asia/Kolkata",
+    utcOffset: 5.5, // IST (UTC+5:30)
     email: "ayush@ayusharyan.dev",
     calLink: "https://cal.com/ayusharyan/intro",
     statusText: "Available for select opportunities & advisory",

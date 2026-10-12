@@ -148,12 +148,14 @@
 .navbar-link {
   position: relative;
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  gap: 3px;
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
   padding: 4px 2px;
+  white-space: nowrap;
   transition: color 0.2s ease;
 }
 

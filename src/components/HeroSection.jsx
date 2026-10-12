@@ -20,7 +20,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     const hour = new Date().getHours();
     if (hour < 12) setGreeting('Good morning');
     else if (hour < 17) setGreeting('Good afternoon');
-    else setGreeting('Good evening');
+    else setGreeting('Good Evening Dear');
   }, []);
 
   // 2. Animated Verb Switcher (Rahul M style: "I build / design / scale products")
@@ -75,7 +75,6 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ color: 'var(--accent)' }}>●</span>
             <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{greeting}</span>
-            <span>— welcome to my portfolio</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -366,7 +365,7 @@ function LiveClockWidget({ timeZone, location }) {
     const updateTime = () => {
       const now = new Date();
       const options = {
-        timeZone: timeZone || 'America/Los_Angeles',
+        timeZone: timeZone || 'Asia/Kolkata',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
@@ -375,10 +374,10 @@ function LiveClockWidget({ timeZone, location }) {
       const formatter = new Intl.DateTimeFormat('en-US', options);
       setLocalTime(formatter.format(now));
 
-      const sfDate = new Date(now.toLocaleString('en-US', { timeZone: timeZone || 'America/Los_Angeles' }));
-      const s = sfDate.getSeconds();
-      const m = sfDate.getMinutes() + s / 60;
-      const h = (sfDate.getHours() % 12) + m / 60;
+      const targetDate = new Date(now.toLocaleString('en-US', { timeZone: timeZone || 'Asia/Kolkata' }));
+      const s = targetDate.getSeconds();
+      const m = targetDate.getMinutes() + s / 60;
+      const h = (targetDate.getHours() % 12) + m / 60;
 
       setClockDegrees({
         hour: (h / 12) * 360,
@@ -386,9 +385,8 @@ function LiveClockWidget({ timeZone, location }) {
         second: (s / 60) * 360
       });
 
-      const visitorOffsetMin = -now.getTimezoneOffset();
-      const sfOffsetMin = -420;
-      const diffHours = Math.round((sfOffsetMin - visitorOffsetMin) / 60);
+      const diffMin = Math.round((targetDate.getTime() - now.getTime()) / (1000 * 60));
+      const diffHours = Math.round(diffMin / 60);
 
       if (diffHours === 0) {
         setTimeDiffText('// same timezone as you');

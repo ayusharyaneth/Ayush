@@ -142,10 +142,9 @@ export default function Navbar({
             onClick={(e) => handleNavClick(e, 'contact')}
             onMouseEnter={() => sound.playHover()}
             className={`navbar-link ${activeSection === 'contact' ? 'active' : ''}`}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '2px' }}
           >
-            Contact
-            <ArrowUpRight size={13} style={{ opacity: 0.8 }} />
+            <span>Contact</span>
+            <ArrowUpRight size={13} style={{ opacity: 0.8, flexShrink: 0 }} />
             {activeSection === 'contact' && <span className="navbar-link-dot" />}
           </a>
         </nav>
