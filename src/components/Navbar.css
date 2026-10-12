@@ -222,19 +222,12 @@
   gap: 8px;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments: Desktop navbar is visible only on screens > 720px;
+   hidden on mobile so desktop and mobile navigation systems never appear simultaneously */
 @media (max-width: 720px) {
-  .navbar-nav {
+  .navbar-header,
+  .navbar-spacer {
     display: none !important;
-  }
-  .navbar-divider {
-    display: none !important;
-  }
-  .navbar-header.scrolled {
-    padding: 8px 12px 0;
-  }
-  .navbar-header.scrolled .navbar-pill {
-    height: 46px;
-    padding: 0 12px;
   }
 }
+

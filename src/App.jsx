@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Navbar from './components/Navbar';
+import MobileBottomNav from './components/MobileBottomNav';
 import SettingsBar from './components/SettingsBar';
 import CommandPalette from './components/CommandPalette';
 import HeroSection from './components/HeroSection';
@@ -149,7 +150,7 @@ export default function App() {
       {/* Top Edge Scroll Fade Vignette (Chanh Dai) */}
       <div className={`site-scroll-fade-top ${isScrolled ? 'visible' : ''}`} aria-hidden="true" />
 
-      {/* Sticky Navigation Bar */}
+      {/* Sticky Navigation Bar (Desktop) */}
       <Navbar
         theme={theme}
         setTheme={handleThemeChange}
@@ -160,8 +161,15 @@ export default function App() {
         isSettingsOpen={isSettingsOpen}
       />
 
-      {/* Header layout spacer so page flow begins naturally beneath fixed navbar */}
-      <div style={{ height: 'var(--header-height)' }} aria-hidden="true" />
+      {/* Mobile Bottom Navigation Dock & Expandable Menu (srbh.site reference) */}
+      <MobileBottomNav
+        theme={theme}
+        setTheme={handleThemeChange}
+        onOpenCommand={() => setIsCommandOpen(true)}
+      />
+
+      {/* Header layout spacer so page flow begins naturally beneath fixed navbar on desktop */}
+      <div className="navbar-spacer" style={{ height: 'var(--header-height)' }} aria-hidden="true" />
 
       {/* Floating Interface Customizer Panel (Mukund Kapoor style) */}
       <SettingsBar
