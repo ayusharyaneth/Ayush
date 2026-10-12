@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
 import ConsentManager from './components/ConsentManager';
+import DotGridSpotlight from './components/DotGridSpotlight';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -28,6 +29,7 @@ export default function App() {
   const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [toast, setToast] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Sync Theme, Font, and Palette to Document Element
   useEffect(() => {
@@ -39,6 +41,32 @@ export default function App() {
     localStorage.setItem('portfolio-font', font);
     localStorage.setItem('portfolio-palette', palette);
   }, [theme, font, palette]);
+
+  // Track scroll position for site-wide scroll fade vignette
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 25);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Animated Theme Switcher using View Transitions API (Circle Blur Top Left - Chanh Dai)
+  const handleThemeChange = useCallback((nextTheme) => {
+    const targetTheme = typeof nextTheme === 'function' ? nextTheme(theme) : nextTheme;
+    if (targetTheme === theme) return;
+
+    const applyTheme = () => {
+      setTheme(targetTheme);
+    };
+
+    if (typeof document !== 'undefined' && document.startViewTransition) {
+      document.startViewTransition(applyTheme);
+    } else {
+      applyTheme();
+    }
+  }, [theme]);
 
   const showToast = useCallback((message, type = 'info') => {
     setToast({ message, type });
@@ -80,11 +108,11 @@ export default function App() {
         handleCopyEmail();
       }
 
-      // 'd' or 'D' -> Toggle Dark / Light Theme
+      // 'd' or 'D' -> Toggle Dark / Light Theme (with circle blur top left transition)
       if (!e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'd') {
         e.preventDefault();
         sound.playToggle();
-        setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+        handleThemeChange((prev) => (prev === 'dark' ? 'light' : 'dark'));
         showToast(`Theme switched to ${theme === 'dark' ? 'light' : 'dark'} mode`);
       }
 
@@ -99,14 +127,20 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleCopyEmail, theme, showToast]);
+  }, [handleCopyEmail, theme, showToast, handleThemeChange]);
 
   return (
-    <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative' }}>
+    <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative', overflowX: 'hidden' }}>
+      {/* Interactive Dot Grid Spotlight Canvas (Chanh Dai) */}
+      <DotGridSpotlight theme={theme} />
+
+      {/* Top Edge Scroll Fade Vignette (Chanh Dai) */}
+      <div className={`site-scroll-fade-top ${isScrolled ? 'visible' : ''}`} aria-hidden="true" />
+
       {/* Sticky Navigation Bar */}
       <Navbar
         theme={theme}
-        setTheme={setTheme}
+        setTheme={handleThemeChange}
         soundMuted={soundMuted}
         setSoundMuted={setSoundMuted}
         onOpenCommand={() => setIsCommandOpen(true)}
@@ -117,7 +151,7 @@ export default function App() {
       {/* Floating Interface Customizer Panel (Mukund Kapoor style) */}
       <SettingsBar
         theme={theme}
-        setTheme={setTheme}
+        setTheme={handleThemeChange}
         font={font}
         setFont={setFont}
         palette={palette}
@@ -130,7 +164,7 @@ export default function App() {
       />
 
       {/* Main Content Assembly */}
-      <main>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         {/* Hero Section */}
         <HeroSection
           personal={portfolioData.personal}
