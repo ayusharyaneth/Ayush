@@ -378,12 +378,14 @@
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 520px) {
+@media (max-width: 720px) {
   .consent-banner-wrapper {
     right: 14px;
-    bottom: 14px;
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
     width: calc(100% - 28px);
   }
+}
+@media (max-width: 520px) {
   .consent-modal-card {
     border-radius: var(--radius-lg);
   }
