@@ -47,6 +47,7 @@ export default function CaseStudyModal({ project, onClose }) {
           padding: '32px 28px',
           animation: 'slideUpFade 0.25s var(--ease-spring)'
         }}
+        className="scroll-fade-effect-y"
       >
         {/* Modal Top Bar */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>

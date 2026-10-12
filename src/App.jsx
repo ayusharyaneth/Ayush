@@ -206,7 +206,7 @@ export default function App() {
         setIsOpen={setIsCommandOpen}
         onCopyEmail={handleCopyEmail}
         theme={theme}
-        setTheme={setTheme}
+        setTheme={handleThemeChange}
         font={font}
         setFont={setFont}
         palette={palette}
