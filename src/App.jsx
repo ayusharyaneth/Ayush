@@ -10,6 +10,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
+import ConsentManager from './components/ConsentManager';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -24,6 +25,7 @@ export default function App() {
   // Modal & Drawer State
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [toast, setToast] = useState(null);
 
