@@ -101,11 +101,11 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .consent-btn-accept:hover {
-  opacity: 0.92;
+  background: var(--accent-hover);
   transform: translateY(-1px);
 }
 
