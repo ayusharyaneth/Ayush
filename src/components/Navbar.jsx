@@ -321,8 +321,8 @@ export default function Navbar({
           className="navbar-brand"
           title="Ayush Aryan Portfolio"
         >
-          <span>ayush</span>
-          <span style={{ color: 'var(--accent)' }}>aryan</span>
+          <span>Ayush</span>
+          <span style={{ color: 'var(--accent)' }}>Aryan</span>
           {/* Spatial Anchor for the small blue dot when at top */}
           <span
             ref={logoDotAnchorRef}
