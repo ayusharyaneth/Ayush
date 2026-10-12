@@ -3,8 +3,6 @@ import {
   Sliders,
   Moon,
   Sun,
-  Volume2,
-  VolumeX,
   Search,
   ArrowUpRight
 } from 'lucide-react';
@@ -72,12 +70,6 @@ export default function Navbar({
   const toggleTheme = () => {
     sound.playToggle();
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  const toggleSound = () => {
-    const isMuted = sound.toggleMute();
-    setSoundMuted(isMuted);
-    if (!isMuted) sound.playClick();
   };
 
   const handleNavClick = (e, targetId) => {
@@ -154,37 +146,18 @@ export default function Navbar({
 
         {/* Action Controls & Triggers */}
         <div className="navbar-actions">
-          {/* Command Palette Trigger */}
+          {/* Search Trigger */}
           <button
             onClick={() => {
               sound.playClick();
               onOpenCommand();
             }}
-            className="btn-secondary"
-            style={{
-              padding: '5px 10px',
-              fontSize: '0.78rem',
-              gap: '6px',
-              height: '32px'
-            }}
-            title="Open command palette (⌘K)"
-          >
-            <Search size={13} style={{ color: 'var(--text-muted)' }} />
-            <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-              <kbd className="kbd-chip">⌘</kbd>
-              <kbd className="kbd-chip">K</kbd>
-            </span>
-          </button>
-
-          {/* Sound Toggle */}
-          <button
-            onClick={toggleSound}
             className="btn-icon"
             style={{ width: '32px', height: '32px' }}
-            title={soundMuted ? 'Unmute interface audio' : 'Mute interface audio'}
-            aria-label="Toggle sound"
+            title="Search (⌘K)"
+            aria-label="Search"
           >
-            {soundMuted ? <VolumeX size={15} /> : <Volume2 size={15} style={{ color: 'var(--accent)' }} />}
+            <Search size={15} />
           </button>
 
           {/* Theme Quick Toggle */}
