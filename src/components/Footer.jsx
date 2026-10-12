@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowUp, Sparkles, Heart } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
-export default function Footer({ personal }) {
+export default function Footer({ personal, onOpenConsent }) {
   const scrollToTop = () => {
     sound.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -73,10 +73,38 @@ export default function Footer({ personal }) {
                 fontFamily: 'var(--font-family-mono)',
                 fontSize: '0.68rem',
                 color: 'var(--text-dim)',
-                marginTop: '6px'
+                marginTop: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
               }}
             >
-              © 2026 {personal.name} · All rights reserved.
+              <span>© 2026 {personal.name}</span>
+              <span>·</span>
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playClick();
+                  if (onOpenConsent) onOpenConsent();
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  fontFamily: 'inherit',
+                  fontSize: 'inherit',
+                  transition: 'color 0.15s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                title="Manage cookie consent & privacy preferences"
+              >
+                Cookie Preferences
+              </button>
             </div>
           </div>
 
