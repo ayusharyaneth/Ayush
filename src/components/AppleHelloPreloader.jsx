@@ -18,14 +18,14 @@ export default function AppleHelloPreloader({ onFinish }) {
     setTimeout(() => {
       setIsComplete(true);
       if (onFinish) onFinish();
-    }, 600);
+    }, 380);
   };
 
   const handleAnimationComplete = () => {
     // Brief pause to admire the completed "hello"
     setTimeout(() => {
       dismiss();
-    }, 450);
+    }, 220);
   };
 
   // Keyboard shortcut (Escape, Space, Enter) to dismiss instantly
@@ -52,7 +52,7 @@ export default function AppleHelloPreloader({ onFinish }) {
       <div className="apple-preloader-container" onClick={(e) => e.stopPropagation()}>
         <div className="apple-preloader-glow" />
         <AppleHelloEffectEnglish
-          durationScale={0.88}
+          durationScale={0.55}
           onAnimationComplete={handleAnimationComplete}
         />
       </div>
