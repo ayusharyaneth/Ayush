@@ -3,24 +3,30 @@
    Replicates the exact layout from chanhdai.com
    ========================================================================== */
 
-.chanh-connect-header {
-  margin-top: 24px;
-  margin-bottom: 8px;
+/* Layout container coordinating outside "Connect with Me" and the main box */
+.chanh-layout-container {
   display: flex;
-  align-items: center;
-  padding-left: 2px;
-  user-select: none;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
-.chanh-connect-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+/* Outside Aside on the Left: perfectly matching the reference screenshot */
+.chanh-aside-follow {
+  flex-shrink: 0;
+  width: 125px;
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  user-select: none;
 }
 
 .chanh-connect-text {
   font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text-muted);
   line-height: 1;
@@ -33,23 +39,23 @@
   color: var(--text-muted);
   display: inline-block;
   opacity: 0.85;
-  position: relative;
-  top: 3px;
+  margin-top: 2px;
+  margin-right: 2px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.chanh-connect-tag:hover .chanh-connect-arrow {
-  transform: translate(2px, 2px);
+.chanh-aside-follow:hover .chanh-connect-arrow {
+  transform: translate(3px, 0);
   color: var(--text-primary);
 }
 
-.chanh-connect-tag:hover .chanh-connect-text {
+.chanh-aside-follow:hover .chanh-connect-text {
   color: var(--text-primary);
 }
 
 .chanh-hero-wrapper {
-  margin-top: 4px;
-  margin-bottom: 24px;
+  flex: 1;
+  min-width: 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -200,17 +206,39 @@
 
 /* Responsive adjustments */
 @media (max-width: 720px) {
-  .chanh-top-strip {
+  .chanh-layout-container {
     flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .chanh-aside-follow {
+    width: auto;
+    padding-top: 0;
     align-items: flex-start;
+    padding-left: 2px;
+    flex-direction: row;
     gap: 8px;
-    padding: 10px 8px;
+  }
+
+  .chanh-connect-arrow {
+    margin-top: 0;
+    position: relative;
+    top: 3px;
+  }
+
+  .chanh-hero-wrapper {
+    width: 100%;
+  }
+
+  .chanh-top-strip {
+    padding: 10px 14px;
   }
   
   .chanh-info-grid {
     grid-template-columns: 1fr;
     gap: 14px;
-    padding: 16px 8px;
+    padding: 16px 14px;
   }
 
   .chanh-grid-column.right-col {
