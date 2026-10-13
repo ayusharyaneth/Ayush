@@ -1,0 +1,318 @@
+/* ==========================================================================
+   MINIMAL & ATTRACTIVE FOOTER SECTION
+   Harmonizes Priyanshu Urmaliya & Saurabh footer aesthetics
+   ========================================================================== */
+
+.footer-section {
+  position: relative;
+  border-top: 1px dashed var(--border-dashed);
+  padding: 48px 0 56px;
+  background: transparent;
+}
+
+/* Master Minimal Card Container */
+.footer-card {
+  position: relative;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  box-shadow: 
+    0 16px 36px -4px rgba(0, 0, 0, 0.4),
+    0 0 0 1px var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  overflow: hidden;
+}
+
+.theme-dark .footer-card {
+  background: rgba(18, 18, 22, 0.72);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px -6px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .footer-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 
+    0 12px 32px -4px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Primary Top Row */
+.footer-primary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+/* Left: Attribution & Copyright */
+.footer-branding {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+}
+
+.footer-author-name {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.footer-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  display: inline-block;
+}
+
+.footer-copy-text {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.footer-cookie-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+  font-size: inherit;
+  transition: color 0.15s ease;
+}
+
+.footer-cookie-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Right: Actions, Socials & Back to Top */
+.footer-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Example 1: Signature Luminous GitHub Pill Button */
+.footer-github-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.85) 0%, rgba(168, 85, 247, 0.75) 45%, rgba(226, 232, 240, 0.9) 100%);
+  background-size: 180% 180%;
+  box-shadow: 
+    0 0 20px -2px rgba(168, 85, 247, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.theme-light .footer-github-pill {
+  color: #ffffff;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #475569 100%);
+  box-shadow: 
+    0 4px 14px -2px rgba(124, 58, 237, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.footer-github-pill:hover {
+  transform: translateY(-2px);
+  background-position: right center;
+  box-shadow: 
+    0 0 28px 2px rgba(168, 85, 247, 0.65),
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.footer-github-pill:active {
+  transform: translateY(0);
+}
+
+/* Example 1: Minimalist Square Icon Buttons (X, LinkedIn) */
+.footer-icon-square {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-line);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-icon-square:hover {
+  transform: translateY(-2px);
+  color: var(--text-primary);
+  border-color: var(--accent-border, rgba(255, 255, 255, 0.25));
+  background: var(--bg-card-hover);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.footer-icon-square:active {
+  transform: translateY(0);
+}
+
+/* Back to Top Trigger (Preserved per user requirement) */
+.footer-back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  height: 36px;
+  border-radius: 9999px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-line);
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.footer-back-to-top:hover {
+  transform: translateY(-2px);
+  color: var(--text-primary);
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.footer-back-to-top:active {
+  transform: translateY(0);
+}
+
+/* Subtle Divider Line between primary and secondary row */
+.footer-card-divider {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed var(--border-dashed);
+  opacity: 0.7;
+}
+
+/* Secondary Bottom Row (Location, Live Time, Visitors) */
+.footer-secondary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.footer-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+}
+
+.footer-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Example 2: Visitors Badge */
+.footer-visitor-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+}
+
+.footer-visitor-count {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .footer-card {
+    padding: 22px 20px;
+    border-radius: var(--radius-lg);
+  }
+  .footer-primary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .footer-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .footer-secondary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
