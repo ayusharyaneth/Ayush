@@ -35,7 +35,6 @@ export default function App() {
   const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [toast, setToast] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   // Sync Theme, Font, and Palette to Document Element
   useEffect(() => {
@@ -47,23 +46,6 @@ export default function App() {
     localStorage.setItem('portfolio-font', font);
     localStorage.setItem('portfolio-palette', palette);
   }, [theme, font, palette]);
-
-  // Track scroll position for site-wide scroll fade vignette (throttled via rAF)
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 25);
-          ticking = false;
-        });
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Animated Theme Switcher using View Transitions API (Circle Blur Top Left - Chanh Dai)
   const handleThemeChange = useCallback((nextTheme) => {

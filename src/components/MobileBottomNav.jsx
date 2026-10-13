@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { sound } from '../utils/soundEffects';
-import { smoothScrollTo, cancelSmoothScroll } from '../utils/smoothScroll';
+import { smoothScrollTo } from '../utils/smoothScroll';
 import './MobileBottomNav.css';
 
 const NAV_ITEMS = [
