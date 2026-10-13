@@ -214,6 +214,7 @@ export default function App() {
       {/* Footer & Signature */}
       <Footer
         personal={portfolioData.personal}
+        socials={portfolioData.socials}
         onOpenConsent={() => setIsConsentOpen(true)}
       />
 
