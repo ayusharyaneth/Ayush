@@ -170,26 +170,6 @@ export const portfolioData = {
         solution: "Wrote lock-free concurrency primitives using Rust atomics with zero-copy deserialization and persistent WAL journal.",
         outcome: "Published peer-reviewed benchmarks showing a 3.4x throughput increase over standard embedded key-value stores."
       }
-    },
-    {
-      id: "chrono-pulse",
-      category: "Full-Stack",
-      eyebrow: "05 / Remote SaaS",
-      title: "Chrono Pulse",
-      tagline: "Async Team Sync & Distributed Timezone Canvas",
-      description:
-        "An intuitive visual day-overlap planner for global distributed teams. Automatically finds optimal 15-minute sync windows, highlights overlapping focus hours, and suppresses out-of-hours notification fatigue.",
-      metrics: "18k Global Teams · 4.8★ Product Hunt",
-      image: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1200&q=80",
-      featured: false,
-      demoUrl: "https://chronopulse.io",
-      githubUrl: "https://github.com/ayusharyan/chrono-pulse",
-      technologies: ["React", "TypeScript", "Cloudflare Workers", "PostgreSQL", "D1", "Prisma"],
-      caseStudy: {
-        problem: "Scheduling across 6+ continents causes timezone calculation errors and calendar thrash for remote teams.",
-        solution: "Interactive drag-to-sweep visual timeline with smart local sunrise/sunset shading and Google Calendar OAuth sync.",
-        outcome: "Used across 35 countries by distributed engineering teams."
-      }
     }
   ],
 

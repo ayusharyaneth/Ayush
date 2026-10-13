@@ -3,6 +3,10 @@
    Replicates the exact layout from chanhdai.com
    ========================================================================== */
 
+.hero-card {
+  position: relative;
+}
+
 /* Handwritten "Connect with Me" placed OUTSIDE the card's marked dashed line */
 .chanh-outside-connect {
   position: absolute;
