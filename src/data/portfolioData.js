@@ -18,6 +18,30 @@ export const portfolioData = {
     email: "ayush@ayusharyan.dev",
     calLink: "https://cal.com/ayusharyan/intro",
     statusText: "Available for select opportunities & advisory",
+    chanhCard: {
+      role1: {
+        title: "Design Engineer",
+        company: "@shadcncraft",
+        url: "https://github.com/shadcncraft"
+      },
+      role2: {
+        title: "Founder",
+        company: "@Quaric",
+        url: "https://quaric.com"
+      },
+      location: "Ho Chi Minh City, Viet Nam",
+      email: "dai@chanhdai.com",
+      phone: "+84 777 888 148",
+      phoneTel: "+84777888148",
+      timeComment: "// 1h ahead",
+      socials: {
+        twitter: "https://x.com",
+        github: "https://github.com",
+        linkedin: "https://linkedin.com",
+        discord: "https://discord.com",
+        youtube: "https://youtube.com"
+      }
+    },
     shortBio:
       "Bridging design engineering and resilient distributed systems. Obsessed with 60fps micro-interactions, typographic rhythm, and scalable architectures that make complex software feel effortless.",
     storyBullets: [

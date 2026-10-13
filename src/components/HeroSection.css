@@ -4,10 +4,18 @@
    ========================================================================== */
 
 .chanh-hero-wrapper {
-  margin-top: 18px;
+  margin-top: 22px;
+  margin-bottom: 24px;
   position: relative;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Top Strip with Hatching Accent, Handwritten 'follow me' & Social Icons */
@@ -16,8 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 12px 14px 14px;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: 12px 18px;
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
@@ -30,39 +37,40 @@
 }
 
 .theme-dark .chanh-top-strip {
-  background-color: rgba(255, 255, 255, 0.015);
+  background-color: rgba(255, 255, 255, 0.02);
 }
 
 .theme-light .chanh-top-strip {
-  background-color: rgba(0, 0, 0, 0.015);
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 /* Handwritten Cursive "follow me" with Curved Arrow */
 .chanh-follow-tag {
   display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  margin-right: 14px;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 18px;
   user-select: none;
   position: relative;
-  top: -2px;
+  line-height: 1;
 }
 
 .chanh-follow-text {
   font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 600;
   color: var(--text-muted);
   line-height: 1;
   letter-spacing: -0.01em;
+  transform: rotate(-3deg);
+  white-space: nowrap;
 }
 
 .chanh-follow-arrow {
   color: var(--text-muted);
   display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  top: 4px;
+  margin-top: 1px;
+  margin-right: -4px;
 }
 
 /* Social Buttons Row */
