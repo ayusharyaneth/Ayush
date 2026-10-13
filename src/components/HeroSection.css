@@ -1,0 +1,214 @@
+/* ==========================================================================
+   CHANH DAI SIGNATURE HERO SECTION
+   Replicates the exact layout from chanhdai.com
+   ========================================================================== */
+
+.chanh-hero-wrapper {
+  margin-top: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Strip with Hatching Accent, Handwritten 'follow me' & Social Icons */
+.chanh-top-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 14px 14px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    var(--border-dashed) 6px,
+    var(--border-dashed) 7px
+  );
+  border-bottom: 1px solid var(--border-line);
+  overflow: visible;
+}
+
+.theme-dark .chanh-top-strip {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+.theme-light .chanh-top-strip {
+  background-color: rgba(0, 0, 0, 0.015);
+}
+
+/* Handwritten Cursive "follow me" with Curved Arrow */
+.chanh-follow-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-right: 14px;
+  user-select: none;
+  position: relative;
+  top: -2px;
+}
+
+.chanh-follow-text {
+  font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.chanh-follow-arrow {
+  color: var(--text-muted);
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: 4px;
+}
+
+/* Social Buttons Row */
+.chanh-social-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chanh-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-line);
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.chanh-social-btn:hover {
+  transform: translateY(-2px);
+  color: var(--text-primary);
+  border-color: var(--accent-border, rgba(255, 255, 255, 0.25));
+  background: var(--bg-card-hover);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chanh-social-btn:active {
+  transform: translateY(0);
+}
+
+/* Two-Column Information Grid */
+.chanh-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 36px;
+  padding: 24px 14px 20px;
+}
+
+.chanh-grid-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chanh-grid-column.right-col {
+  border-left: 1px dashed var(--border-dashed);
+  padding-left: 36px;
+}
+
+/* Individual Grid Row Item */
+.chanh-grid-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-family-mono);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+/* Badge Icon Container */
+.chanh-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-line);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  font-family: var(--font-family-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  box-sizing: border-box;
+}
+
+.chanh-item-text {
+  font-family: var(--font-family-mono);
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.chanh-handle {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.chanh-handle:hover {
+  color: var(--accent);
+}
+
+.chanh-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.chanh-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* Bottom Divider between Grid and Bio/Actions */
+.chanh-bottom-divider {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed var(--border-dashed);
+  margin: 16px 0 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 720px) {
+  .chanh-top-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 8px;
+  }
+  
+  .chanh-info-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 16px 8px;
+  }
+
+  .chanh-grid-column.right-col {
+    border-left: none;
+    border-top: 1px dashed var(--border-dashed);
+    padding-left: 0;
+    padding-top: 14px;
+  }
+}
