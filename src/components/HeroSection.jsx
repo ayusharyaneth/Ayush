@@ -13,8 +13,9 @@ import {
   TwitterIcon,
   GithubIcon,
   LinkedinIcon,
-  DiscordIcon,
-  YoutubeIcon
+  FigmaIcon,
+  DribbbleIcon,
+  LeetCodeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
 import './HeroSection.css';
@@ -86,8 +87,9 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
       twitter: 'https://x.com',
       github: 'https://github.com',
       linkedin: 'https://linkedin.com',
-      discord: 'https://discord.com',
-      youtube: 'https://youtube.com'
+      figma: 'https://figma.com/@ayusharyan',
+      dribbble: 'https://dribbble.com/ayusharyan',
+      leetcode: 'https://leetcode.com/ayusharyan_algo'
     }
   };
 
@@ -95,8 +97,9 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://linkedin.com' },
-    { name: 'Discord', icon: DiscordIcon, url: chanh.socials?.discord || 'https://discord.com' },
-    { name: 'YouTube', icon: YoutubeIcon, url: chanh.socials?.youtube || 'https://youtube.com' }
+    { name: 'Figma', icon: FigmaIcon, url: chanh.socials?.figma || 'https://figma.com/@ayusharyan' },
+    { name: 'Dribbble', icon: DribbbleIcon, url: chanh.socials?.dribbble || 'https://dribbble.com/ayusharyan' },
+    { name: 'LeetCode', icon: LeetCodeIcon, url: chanh.socials?.leetcode || 'https://leetcode.com/ayusharyan_algo' }
   ];
 
   return (

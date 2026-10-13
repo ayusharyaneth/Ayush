@@ -40,7 +40,8 @@ export const portfolioData = {
         linkedin: "https://linkedin.com",
         figma: "https://figma.com/@ayusharyan",
         dribbble: "https://dribbble.com/ayusharyan",
-        leetcode: "https://leetcode.com/ayusharyan_algo"
+        leetcode: "https://leetcode.com/ayusharyan_algo",
+        producthunt: "https://www.producthunt.com/@ayusharyan"
       }
     },
     shortBio:

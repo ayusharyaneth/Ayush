@@ -160,3 +160,26 @@ export function DribbbleIcon({ size = 16, className = '', style = {}, ...props }
   );
 }
 
+export function ProductHuntIcon({ size = 16, className = '', style = {}, ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={{ display: 'inline-block', verticalAlign: 'middle', ...style }}
+      {...props}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M10 8h3a2.5 2.5 0 0 1 0 5h-3v4" />
+      <path d="M10 13V8" />
+    </svg>
+  );
+}
+
+
