@@ -31,10 +31,10 @@ export default function TheCollection({ collection = [] }) {
   };
 
   return (
-    <section id="collection" style={{ paddingTop: '56px', paddingBottom: '56px' }}>
+    <section id="collection" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '32px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <div
             style={{
               fontSize: '0.75rem',

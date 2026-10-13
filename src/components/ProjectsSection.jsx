@@ -22,7 +22,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="work" style={{ paddingTop: '56px', paddingBottom: '56px' }}>
+    <section id="work" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header with Editorial Serif Flourish */}
         <div
@@ -32,7 +32,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '16px',
-            marginBottom: '32px'
+            marginBottom: '24px'
           }}
         >
           <div>

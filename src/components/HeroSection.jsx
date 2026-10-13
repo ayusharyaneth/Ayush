@@ -103,8 +103,8 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     <section
       id="top"
       style={{
-        paddingTop: '40px',
-        paddingBottom: '48px',
+        paddingTop: '24px',
+        paddingBottom: '28px',
         position: 'relative'
       }}
     >

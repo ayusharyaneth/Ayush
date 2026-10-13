@@ -14,7 +14,7 @@ export default function ContactSection({ personal, socials, onCopyEmail, onBookC
   };
 
   return (
-    <section id="contact" style={{ paddingTop: '56px', paddingBottom: '72px' }}>
+    <section id="contact" style={{ paddingTop: '28px', paddingBottom: '36px' }}>
       <div className="container">
 
         {/* Big Editorial CTA Card */}

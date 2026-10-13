@@ -12,10 +12,10 @@ export default function ExperienceSection({ experience = [] }) {
   };
 
   return (
-    <section id="experience" style={{ paddingTop: '56px', paddingBottom: '56px' }}>
+    <section id="experience" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '32px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <div
             style={{
               fontSize: '0.75rem',
