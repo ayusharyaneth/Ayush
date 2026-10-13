@@ -23,7 +23,7 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px dashed var(--border-dashed);
-  padding: 0;
+  padding: 4px 16px;
 }
 
 /* State 2: Scrolled Floating Dock Mode */
@@ -49,19 +49,18 @@
   justify-content: space-between;
   gap: 14px;
   box-sizing: border-box;
+  height: 48px;
+  padding: 0 16px;
   transition: 
-    height 0.35s var(--ease-spring),
-    padding 0.35s var(--ease-spring),
     border-radius 0.35s var(--ease-spring),
     background 0.3s ease,
     border-color 0.3s ease,
-    box-shadow 0.35s var(--ease-spring),
-    transform 0.35s var(--ease-spring);
+    box-shadow 0.35s var(--ease-spring);
 }
 
 /* Unscrolled Pill Styling */
 .navbar-header:not(.scrolled) .navbar-pill {
-  height: var(--header-height);
+  height: 48px;
   padding: 0 16px;
   border-radius: 0;
   background: transparent;
@@ -137,22 +136,19 @@
   opacity: 0.9;
 }
 
-/* Signature Glowing Dot inside Brand Logo */
-.navbar-brand-dot {
+/* Spatial anchor slot inside logo beside 'Aryan' */
+.navbar-brand-dot-anchor {
   display: inline-block;
   width: 7px;
   height: 7px;
-  border-radius: 9999px;
-  background: var(--accent);
-  box-shadow: 
-    0 0 10px 2px var(--accent-glow),
-    0 0 4px var(--accent);
   margin-left: 2px;
-  flex-shrink: 0;
   vertical-align: middle;
+  visibility: hidden; /* Geometry anchor only; .navbar-indicator renders the actual visible morphing dot */
+  pointer-events: none;
+  flex-shrink: 0;
 }
 
-/* Shared Animated Underline Indicator (for active navigation section) */
+/* Single Shared Animated Indicator (Dot-to-Underline morph driven by Motion) */
 .navbar-indicator {
   position: absolute;
   top: 0;
@@ -160,11 +156,23 @@
   pointer-events: none;
   background: var(--accent);
   z-index: 10;
+  will-change: transform, width, height, border-radius, box-shadow;
+  transition: 
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navbar-indicator.is-dot {
+  border-radius: 9999px;
+  box-shadow: 
+    0 0 10px 2px var(--accent-glow),
+    0 0 4px var(--accent);
+}
+
+.navbar-indicator.is-underline {
   border-radius: 2px;
   box-shadow: 
     0 0 8px 1.5px var(--accent-glow),
     0 1px 2px rgba(0, 0, 0, 0.2);
-  will-change: transform, width, height, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
