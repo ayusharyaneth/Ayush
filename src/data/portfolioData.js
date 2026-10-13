@@ -38,8 +38,9 @@ export const portfolioData = {
         twitter: "https://x.com",
         github: "https://github.com",
         linkedin: "https://linkedin.com",
-        discord: "https://discord.com",
-        youtube: "https://youtube.com"
+        figma: "https://figma.com/@ayusharyan",
+        dribbble: "https://dribbble.com/ayusharyan",
+        leetcode: "https://leetcode.com/ayusharyan_algo"
       }
     },
     shortBio:
