@@ -215,13 +215,14 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             </div>
           </div>
 
-          {/* Outside "Connect with Me" Handwritten Header */}
-          <div className="chanh-connect-header">
-            <div className="chanh-connect-tag">
+          {/* Chanh Layout Container: Outside "Connect with Me" on Left + The Main Box */}
+          <div className="chanh-layout-container">
+            {/* Outside Aside on the Left: "Connect with Me ⤷" */}
+            <div className="chanh-aside-follow">
               <span className="chanh-connect-text">Connect with Me</span>
               <svg
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -231,17 +232,16 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                 className="chanh-connect-arrow"
                 aria-hidden="true"
               >
-                <path d="M 4 4 C 4 14, 10 18, 19 18" />
-                <path d="M 15 14 L 19 18 L 15 22" />
+                <path d="M 4 4 C 4 13, 10 16, 18 16" />
+                <path d="M 14 12 L 18 16 L 14 20" />
               </svg>
             </div>
-          </div>
 
-          {/* Chanh Dai Signature Hero Block */}
-          <div className="chanh-hero-wrapper">
-            {/* Top Social Row - Clean, clear background */}
-            <div className="chanh-top-strip">
-              <div className="chanh-social-row">
+            {/* Chanh Dai Signature Hero Box */}
+            <div className="chanh-hero-wrapper">
+              {/* Top Social Row - Clean, clear background */}
+              <div className="chanh-top-strip">
+                <div className="chanh-social-row">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -352,6 +352,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               </div>
             </div>
           </div>
+        </div>
 
           {/* Bio Paragraph */}
           <p
