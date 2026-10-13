@@ -21,8 +21,8 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
   // 3. Avatar toggle / cycle state (Saurabh & Nikhil style)
   const [avatarIndex, setAvatarIndex] = useState(0);
   const avatarPhotos = [
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80'
+    '/avatars/avatar-primary.png',
+    '/avatars/avatar-secondary.png'
   ];
 
   const handleAvatarClick = () => {
@@ -67,9 +67,13 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                   }}
                   title="Click to switch photo"
                 >
-                  {/* Photo 1 (Formal / Default) */}
+                  {/* Photo 1 (Default / Opening Pic) */}
                   <img
                     src={avatarPhotos[0]}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://i.ibb.co/pB7wxbjb/bot-pfp-silver-star.png';
+                    }}
                     alt={personal.name}
                     style={{
                       width: '100%',
@@ -81,10 +85,14 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                       transition: 'opacity 0.3s ease, transform 0.4s ease'
                     }}
                   />
-                  {/* Photo 2 (Candid / Smiling) */}
+                  {/* Photo 2 (Secondary / Clicked Pic) */}
                   <img
                     src={avatarPhotos[1]}
-                    alt={`${personal.name} smiling`}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://i.ibb.co/RGszBkXG/bot-pfp-warm-pebble.png';
+                    }}
+                    alt={`${personal.name} avatar secondary`}
                     style={{
                       width: '100%',
                       height: '100%',
