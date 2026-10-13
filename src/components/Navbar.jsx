@@ -25,19 +25,17 @@ export default function Navbar({
   const shouldReduceMotion = useReducedMotion();
 
   const pillRef = useRef(null);
-  const logoDotAnchorRef = useRef(null);
   const navItemRefs = useRef({});
   const isClickScrollingRef = useRef(false);
   const scrollEndTimerRef = useRef(null);
 
-  // Dynamic indicator geometry state (Motion spring-driven)
+  // Dynamic indicator geometry state (Motion spring-driven for section underline)
   const [indicatorTarget, setIndicatorTarget] = useState({
     x: 0,
     y: 0,
-    width: 7,
-    height: 7,
-    opacity: 0,
-    isUnderline: false
+    width: 0,
+    height: 2,
+    opacity: 0
   });
 
   // Enable fluid transitions after initial layout geometry has computed
@@ -48,57 +46,44 @@ export default function Navbar({
     return () => clearTimeout(timer);
   }, []);
 
-  // Calculate indicator coordinates dynamically using actual DOM rects
+  // Calculate underline indicator coordinates dynamically for active nav items
   const updateIndicatorPosition = useCallback(() => {
     if (!pillRef.current) return;
     const pillRect = pillRef.current.getBoundingClientRect();
     const isMobileNavHidden = window.innerWidth <= 720;
 
-    let targetElement = null;
-    let isUnderline = false;
-
-    if (!isMobileNavHidden && activeSection && navItemRefs.current[activeSection]) {
-      targetElement = navItemRefs.current[activeSection];
-      isUnderline = true;
-    } else if (logoDotAnchorRef.current) {
-      targetElement = logoDotAnchorRef.current;
-      isUnderline = false;
+    if (isMobileNavHidden || !activeSection || !navItemRefs.current[activeSection]) {
+      setIndicatorTarget((prev) => ({
+        ...prev,
+        opacity: 0
+      }));
+      return;
     }
 
-    if (!targetElement) return;
-
+    const targetElement = navItemRefs.current[activeSection];
     const targetRect = targetElement.getBoundingClientRect();
     if (targetRect.width === 0 && targetRect.height === 0) return;
 
-    let x, y, width, height;
-
-    if (isUnderline) {
-      // Underline directly beneath the active navigation item's text
-      width = Math.round(targetRect.width);
-      height = 2;
-      x = Math.round(targetRect.left - pillRect.left);
-      y = Math.round(targetRect.bottom - pillRect.top + 3);
-    } else {
-      // Small glowing blue dot beside "ayush aryan" logo
-      width = 7;
-      height = 7;
-      x = Math.round(targetRect.left - pillRect.left);
-      y = Math.round(targetRect.top - pillRect.top + (targetRect.height - 7) / 2);
-    }
+    // Underline directly beneath the active navigation item's text
+    const width = Math.round(targetRect.width);
+    const height = 2;
+    const x = Math.round(targetRect.left - pillRect.left);
+    const y = Math.round(targetRect.bottom - pillRect.top + 3);
 
     setIndicatorTarget({
       x,
       y,
       width,
       height,
-      opacity: 1,
-      isUnderline
+      opacity: 1
     });
   }, [activeSection]);
 
   // Recalculate indicator position on section change or header morph
   useLayoutEffect(() => {
     updateIndicatorPosition();
+    const timer = setTimeout(updateIndicatorPosition, 360);
+    return () => clearTimeout(timer);
   }, [updateIndicatorPosition, isScrolled]);
 
   // ResizeObserver & window resize to keep coordinates pixel-perfect
@@ -281,9 +266,9 @@ export default function Navbar({
   return (
     <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-pill" ref={pillRef}>
-        {/* Single Shared Animated Indicator (Fluid spring-physics navigation indicator) */}
+        {/* Animated Underline Indicator for Active Navigation Section */}
         <motion.div
-          className={`navbar-indicator ${indicatorTarget.isUnderline ? 'is-underline' : 'is-dot'}`}
+          className="navbar-indicator is-underline"
           initial={false}
           animate={{
             x: indicatorTarget.x,
@@ -297,8 +282,8 @@ export default function Navbar({
               ? { duration: 0 }
               : {
                   type: 'spring',
-                  stiffness: 260,
-                  damping: 27,
+                  stiffness: 280,
+                  damping: 28,
                   mass: 0.7,
                   restDelta: 0.001
                 }
@@ -323,12 +308,8 @@ export default function Navbar({
         >
           <span>Ayush</span>
           <span style={{ color: 'var(--accent)' }}>Aryan</span>
-          {/* Spatial Anchor for the small blue dot when at top */}
-          <span
-            ref={logoDotAnchorRef}
-            className="navbar-brand-dot-anchor"
-            aria-hidden="true"
-          />
+          {/* Signature Accent Dot (rock-solid, zero drift or lag on scroll) */}
+          <span className="navbar-brand-dot" aria-hidden="true" />
         </a>
 
         {/* Section Navigation Links */}

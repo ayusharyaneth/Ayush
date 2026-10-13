@@ -62,7 +62,7 @@
 /* Unscrolled Pill Styling */
 .navbar-header:not(.scrolled) .navbar-pill {
   height: var(--header-height);
-  padding: 0 20px;
+  padding: 0 16px;
   border-radius: 0;
   background: transparent;
   border: 1px solid transparent;
@@ -137,18 +137,22 @@
   opacity: 0.9;
 }
 
-/* Spatial anchor slot inside logo beside 'aryan' */
-.navbar-brand-dot-anchor {
+/* Signature Glowing Dot inside Brand Logo */
+.navbar-brand-dot {
   display: inline-block;
   width: 7px;
   height: 7px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 
+    0 0 10px 2px var(--accent-glow),
+    0 0 4px var(--accent);
   margin-left: 2px;
+  flex-shrink: 0;
   vertical-align: middle;
-  visibility: hidden; /* Geometry anchor only; .navbar-indicator renders the actual visible dot */
-  pointer-events: none;
 }
 
-/* Single Shared Animated Indicator (Dot-to-Underline driven by Motion) */
+/* Shared Animated Underline Indicator (for active navigation section) */
 .navbar-indicator {
   position: absolute;
   top: 0;
@@ -156,24 +160,11 @@
   pointer-events: none;
   background: var(--accent);
   z-index: 10;
-  will-change: transform, width, height, border-radius, box-shadow;
-  transition: 
-    border-radius 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-    box-shadow 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.navbar-indicator.is-dot {
-  border-radius: 9999px;
-  box-shadow: 
-    0 0 10px 2px var(--accent-glow),
-    0 0 4px var(--accent);
-}
-
-.navbar-indicator.is-underline {
   border-radius: 2px;
   box-shadow: 
     0 0 8px 1.5px var(--accent-glow),
     0 1px 2px rgba(0, 0, 0, 0.2);
+  will-change: transform, width, height, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -229,6 +220,9 @@
   }
   .navbar-divider {
     display: none !important;
+  }
+  .navbar-header:not(.scrolled) .navbar-pill {
+    padding: 0 12px;
   }
   .navbar-header.scrolled {
     padding: 8px 12px 0;
