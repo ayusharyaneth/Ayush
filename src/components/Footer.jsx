@@ -78,24 +78,19 @@ export default function Footer({ personal = {}, socials = [] }) {
               >
                 <LinkedinIcon size={14} />
               </a>
+
+              {/* Back to Top Button right beside LinkedIn */}
+              <button
+                onClick={scrollToTop}
+                onMouseEnter={() => sound.playHover()}
+                className="footer-back-to-top"
+                title="Scroll back to top"
+                aria-label="Back to top"
+              >
+                <span>Back to top</span>
+                <ArrowUp size={13} />
+              </button>
             </div>
-          </div>
-
-          {/* Card Subtle Divider */}
-          <div className="footer-card-divider" />
-
-          {/* Secondary Bottom Row: Back to top button */}
-          <div className="footer-secondary-row" style={{ justifyContent: 'flex-end' }}>
-            <button
-              onClick={scrollToTop}
-              onMouseEnter={() => sound.playHover()}
-              className="footer-back-to-top"
-              title="Scroll back to top"
-              aria-label="Back to top"
-            >
-              <span>Back to top</span>
-              <ArrowUp size={13} />
-            </button>
           </div>
         </div>
       </div>
