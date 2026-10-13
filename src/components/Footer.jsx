@@ -2,12 +2,16 @@ import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
+import { smoothScrollTo } from '../utils/smoothScroll';
 import './Footer.css';
 
 export default function Footer({ personal = {}, socials = [] }) {
   const scrollToTop = () => {
     sound.playClick();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    smoothScrollTo('top');
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', '#');
+    }
   };
 
   // Resolve social URLs

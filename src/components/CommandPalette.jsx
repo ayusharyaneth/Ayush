@@ -18,6 +18,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
+import { smoothScrollTo } from '../utils/smoothScroll';
 
 export default function CommandPalette({
   isOpen,
@@ -55,7 +56,7 @@ export default function CommandPalette({
       subtitle: 'Browse 5 production case studies',
       icon: FolderGit2,
       run: () => {
-        document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+        smoothScrollTo('work');
         setIsOpen(false);
       }
     },
@@ -66,7 +67,7 @@ export default function CommandPalette({
       subtitle: 'Career timeline & 52-week activity heatmap',
       icon: Briefcase,
       run: () => {
-        document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
+        smoothScrollTo('experience');
         setIsOpen(false);
       }
     },
@@ -77,7 +78,7 @@ export default function CommandPalette({
       subtitle: 'Security research, honors & publications',
       icon: Layers,
       run: () => {
-        document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+        smoothScrollTo('collection');
         setIsOpen(false);
       }
     },
@@ -88,7 +89,7 @@ export default function CommandPalette({
       subtitle: 'Send an inquiry or book an intro call',
       icon: Mail,
       run: () => {
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+        smoothScrollTo('contact');
         setIsOpen(false);
       }
     },

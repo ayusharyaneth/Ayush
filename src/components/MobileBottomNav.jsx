@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { sound } from '../utils/soundEffects';
+import { smoothScrollTo, cancelSmoothScroll } from '../utils/smoothScroll';
 import './MobileBottomNav.css';
 
 const NAV_ITEMS = [
@@ -143,23 +144,19 @@ export default function MobileBottomNav() {
 
     isClickScrollingRef.current = true;
 
-    if (targetId === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const el = document.getElementById(targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+    smoothScrollTo(targetId, {
+      onComplete: () => {
+        isClickScrollingRef.current = false;
+        setActiveSection(targetId);
+      },
+      onInterrupt: () => {
+        isClickScrollingRef.current = false;
       }
-    }
+    });
 
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
     }
-
-    clearTimeout(scrollEndTimerRef.current);
-    scrollEndTimerRef.current = setTimeout(() => {
-      isClickScrollingRef.current = false;
-    }, 850);
   }, []);
 
   // Scroll to top button handler
@@ -168,16 +165,20 @@ export default function MobileBottomNav() {
     setIsOpen(false);
     isClickScrollingRef.current = true;
     setActiveSection('top');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    smoothScrollTo('top', {
+      onComplete: () => {
+        isClickScrollingRef.current = false;
+        setActiveSection('top');
+      },
+      onInterrupt: () => {
+        isClickScrollingRef.current = false;
+      }
+    });
 
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', '#');
     }
-
-    clearTimeout(scrollEndTimerRef.current);
-    scrollEndTimerRef.current = setTimeout(() => {
-      isClickScrollingRef.current = false;
-    }, 850);
   }, []);
 
   // Toggle expandable menu

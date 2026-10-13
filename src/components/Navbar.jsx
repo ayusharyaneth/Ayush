@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { sound } from '../utils/soundEffects';
+import { smoothScrollTo, cancelSmoothScroll } from '../utils/smoothScroll';
 import './Navbar.css';
 
 export default function Navbar({
@@ -205,6 +206,7 @@ export default function Navbar({
 
     const handleUserScrollInterrupt = () => {
       if (isClickScrollingRef.current) {
+        cancelSmoothScroll();
         isClickScrollingRef.current = false;
         clearTimeout(scrollEndTimerRef.current);
         handleScroll();
@@ -222,6 +224,7 @@ export default function Navbar({
       window.removeEventListener('wheel', handleUserScrollInterrupt);
       window.removeEventListener('touchmove', handleUserScrollInterrupt);
       clearTimeout(scrollEndTimerRef.current);
+      cancelSmoothScroll();
     };
   }, []);
 
@@ -240,44 +243,19 @@ export default function Navbar({
     // Lock scroll spy during smooth scroll to prevent intermediate indicator jumping
     isClickScrollingRef.current = true;
 
-    if (targetId === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const el = document.getElementById(targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+    smoothScrollTo(targetId, {
+      onComplete: () => {
+        isClickScrollingRef.current = false;
+        setActiveSection(targetSection);
+      },
+      onInterrupt: () => {
+        isClickScrollingRef.current = false;
       }
-    }
+    });
 
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
     }
-
-    clearTimeout(scrollEndTimerRef.current);
-    scrollEndTimerRef.current = setTimeout(() => {
-      isClickScrollingRef.current = false;
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-      if (scrollY <= 90) {
-        setActiveSection('');
-      } else if (scrollY + windowHeight >= docHeight - 50) {
-        setActiveSection('contact');
-      } else {
-        const focusPoint = windowHeight * 0.33;
-        const sections = ['work', 'experience', 'collection', 'contact'];
-        for (const id of sections) {
-          const el = document.getElementById(id);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= focusPoint && rect.bottom > focusPoint) {
-              setActiveSection(id);
-              break;
-            }
-          }
-        }
-      }
-    }, 750);
   };
 
   return (
