@@ -13,6 +13,7 @@ import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
 import ConsentManager from './components/ConsentManager';
 import DotGridSpotlight from './components/DotGridSpotlight';
+import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -146,8 +147,8 @@ export default function App() {
       {/* Interactive Dot Grid Spotlight Canvas (Chanh Dai) */}
       <DotGridSpotlight theme={theme} />
 
-      {/* Top Edge Scroll Fade Vignette (Chanh Dai) */}
-      <div className={`site-scroll-fade-top ${isScrolled ? 'visible' : ''}`} aria-hidden="true" />
+      {/* Subtle Adaptive Scroll Edge Vignettes (Top & Bottom Blur) */}
+      <ScrollEdgeVignettes />
 
       {/* Sticky Navigation Bar (Desktop) */}
       <Navbar

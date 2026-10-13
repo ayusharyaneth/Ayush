@@ -1,0 +1,68 @@
+/* ==========================================================================
+   SCROLL EDGE VIGNETTES
+   Subtle adaptive blur and soft progressive transitions at top & bottom
+   ========================================================================== */
+
+/* Top Edge Vignette */
+.scroll-vignette-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 75; /* Sits below desktop navbar (z-index: 80) and mobile nav (z-index: 990) */
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* Progressive Backdrop Blur */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* Masked gradient so blur softly fades into content */
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+
+  /* Soft chromatic background gradient fallback */
+  background: linear-gradient(to bottom, var(--bg-primary) 0%, transparent 100%);
+
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+/* Bottom Edge Vignette */
+.scroll-vignette-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 75; /* Sits below mobile nav dock (z-index: 990) and modals (z-index: 1000+) */
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* Progressive Backdrop Blur */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* Masked gradient so blur softly fades into content */
+  mask-image: linear-gradient(to top, black 0%, black 25%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 0%, black 25%, transparent 100%);
+
+  /* Soft chromatic background gradient fallback */
+  background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
+
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-vignette-top,
+  .scroll-vignette-bottom {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: none !important;
+  }
+}
