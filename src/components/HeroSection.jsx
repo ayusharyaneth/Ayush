@@ -215,29 +215,32 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             </div>
           </div>
 
-          {/* Chanh Dai Signature Hero Block (Replicates Reference Image 1) */}
-          <div className="chanh-hero-wrapper">
-            {/* Top Strip with Hatching, Handwritten "follow me", and Social Icons */}
-            <div className="chanh-top-strip">
-              <div className="chanh-follow-tag">
-                <span className="chanh-follow-text">follow me</span>
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chanh-follow-arrow"
-                  aria-hidden="true"
-                >
-                  <path d="M 6 4 C 6 13, 11 16, 19 16" />
-                  <path d="M 15 12 L 19 16 L 15 20" />
-                </svg>
-              </div>
+          {/* Outside "Connect with Me" Handwritten Header */}
+          <div className="chanh-connect-header">
+            <div className="chanh-connect-tag">
+              <span className="chanh-connect-text">Connect with Me</span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="chanh-connect-arrow"
+                aria-hidden="true"
+              >
+                <path d="M 4 4 C 4 14, 10 18, 19 18" />
+                <path d="M 15 14 L 19 18 L 15 22" />
+              </svg>
+            </div>
+          </div>
 
+          {/* Chanh Dai Signature Hero Block */}
+          <div className="chanh-hero-wrapper">
+            {/* Top Social Row - Clean, clear background */}
+            <div className="chanh-top-strip">
               <div className="chanh-social-row">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;

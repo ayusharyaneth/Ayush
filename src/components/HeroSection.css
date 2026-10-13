@@ -3,8 +3,52 @@
    Replicates the exact layout from chanhdai.com
    ========================================================================== */
 
+.chanh-connect-header {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  padding-left: 2px;
+  user-select: none;
+}
+
+.chanh-connect-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chanh-connect-text {
+  font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+
+.chanh-connect-arrow {
+  color: var(--text-muted);
+  display: inline-block;
+  opacity: 0.85;
+  position: relative;
+  top: 3px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.chanh-connect-tag:hover .chanh-connect-arrow {
+  transform: translate(2px, 2px);
+  color: var(--text-primary);
+}
+
+.chanh-connect-tag:hover .chanh-connect-text {
+  color: var(--text-primary);
+}
+
 .chanh-hero-wrapper {
-  margin-top: 22px;
+  margin-top: 4px;
   margin-bottom: 24px;
   position: relative;
   display: flex;
@@ -18,59 +62,15 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Top Strip with Hatching Accent, Handwritten 'follow me' & Social Icons */
+/* Top Strip: Clean, clear background with no hatch pattern */
 .chanh-top-strip {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 12px 18px;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 6px,
-    var(--border-dashed) 6px,
-    var(--border-dashed) 7px
-  );
+  background: transparent;
   border-bottom: 1px solid var(--border-line);
-  overflow: visible;
-}
-
-.theme-dark .chanh-top-strip {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.theme-light .chanh-top-strip {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-/* Handwritten Cursive "follow me" with Curved Arrow */
-.chanh-follow-tag {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-right: 18px;
-  user-select: none;
-  position: relative;
-  line-height: 1;
-}
-
-.chanh-follow-text {
-  font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
-  font-size: 1.45rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  line-height: 1;
-  letter-spacing: -0.01em;
-  transform: rotate(-3deg);
-  white-space: nowrap;
-}
-
-.chanh-follow-arrow {
-  color: var(--text-muted);
-  display: inline-block;
-  margin-top: 1px;
-  margin-right: -4px;
 }
 
 /* Social Buttons Row */
