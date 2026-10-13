@@ -215,32 +215,30 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             </div>
           </div>
 
-          {/* Chanh Layout Container: Outside "Connect with Me" on Left + The Main Box */}
-          <div className="chanh-layout-container">
-            {/* Outside Aside on the Left: "Connect with Me ⤷" */}
-            <div className="chanh-aside-follow">
-              <span className="chanh-connect-text">Connect with Me</span>
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="chanh-connect-arrow"
-                aria-hidden="true"
-              >
-                <path d="M 4 4 C 4 13, 10 16, 18 16" />
-                <path d="M 14 12 L 18 16 L 14 20" />
-              </svg>
-            </div>
+          {/* Handwritten "Connect with Me" placed OUTSIDE the marked dashed border */}
+          <div className="chanh-outside-connect">
+            <span className="chanh-connect-text">Connect with Me</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="chanh-connect-arrow"
+              aria-hidden="true"
+            >
+              <path d="M 4 4 C 4 13, 10 16, 18 16" />
+              <path d="M 14 12 L 18 16 L 14 20" />
+            </svg>
+          </div>
 
-            {/* Chanh Dai Signature Hero Box */}
-            <div className="chanh-hero-wrapper">
-              {/* Top Social Row - Clean, clear background */}
-              <div className="chanh-top-strip">
+          {/* Chanh Dai Signature Hero Box */}
+          <div className="chanh-hero-wrapper">
+            {/* Top Social Row - Clean, clear background */}
+            <div className="chanh-top-strip">
                 <div className="chanh-social-row">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
@@ -352,7 +350,6 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               </div>
             </div>
           </div>
-        </div>
 
           {/* Bio Paragraph */}
           <p
