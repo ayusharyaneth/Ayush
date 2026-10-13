@@ -218,31 +218,31 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             </div>
           </div>
 
-          {/* Handwritten "Connect with Me" placed OUTSIDE the marked dashed border */}
-          <div className="chanh-outside-connect">
-            <span className="chanh-connect-text">Connect with Me</span>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="chanh-connect-arrow"
-              aria-hidden="true"
-            >
-              <path d="M 4 4 C 4 13, 10 16, 18 16" />
-              <path d="M 14 12 L 18 16 L 14 20" />
-            </svg>
-          </div>
-
           {/* Chanh Dai Signature Hero Box */}
           <div className="chanh-hero-wrapper">
             {/* Top Social Row - Clean, clear background */}
             <div className="chanh-top-strip">
-                <div className="chanh-social-row">
+              {/* Handwritten "Connect with Me" placed OUTSIDE the card dashed border, pointing directly at the first social button */}
+              <div className="chanh-outside-connect">
+                <span className="chanh-connect-text">Connect with Me</span>
+                <svg
+                  width="56"
+                  height="34"
+                  viewBox="0 0 56 34"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="chanh-connect-arrow"
+                  aria-hidden="true"
+                >
+                  <path d="M 6 4 C 6 16, 18 24, 48 24" />
+                  <path d="M 40 18 L 48 24 L 40 30" />
+                </svg>
+              </div>
+
+              <div className="chanh-social-row">
                 {socialLinks.map((item) => {
                   const Icon = item.icon;
                   return (

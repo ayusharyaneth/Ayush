@@ -7,37 +7,41 @@
   position: relative;
 }
 
-/* Handwritten "Connect with Me" placed OUTSIDE the card's marked dashed line */
+/* Handwritten "Connect with Me" placed OUTSIDE the card dashed border ("market line") */
 .chanh-outside-connect {
   position: absolute;
-  right: calc(100% + 14px);
-  top: 132px;
+  right: calc(100% - 10px);
+  top: 50%;
+  transform: translateY(-48px);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   user-select: none;
   z-index: 10;
   pointer-events: auto;
+  white-space: nowrap;
 }
 
 .chanh-connect-text {
   font-family: var(--font-family-hand), "Caveat", cursive, sans-serif;
-  font-size: 1.45rem;
+  font-size: 1.42rem;
   font-weight: 600;
   color: var(--text-muted);
   line-height: 1;
   letter-spacing: -0.01em;
   transform: rotate(-3deg);
   white-space: nowrap;
+  margin-right: 46px; /* Positions the text completely outside the hero card dashed line */
+  margin-bottom: 2px;
+  transition: color 0.2s ease;
 }
 
 .chanh-connect-arrow {
   color: var(--text-muted);
   display: inline-block;
   opacity: 0.85;
-  margin-top: 2px;
-  margin-right: -2px;
   transition: transform 0.2s ease, color 0.2s ease;
+  margin-right: 0; /* Arrow tip reaches directly in front of the first social button */
 }
 
 .chanh-outside-connect:hover .chanh-connect-arrow {
@@ -60,7 +64,7 @@
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
 }
@@ -74,6 +78,8 @@
   padding: 12px 18px;
   background: transparent;
   border-bottom: 1px solid var(--border-line);
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
 }
 
 /* Social Buttons Row */
@@ -202,33 +208,46 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 1080px) {
+@media (max-width: 860px) {
   .chanh-outside-connect {
     position: relative;
     right: auto;
     top: auto;
+    transform: none;
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    margin-top: 4px;
-    margin-bottom: 10px;
-    padding-left: 2px;
+    margin-right: 12px;
+    margin-bottom: 0;
+  }
+
+  .chanh-connect-text {
+    margin-right: 0;
+    margin-bottom: 0;
+    font-size: 1.25rem;
   }
 
   .chanh-connect-arrow {
-    margin-top: 0;
-    position: relative;
-    top: 3px;
-  }
-
-  .chanh-hero-wrapper {
-    margin-top: 0;
+    width: 36px;
+    height: 22px;
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
+  .hero-card {
+    padding: 24px 16px !important;
+  }
+
   .chanh-top-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
     padding: 10px 14px;
+  }
+
+  .chanh-outside-connect {
+    margin-right: 0;
+    margin-bottom: 4px;
   }
   
   .chanh-info-grid {
@@ -244,3 +263,4 @@
     padding-top: 14px;
   }
 }
+
