@@ -124,25 +124,13 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
               >
                 <LinkedinIcon size={14} />
               </a>
-
-              {/* Back to Top Trigger (Preserved per explicit requirement) */}
-              <button
-                onClick={scrollToTop}
-                onMouseEnter={() => sound.playHover()}
-                className="footer-back-to-top"
-                title="Scroll back to top"
-                aria-label="Back to top"
-              >
-                <span>Back to top</span>
-                <ArrowUp size={13} />
-              </button>
             </div>
           </div>
 
           {/* Card Subtle Divider */}
           <div className="footer-card-divider" />
 
-          {/* Secondary Bottom Row: Live IST Clock & Visitor Counter (Example 2) */}
+          {/* Secondary Bottom Row: Live IST Clock & Back to top button */}
           <div className="footer-secondary-row">
             <div className="footer-meta-left">
               <span className="footer-live-dot" />
@@ -153,16 +141,16 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
             </div>
 
             <div className="footer-meta-right">
-              <div
-                className="footer-visitor-pill"
-                title="Total unique visitors recorded"
+              <button
+                onClick={scrollToTop}
+                onMouseEnter={() => sound.playHover()}
+                className="footer-back-to-top"
+                title="Scroll back to top"
+                aria-label="Back to top"
               >
-                <span>Visitors</span>
-                <span className="footer-visitor-count">
-                  #{personal.visitorsCount ? personal.visitorsCount.toLocaleString() : '17,083'}
-                </span>
-                <ArrowUpRight size={11} style={{ opacity: 0.7 }} />
-              </div>
+                <span>Back to top</span>
+                <ArrowUp size={13} />
+              </button>
             </div>
           </div>
         </div>
