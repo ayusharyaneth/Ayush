@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import './Footer.css';
@@ -53,15 +53,14 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
             {/* Left Column: Attribution & Copyright (Example 1 & Example 2) */}
             <div className="footer-branding">
               <div className="footer-title">
-                <span>Designed & Developed by</span>
-                <span className="footer-author-name">{personal.name || 'Ayush Aryan'}</span>
+                <span className="footer-author-name">© {currentYear} {personal.name || 'Ayush Aryan'}</span>
                 <span className="footer-brand-dot" />
               </div>
 
               <div className="footer-copy-text">
-                <span>© {currentYear} All rights reserved.</span>
+                <span>All rights reserved.</span>
                 <span>·</span>
-                <span>Built with love, late nights, coffee</span>
+                <span>Built with Love in Late Night.</span>
                 {onOpenConsent && (
                   <>
                     <span>·</span>
