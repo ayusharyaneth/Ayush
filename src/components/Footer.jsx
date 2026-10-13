@@ -1,37 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import './Footer.css';
 
-export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
-  const [currentTime, setCurrentTime] = useState('');
-
-  // Live ticking IST clock (Example 2 aesthetic)
-  useEffect(() => {
-    const updateTime = () => {
-      try {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-GB', {
-          timeZone: 'Asia/Kolkata',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        setCurrentTime(timeStr);
-      } catch {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        setCurrentTime(`${hours}:${minutes}`);
-      }
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
+export default function Footer({ personal = {}, socials = [] }) {
   const scrollToTop = () => {
     sound.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -48,9 +21,9 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
     <footer className="footer-section">
       <div className="container">
         <div className="footer-card">
-          {/* Top Primary Row: Branding, Social Pills & Back to Top */}
+          {/* Top Primary Row: Branding & Social Pills */}
           <div className="footer-primary-row">
-            {/* Left Column: Attribution & Copyright (Example 1 & Example 2) */}
+            {/* Left Column: Attribution */}
             <div className="footer-branding">
               <div className="footer-title">
                 <span className="footer-author-name">© {currentYear} {personal.name || 'Ayush Aryan'}</span>
@@ -58,31 +31,13 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
               </div>
 
               <div className="footer-copy-text">
-                <span>All rights reserved.</span>
-                <span>·</span>
                 <span>Built with Love in Late Night.</span>
-                {onOpenConsent && (
-                  <>
-                    <span>·</span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        sound.playClick();
-                        onOpenConsent();
-                      }}
-                      className="footer-cookie-btn"
-                      title="Manage cookie consent & privacy preferences"
-                    >
-                      Privacy
-                    </button>
-                  </>
-                )}
               </div>
             </div>
 
-            {/* Right Column: Actions & Socials (Example 1) + Back to Top */}
+            {/* Right Column: Social Pills */}
             <div className="footer-actions">
-              {/* Luminous Specular GitHub Pill Button (Example 1) */}
+              {/* Luminous Specular GitHub Pill Button */}
               <a
                 href={githubLink}
                 target="_blank"
@@ -96,7 +51,7 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
                 <span>GitHub</span>
               </a>
 
-              {/* Minimal Square X / Twitter Button (Example 1) */}
+              {/* Minimal Square X / Twitter Button */}
               <a
                 href={twitterLink}
                 target="_blank"
@@ -110,7 +65,7 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
                 <TwitterIcon size={13} />
               </a>
 
-              {/* Minimal Square LinkedIn Button (Example 1) */}
+              {/* Minimal Square LinkedIn Button */}
               <a
                 href={linkedinLink}
                 target="_blank"
@@ -129,28 +84,18 @@ export default function Footer({ personal = {}, socials = [], onOpenConsent }) {
           {/* Card Subtle Divider */}
           <div className="footer-card-divider" />
 
-          {/* Secondary Bottom Row: Live IST Clock & Back to top button */}
-          <div className="footer-secondary-row">
-            <div className="footer-meta-left">
-              <span className="footer-live-dot" />
-              <span>
-                {personal.location || 'Uttarakhand, India'}{' '}
-                {currentTime ? `${currentTime} GMT+5:30` : '21:30 GMT+5:30'}
-              </span>
-            </div>
-
-            <div className="footer-meta-right">
-              <button
-                onClick={scrollToTop}
-                onMouseEnter={() => sound.playHover()}
-                className="footer-back-to-top"
-                title="Scroll back to top"
-                aria-label="Back to top"
-              >
-                <span>Back to top</span>
-                <ArrowUp size={13} />
-              </button>
-            </div>
+          {/* Secondary Bottom Row: Back to top button */}
+          <div className="footer-secondary-row" style={{ justifyContent: 'flex-end' }}>
+            <button
+              onClick={scrollToTop}
+              onMouseEnter={() => sound.playHover()}
+              className="footer-back-to-top"
+              title="Scroll back to top"
+              aria-label="Back to top"
+            >
+              <span>Back to top</span>
+              <ArrowUp size={13} />
+            </button>
           </div>
         </div>
       </div>

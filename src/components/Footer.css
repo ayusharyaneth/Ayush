@@ -233,66 +233,12 @@
   opacity: 0.7;
 }
 
-/* Secondary Bottom Row (Location, Live Time, Visitors) */
+/* Secondary Bottom Row (Back to Top) */
 .footer-secondary-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 16px;
-  font-family: var(--font-family-mono);
-  font-size: 0.75rem;
-  color: var(--text-dim);
-}
-
-.footer-meta-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer-live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 9999px;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  animation: pulse-dot 2s infinite ease-in-out;
-}
-
-@keyframes pulse-dot {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.85);
-  }
-}
-
-.footer-meta-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-/* Example 2: Visitors Badge */
-.footer-visitor-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  background: var(--bg-muted);
-  border: 1px solid var(--border-primary);
-  color: var(--text-secondary);
-  font-size: 0.74rem;
-}
-
-.footer-visitor-count {
-  color: var(--text-primary);
-  font-weight: 600;
 }
 
 /* Responsive Styles */
