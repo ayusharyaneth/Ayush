@@ -172,39 +172,6 @@
 .contact-corner-bl { bottom: -5px; left: -5px; }
 .contact-corner-br { bottom: -5px; right: -5px; }
 
-/* Desktop Vertical Edge Typography */
-.contact-vertical-edge-left {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: 0.45;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-
-.contact-vertical-edge-right {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  opacity: 0.45;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-
 /* Top Meta Row */
 .contact-meta-header {
   display: flex;
@@ -587,11 +554,6 @@
    ========================================================================== */
 
 @media (max-width: 960px) {
-  .contact-vertical-edge-left,
-  .contact-vertical-edge-right {
-    display: none;
-  }
-
   .contact-editorial-card {
     padding: 20px 18px 18px;
   }

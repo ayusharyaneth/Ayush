@@ -111,14 +111,6 @@ export default function ContactSection({
           <span className="contact-card-corner contact-corner-bl" aria-hidden="true">+</span>
           <span className="contact-card-corner contact-corner-br" aria-hidden="true">+</span>
 
-          {/* Desktop Vertical Edge Typography */}
-          <div className="contact-vertical-edge-left" aria-hidden="true">
-            AYUSH ARYAN · EST. 2026 · SYSTEM & CRAFT
-          </div>
-          <div className="contact-vertical-edge-right" aria-hidden="true">
-            AVAILABLE WORLDWIDE · SELECT OPPORTUNITIES
-          </div>
-
           {/* Top Meta Row */}
           <motion.div
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 14 }}
@@ -130,10 +122,6 @@ export default function ContactSection({
             <div className="contact-badge-label">
               <span className="contact-accent-dot" />
               <span>GET IN TOUCH</span>
-            </div>
-
-            <div className="contact-meta-coordinates">
-              <span>LOC: UTTARAKHAND, IN · 30.06° N 79.01° E</span>
             </div>
           </motion.div>
 
