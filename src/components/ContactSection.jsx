@@ -177,33 +177,6 @@ export default function ContactSection({
                 <span className="ticket-serial">№ 2026-ETH</span>
               </div>
             </motion.div>
-
-            {/* STICKER 2: STATUS OVAL PILL (Top-Left) */}
-            <motion.div
-              onClick={handleStickerClick}
-              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.75, rotate: 0 }}
-              whileInView={prefersReducedMotion ? {} : { opacity: 1, scale: 1, rotate: -8 }}
-              viewport={{ once: true, amount: 0.2 }}
-              animate={
-                prefersReducedMotion
-                  ? {}
-                  : {
-                      x: pointerOffset.x * -10,
-                      y: pointerOffset.y * -10,
-                      rotate: [-8, -10, -8]
-                    }
-              }
-              transition={{
-                rotate: { duration: 6.2, repeat: Infinity, ease: 'easeInOut' },
-                x: { duration: 0.25, ease: 'easeOut' },
-                y: { duration: 0.25, ease: 'easeOut' }
-              }}
-              className="contact-sticker sticker-status-pill"
-              title="Click to interact"
-            >
-              <span className="sticker-status-dot" />
-              <span>STATUS: AVAILABLE ✦ 2026</span>
-            </motion.div>
           </div>
 
           {/* Oversized Cinematic Editorial Headline */}

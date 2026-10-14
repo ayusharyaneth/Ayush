@@ -370,34 +370,6 @@
 .ticket-notch-left { left: -3px; }
 .ticket-notch-right { right: -3px; }
 
-/* STICKER 2: STATUS OVAL PILL (Top-Left) */
-.sticker-status-pill {
-  top: 46%;
-  left: 2%;
-  background: var(--bg-surface);
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
-  padding: 3px 9px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: var(--shadow-card), 0 0 8px var(--accent-glow);
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.64rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  z-index: 3;
-}
-
-.sticker-status-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 6px var(--accent);
-}
-
 /* Sticker Hover Elevations */
 .contact-sticker:hover {
   transform: scale(1.06) rotate(0deg) !important;
