@@ -10,6 +10,7 @@ import {
 import { GithubIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
+import { GlowCardGrid, GlowCardOverlay } from './GlowCardGrid';
 
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -162,52 +163,51 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           </div>
         </ScrollReveal>
 
-        {/* Projects Grid Container */}
+        {/* Projects Grid Container with Chanh Dai Glow Card Animation */}
         {viewMode === 'grid' ? (
-          <ScrollRevealGroup
-            key={`grid-${activeCategory}`}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-              gap: '24px'
-            }}
-            className="projects-grid"
-            stagger={0.07}
-          >
-            {filtered.map((project) => (
-              <ScrollRevealItem
-                key={project.id}
-                as="article"
-                className="screen-box"
-                distance={20}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  overflow: 'hidden',
-                  transition: 'transform 0.2s ease, border-color 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                {/* Visual Thumbnail */}
-                <div
-                  onClick={() => {
-                    sound.playClick();
-                    onSelectProject(project);
-                  }}
+          <GlowCardGrid>
+            <ScrollRevealGroup
+              key={`grid-${activeCategory}`}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+                gap: '24px'
+              }}
+              className="projects-grid"
+              stagger={0.07}
+            >
+              {filtered.map((project) => (
+                <ScrollRevealItem
+                  key={project.id}
+                  as="article"
+                  data-slot="glow-card"
+                  className="screen-box"
+                  distance={20}
                   style={{
-                    position: 'relative',
-                    height: '200px',
-                    width: '100%',
-                    overflow: 'hidden',
-                    cursor: 'pointer',
-                    background: 'var(--bg-surface)'
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative'
                   }}
                 >
+                  {/* Chanh Dai Glow Card Ambient and Border Refraction Overlay */}
+                  <GlowCardOverlay image={project.image} title={project.title} />
+
+                  <div className="glow-card-content">
+                    {/* Visual Thumbnail */}
+                    <div
+                      onClick={() => {
+                        sound.playClick();
+                        onSelectProject(project);
+                      }}
+                      style={{
+                        position: 'relative',
+                        height: '200px',
+                        width: '100%',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        background: 'var(--bg-surface)'
+                      }}
+                    >
                   <img
                     src={project.image}
                     alt={project.title}
