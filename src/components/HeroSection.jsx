@@ -98,7 +98,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
       twitter: 'https://x.com/ayusharyaneth',
       github: 'https://github.com/ayusharyaneth/',
       linkedin: 'https://www.linkedin.com/in/theayusharyan',
-      buymeacoffee: 'https://buymeacoffee.com/ayusharyan'
+      buymeacoffee: 'https://buymeacoffee.com/ayusharyaneth'
     }
   };
 

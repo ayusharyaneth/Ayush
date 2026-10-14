@@ -265,11 +265,6 @@ export const portfolioData = {
         label: "Buy Me a Coffee",
         url: "https://buymeacoffee.com/ayusharyaneth",
         subtext: "Fuel my late-night builds"
-      },
-      {
-        label: "GitHub Sponsors",
-        url: "https://github.com/sponsors/ayusharyaneth",
-        subtext: "Recurring support on GitHub"
       }
     ],
     upi: {
