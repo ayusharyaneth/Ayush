@@ -229,7 +229,7 @@ export default function TheCollection({ collection = [] }) {
                                     {item.bounty}
                                   </span>
                                 )}
-                                {item.url && (
+                                {item.url && item.url !== '#' && (
                                   <a
                                     href={item.url}
                                     target="_blank"

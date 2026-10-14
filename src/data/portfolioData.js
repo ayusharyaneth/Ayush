@@ -246,10 +246,10 @@ export const portfolioData = {
       category: "Writing & Press",
       count: "04 Published Articles",
       items: [
-        { title: "The 16ms Frame Budget in Modern Web Apps", desc: "A deep dive into GPU composition, reflows, and micro-animations", url: "#" },
-        { title: "Why Design Engineers Are the Future of Software", desc: "The convergence of typography, shaders, and systems programming", url: "#" },
-        { title: "Building Audio-Reactive Interfaces with Web Audio", desc: "Synthesizing musical feedback without external assets", url: "#" },
-        { title: "Featured on The Pragmatic Engineer", desc: "Case study on building high-density desktop dashboards", url: "#" }
+        { title: "The 16ms Frame Budget in Modern Web Apps", desc: "A deep dive into GPU composition, reflows, and micro-animations" },
+        { title: "Why Design Engineers Are the Future of Software", desc: "The convergence of typography, shaders, and systems programming" },
+        { title: "Building Audio-Reactive Interfaces with Web Audio", desc: "Synthesizing musical feedback without external assets" },
+        { title: "Featured on The Pragmatic Engineer", desc: "Case study on building high-density desktop dashboards" }
       ]
     }
   ],
