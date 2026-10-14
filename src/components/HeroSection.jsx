@@ -175,13 +175,16 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
               >
                 {/* Photo 1 (Default / Opening Pic) */}
                 <img
-                  src={avatarPhotos[0]}
+                  src="/avatars/avatar-primary-128.png"
+                  srcSet="/avatars/avatar-primary-128.png 1x, /avatars/avatar-primary-256.png 2x"
+                  width="64"
+                  height="64"
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://i.ibb.co/pB7wxbjb/bot-pfp-silver-star.png';
+                    e.currentTarget.src = '/avatars/avatar-primary.png';
                   }}
                   alt={personal.name}
                   style={{
@@ -196,12 +199,15 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                 />
                 {/* Photo 2 (Secondary / Clicked Pic) */}
                 <img
-                  src={avatarPhotos[1]}
+                  src="/avatars/avatar-secondary-128.png"
+                  srcSet="/avatars/avatar-secondary-128.png 1x, /avatars/avatar-secondary-256.png 2x"
+                  width="64"
+                  height="64"
                   loading="lazy"
                   decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://i.ibb.co/RGszBkXG/bot-pfp-warm-pebble.png';
+                    e.currentTarget.src = '/avatars/avatar-secondary.png';
                   }}
                   alt={`${personal.name} avatar secondary`}
                   style={{

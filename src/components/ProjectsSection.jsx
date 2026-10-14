@@ -7,6 +7,11 @@ import {
 import { sound } from '../utils/soundEffects';
 import { ScrollReveal } from './ScrollReveal';
 
+const getResponsiveImageUrl = (url, width, quality = 75) => {
+  if (!url || typeof url !== 'string' || !url.includes('images.unsplash.com')) return url;
+  return url.replace(/w=\d+/, `w=${width}`).replace(/q=\d+/, `q=${quality}`);
+};
+
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [hasManuallyToggled, setHasManuallyToggled] = useState(false);
@@ -231,11 +236,15 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                       {/* Top Banner Image with Ticket / Sketch Aesthetic */}
                       <div className="project-card-image-box">
                         <img
-                          src={project.image}
+                          src={getResponsiveImageUrl(project.image, 600, 75)}
+                          srcSet={`${getResponsiveImageUrl(project.image, 480, 72)} 480w, ${getResponsiveImageUrl(project.image, 800, 75)} 800w, ${project.image} 1200w`}
+                          sizes="(max-width: 768px) 92vw, 380px"
                           alt={project.title}
                           className="project-card-img"
                           loading="lazy"
                           decoding="async"
+                          width="380"
+                          height="110"
                         />
                         <div className="project-card-img-gradient" />
 

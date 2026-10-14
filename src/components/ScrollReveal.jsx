@@ -7,9 +7,14 @@ import { motion, useReducedMotion } from 'motion/react';
  */
 const EASE_SMOOTH = [0.16, 1, 0.3, 1];
 
+const isMobileDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
+};
+
 /**
  * ScrollReveal: Progressively reveals content as it enters the viewport.
- * Combines subtle vertical translation, opacity fade, and a light blur-to-sharp focus transition.
+ * Combines subtle vertical translation, opacity fade, and a light blur-to-sharp focus transition on desktop.
  */
 export function ScrollReveal({
   children,
@@ -26,6 +31,8 @@ export function ScrollReveal({
   ...props
 }) {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = isMobileDevice();
+  const effectiveBlur = isMobile ? 0 : blur;
 
   // If user prefers reduced motion, render without movement or blur
   if (prefersReducedMotion) {
@@ -39,25 +46,27 @@ export function ScrollReveal({
 
   // Define initial and target states based on variant
   const getInitial = () => {
+    const filter = effectiveBlur > 0 ? `blur(${effectiveBlur}px)` : undefined;
     switch (variant) {
       case 'fade':
-        return { opacity: 0, filter: `blur(${blur}px)` };
+        return { opacity: 0, filter };
       case 'fade-down':
-        return { opacity: 0, y: -distance, filter: `blur(${blur}px)` };
+        return { opacity: 0, y: -distance, filter };
       case 'scale':
-        return { opacity: 0, scale: 0.96, filter: `blur(${blur}px)` };
+        return { opacity: 0, scale: 0.96, filter };
       case 'fade-up':
       default:
-        return { opacity: 0, y: distance, filter: `blur(${blur}px)` };
+        return { opacity: 0, y: distance, filter };
     }
   };
 
   const getTarget = () => {
+    const filter = effectiveBlur > 0 ? 'blur(0px)' : undefined;
     switch (variant) {
       case 'scale':
-        return { opacity: 1, scale: 1, filter: 'blur(0px)' };
+        return { opacity: 1, scale: 1, filter };
       default:
-        return { opacity: 1, y: 0, filter: 'blur(0px)' };
+        return { opacity: 1, y: 0, filter };
     }
   };
 
@@ -152,6 +161,8 @@ export function ScrollRevealItem({
   ...props
 }) {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = isMobileDevice();
+  const effectiveBlur = isMobile ? 0 : blur;
 
   if (prefersReducedMotion) {
     const Component = as;
@@ -166,12 +177,12 @@ export function ScrollRevealItem({
     hidden: {
       opacity: 0,
       y: distance,
-      filter: `blur(${blur}px)`
+      ...(effectiveBlur > 0 ? { filter: `blur(${effectiveBlur}px)` } : {})
     },
     visible: {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
+      ...(effectiveBlur > 0 ? { filter: 'blur(0px)' } : {}),
       transition: {
         duration,
         ease: EASE_SMOOTH

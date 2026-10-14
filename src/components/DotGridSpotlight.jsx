@@ -169,9 +169,21 @@ export default function DotGridSpotlight({
     }
     window.addEventListener('resize', resizeCanvas, { passive: true });
 
-    resizeCanvas();
+    let idleId = null;
+    let rafId = null;
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(resizeCanvas, { timeout: 800 });
+    } else {
+      rafId = requestAnimationFrame(resizeCanvas);
+    }
 
     return () => {
+      if (idleId !== null && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       if (hasHover) {
         window.removeEventListener('pointermove', handlePointerMove);
         window.removeEventListener('pointerleave', handlePointerLeave);
