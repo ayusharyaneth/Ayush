@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, GitCommit, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 export default function GithubHeatmap({ style = {} }) {

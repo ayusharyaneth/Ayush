@@ -14,6 +14,8 @@ import Toast from './components/Toast';
 import ConsentManager from './components/ConsentManager';
 import DotGridSpotlight from './components/DotGridSpotlight';
 import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
+import GithubHeatmap from './components/GithubHeatmap';
+import { ScrollReveal } from './components/ScrollReveal';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -95,9 +97,9 @@ export default function App() {
     }
     haptic(45);
     sound.playSuccess();
-    showToast('Copied to clipboard', 'copy');
+    showToast('Copied', 'copy');
 
-    // Duck the mobile bottom dock while OS/Toast feedback is active
+    // Notify mobile dock of active copy action
     setIsCopiedActive(true);
     if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
     copiedTimerRef.current = setTimeout(() => {
@@ -224,13 +226,22 @@ export default function App() {
           onBookCall={handleBookCall}
         />
 
+        {/* Open Source Activity (GitHub Heatmap) */}
+        <section id="activity" style={{ paddingTop: '4px', paddingBottom: '24px' }}>
+          <div className="container">
+            <ScrollReveal variant="fade-up" distance={18} duration={0.65}>
+              <GithubHeatmap />
+            </ScrollReveal>
+          </div>
+        </section>
+
         {/* Featured Projects Section */}
         <ProjectsSection
           projects={portfolioData.projects}
           onSelectProject={(project) => setSelectedCaseStudy(project)}
         />
 
-        {/* Experience Timeline & GitHub 52-Week Activity */}
+        {/* Experience Timeline */}
         <ExperienceSection experience={portfolioData.experience} />
 
         {/* The Collection: Security Research, Milestones & Writing */}
