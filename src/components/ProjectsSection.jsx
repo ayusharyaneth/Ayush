@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -25,152 +26,160 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
     <section id="work" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header with Editorial Serif Flourish */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '16px',
-            marginBottom: '24px'
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: '0.75rem',
-                fontFamily: 'var(--font-family-mono)',
-                color: 'var(--accent)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                fontWeight: 600
-              }}
-            >
-              01 / Selected Work
+        <ScrollReveal variant="fade-up" distance={20} duration={0.6}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '16px',
+              marginBottom: '24px'
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '0.75rem',
+                  fontFamily: 'var(--font-family-mono)',
+                  color: 'var(--accent)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  fontWeight: 600
+                }}
+              >
+                01 / Selected Work
+              </div>
+              <h2
+                style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  color: 'var(--text-primary)',
+                  marginTop: '4px'
+                }}
+              >
+                Featured products.{' '}
+                <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
+                  Crafted with care.
+                </span>
+              </h2>
             </div>
-            <h2
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
-                fontWeight: 700,
-                letterSpacing: '-0.02em',
-                color: 'var(--text-primary)',
-                marginTop: '4px'
-              }}
-            >
-              Featured products.{' '}
-              <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
-                Crafted with care.
-              </span>
-            </h2>
-          </div>
 
-          {/* View Mode Toggle & Category Filters */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '3px',
-                borderRadius: 'var(--radius-sm)',
-                background: 'var(--bg-muted)',
-                border: '1px solid var(--border-secondary)'
-              }}
-            >
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setViewMode('grid');
-                }}
+            {/* View Mode Toggle & Category Filters */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div
                 style={{
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  background: viewMode === 'grid' ? 'var(--bg-surface)' : 'transparent',
-                  color: viewMode === 'grid' ? 'var(--text-primary)' : 'var(--text-muted)',
                   display: 'flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  padding: '3px',
+                  borderRadius: 'var(--radius-sm)',
+                  background: 'var(--bg-muted)',
+                  border: '1px solid var(--border-secondary)'
                 }}
-                title="Grid view"
-                aria-label="Grid view"
               >
-                <LayoutGrid size={14} />
-              </button>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  setViewMode('list');
-                }}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  background: viewMode === 'list' ? 'var(--bg-surface)' : 'transparent',
-                  color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-muted)',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-                title="List view"
-                aria-label="List view"
-              >
-                <List size={14} />
-              </button>
+                <button
+                  onClick={() => {
+                    sound.playClick();
+                    setViewMode('grid');
+                  }}
+                  style={{
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    background: viewMode === 'grid' ? 'var(--bg-surface)' : 'transparent',
+                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'var(--text-muted)',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  title="Grid view"
+                  aria-label="Grid view"
+                >
+                  <LayoutGrid size={14} />
+                </button>
+                <button
+                  onClick={() => {
+                    sound.playClick();
+                    setViewMode('list');
+                  }}
+                  style={{
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    background: viewMode === 'list' ? 'var(--bg-surface)' : 'transparent',
+                    color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-muted)',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  title="List view"
+                  aria-label="List view"
+                >
+                  <List size={14} />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Category Pills Bar */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            overflowX: 'auto',
-            paddingBottom: '8px',
-            marginBottom: '28px',
-            scrollbarWidth: 'none'
-          }}
-        >
-          {categories.map((cat) => {
-            const active = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => {
-                  sound.playClick();
-                  setActiveCategory(cat);
-                }}
-                style={{
-                  padding: '5px 12px',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: '0.78rem',
-                  fontFamily: 'var(--font-family-mono)',
-                  whiteSpace: 'nowrap',
-                  background: active ? 'var(--accent)' : 'var(--bg-muted)',
-                  color: active ? '#000' : 'var(--text-secondary)',
-                  border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
-                  fontWeight: active ? 600 : 400,
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
+        <ScrollReveal variant="fade-up" distance={14} delay={0.06} duration={0.55}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              overflowX: 'auto',
+              paddingBottom: '8px',
+              marginBottom: '28px',
+              scrollbarWidth: 'none'
+            }}
+          >
+            {categories.map((cat) => {
+              const active = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    sound.playClick();
+                    setActiveCategory(cat);
+                  }}
+                  style={{
+                    padding: '5px 12px',
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: '0.78rem',
+                    fontFamily: 'var(--font-family-mono)',
+                    whiteSpace: 'nowrap',
+                    background: active ? 'var(--accent)' : 'var(--bg-muted)',
+                    color: active ? '#000' : 'var(--text-secondary)',
+                    border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
+                    fontWeight: active ? 600 : 400,
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </ScrollReveal>
 
         {/* Projects Grid Container */}
         {viewMode === 'grid' ? (
-          <div
+          <ScrollRevealGroup
+            key={`grid-${activeCategory}`}
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
               gap: '24px'
             }}
             className="projects-grid"
+            stagger={0.07}
           >
-            {filtered.map((project, idx) => (
-              <article
+            {filtered.map((project) => (
+              <ScrollRevealItem
                 key={project.id}
+                as="article"
                 className="screen-box"
+                distance={20}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
