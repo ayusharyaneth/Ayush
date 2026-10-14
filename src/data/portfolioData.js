@@ -15,7 +15,7 @@ export const portfolioData = {
     location: "Uttarakhand, India",
     timeZone: "Asia/Kolkata",
     utcOffset: 5.5, // IST (UTC+5:30)
-    email: "ayush@ayusharyan.dev",
+    email: "eth@ayusharyan.in",
     calLink: "https://cal.com/ayusharyan/intro",
     statusText: "Available for select opportunities & advisory",
     chanhCard: {
