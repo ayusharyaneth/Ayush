@@ -199,7 +199,7 @@
   text-decoration: underline;
 }
 
-/* Inline Email Row & Sleek Copy Action */
+/* Inline Email Row & Sleek Copy Action (Linear / Vercel Craft Style) */
 .chanh-email-row {
   display: inline-flex;
   align-items: center;
@@ -210,17 +210,20 @@
 .chanh-email-copy-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: 3px 8px;
+  height: 22px;
+  min-width: 22px;
+  padding: 0 5px;
   font-family: var(--font-family-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-muted);
   background: var(--bg-muted);
   border: 1px solid var(--border-line);
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   line-height: 1;
   user-select: none;
   box-sizing: border-box;
@@ -231,29 +234,52 @@
   background: var(--bg-surface);
   border-color: var(--border-glow);
   transform: translateY(-0.5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .chanh-email-copy-btn:active {
-  transform: translateY(0.5px);
+  transform: translateY(0.5px) scale(0.96);
 }
 
 .chanh-email-copy-btn.copied {
   color: var(--accent);
   background: var(--accent-tint);
   border-color: var(--accent-border);
+  padding: 0 8px;
+  box-shadow: 0 0 12px var(--accent-tint);
+  animation: chanhPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes chanhPop {
+  0% {
+    transform: scale(0.92);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.chanh-copy-idle-icon {
+  transition: transform 0.15s ease;
+}
+
+.chanh-email-copy-btn:hover .chanh-copy-idle-icon {
+  transform: scale(1.08);
 }
 
 .chanh-copy-check-icon {
   color: var(--accent);
+  flex-shrink: 0;
 }
 
-.chanh-kbd-mini {
-  font-size: 0.58rem !important;
-  min-width: 15px !important;
-  height: 15px !important;
-  padding: 0 3px !important;
-  border-radius: 3px !important;
-  margin-left: 1px;
+.chanh-copy-feedback-text {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--accent);
 }
 
 /* Bottom Divider between Grid and Bio/Actions */
