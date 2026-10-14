@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ExternalLink,
   LayoutGrid,
   List,
-  ArrowUpRight,
-  BookOpen
+  ArrowUpRight
 } from 'lucide-react';
-import { GithubIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { ScrollReveal } from './ScrollReveal';
 
@@ -269,45 +266,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                         <h3 className="project-card-title">{project.title}</h3>
 
                         <p className="project-card-desc">{project.description}</p>
-
-                        <div className="project-card-footer">
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <BookOpen size={12} style={{ color: 'var(--accent)' }} />
-                            <span style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                              Case study
-                            </span>
-                          </div>
-
-                          <div
-                            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {project.githubUrl && (
-                              <a
-                                href={project.githubUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={() => sound.playClick()}
-                                className="project-ext-icon"
-                                title="GitHub Repository"
-                              >
-                                <GithubIcon size={14} />
-                              </a>
-                            )}
-                            {project.demoUrl && (
-                              <a
-                                href={project.demoUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={() => sound.playClick()}
-                                className="project-ext-icon"
-                                title="Live Application"
-                              >
-                                <ExternalLink size={14} />
-                              </a>
-                            )}
-                          </div>
-                        </div>
                       </div>
                     </div>
                   );
@@ -697,33 +655,12 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           font-size: 0.76rem;
           color: var(--text-secondary);
           line-height: 1.45;
-          margin-bottom: 12px;
+          margin-bottom: 0;
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
           opacity: 0.85;
-        }
-
-        .project-card-footer {
-          margin-top: auto;
-          padding-top: 10px;
-          border-top: 1px solid var(--border-secondary);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .project-ext-icon {
-          color: var(--text-muted);
-          transition: color 0.15s ease, transform 0.15s ease;
-          display: inline-flex;
-          align-items: center;
-        }
-
-        .project-ext-icon:hover {
-          color: var(--accent);
-          transform: translateY(-1px);
         }
       `}</style>
     </section>
