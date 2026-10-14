@@ -222,9 +222,9 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
           <div className="chanh-hero-wrapper">
             {/* Top Social Row - Clean, clear background */}
             <div className="chanh-top-strip">
-              {/* Handwritten "Connect with Me" placed OUTSIDE the card dashed border, pointing directly at the first social button */}
+              {/* Handwritten "Follow Me" placed OUTSIDE the card dashed border, pointing directly at the first social button */}
               <div className="chanh-outside-connect">
-                <span className="chanh-connect-text">Connect with Me</span>
+                <span className="chanh-connect-text">Follow Me</span>
                 <svg
                   width="56"
                   height="34"

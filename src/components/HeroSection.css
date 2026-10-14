@@ -7,7 +7,7 @@
   position: relative;
 }
 
-/* Handwritten "Connect with Me" placed OUTSIDE the card dashed border ("market line") */
+/* Handwritten "Follow Me" placed OUTSIDE the card dashed border ("market line") */
 .chanh-outside-connect {
   position: absolute;
   right: calc(100% - 10px);
@@ -233,7 +233,7 @@
   }
 }
 
-/* Hide handwritten "Connect with Me" only in mobile view */
+/* Hide handwritten "Follow Me" only in mobile view */
 @media (max-width: 768px) {
   .chanh-outside-connect {
     display: none !important;
