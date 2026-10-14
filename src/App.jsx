@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar';
 import MobileBottomNav from './components/MobileBottomNav';
 import SettingsBar from './components/SettingsBar';
@@ -37,6 +37,15 @@ export default function App() {
   const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [toast, setToast] = useState(null);
+  const [isCopiedActive, setIsCopiedActive] = useState(false);
+  const copiedTimerRef = useRef(null);
+
+  // Clean up copied state timer on unmount
+  useEffect(() => {
+    return () => {
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+    };
+  }, []);
 
   // Sync Theme, Font, and Palette to Document Element
   useEffect(() => {
@@ -86,7 +95,14 @@ export default function App() {
     }
     haptic(45);
     sound.playSuccess();
-    showToast('Copied', 'copy');
+    showToast('Copied to clipboard', 'copy');
+
+    // Duck the mobile bottom dock while OS/Toast feedback is active
+    setIsCopiedActive(true);
+    if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+    copiedTimerRef.current = setTimeout(() => {
+      setIsCopiedActive(false);
+    }, 2200);
   }, [showToast]);
 
   const handleBookCall = useCallback(() => {
@@ -179,7 +195,7 @@ export default function App() {
       />
 
       {/* Mobile Bottom Navigation Pill & Expandable Menu (srbh.site reference) */}
-      <MobileBottomNav />
+      <MobileBottomNav isCopiedActive={isCopiedActive} />
 
       {/* Header layout spacer so page flow begins naturally beneath fixed navbar on desktop */}
       <div className="navbar-spacer" style={{ height: 'var(--header-height)' }} aria-hidden="true" />
