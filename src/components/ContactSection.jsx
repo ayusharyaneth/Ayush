@@ -216,42 +216,6 @@ export default function ContactSection({
               <span className="sticker-status-dot" />
               <span>STATUS: AVAILABLE ✦ 2026</span>
             </motion.div>
-
-            {/* STICKER 3: ROTATING CRAFT SEAL (Bottom-Right) */}
-            <motion.div
-              onClick={handleStickerClick}
-              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.75 }}
-              whileInView={prefersReducedMotion ? {} : { opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              animate={
-                prefersReducedMotion
-                  ? {}
-                  : {
-                      x: pointerOffset.x * 14,
-                      y: pointerOffset.y * 14
-                    }
-              }
-              transition={{
-                x: { duration: 0.25, ease: 'easeOut' },
-                y: { duration: 0.25, ease: 'easeOut' }
-              }}
-              className="contact-sticker sticker-craft-seal"
-              title="Click to interact"
-            >
-              <svg className="seal-svg-rotating" viewBox="0 0 100 100">
-                <path
-                  id="sealTextPath"
-                  d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                  fill="none"
-                />
-                <text fill="var(--accent)" fontSize="9.2" fontFamily="monospace" letterSpacing="2">
-                  <textPath href="#sealTextPath" startOffset="0%">
-                    · HIGH CRAFT · 0 TO 1 CODE · DESIGN ·
-                  </textPath>
-                </text>
-              </svg>
-              <span className="seal-center-badge">✦</span>
-            </motion.div>
           </div>
 
           {/* Oversized Cinematic Editorial Headline */}
