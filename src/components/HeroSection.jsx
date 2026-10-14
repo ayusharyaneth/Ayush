@@ -409,36 +409,12 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                 fontSize: '0.92rem',
                 lineHeight: 1.65,
                 color: 'var(--text-secondary)',
-                marginBottom: '20px',
+                marginBottom: 0,
                 maxWidth: '680px'
               }}
             >
               {personal.shortBio}
             </p>
-          </ScrollRevealItem>
-
-          {/* Availability Pill */}
-          <ScrollRevealItem distance={14}>
-            <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '5px 12px',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'var(--accent-tint)',
-                  border: '1px solid var(--accent-border)',
-                  fontSize: '0.75rem',
-                  color: 'var(--text-primary)',
-                  fontWeight: 500,
-                  marginBottom: 0
-                }}
-              >
-                <span className="pulsing-dot" />
-                <span>{personal.statusText}</span>
-              </div>
-            </div>
           </ScrollRevealItem>
         </ScrollRevealGroup>
       </div>
