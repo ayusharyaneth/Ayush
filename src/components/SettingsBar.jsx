@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Sun, Moon, Volume2, VolumeX, Type, Palette, Sliders, Check, ShieldCheck } from 'lucide-react';
+import { Sun, Moon, Volume2, VolumeX, Sliders, Check, ShieldCheck } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
 export default function SettingsBar({

@@ -178,7 +178,7 @@ class SoundEngine {
       s.connect(ctx.destination);
       u.start(t);
       u.stop(t + 0.04);
-    } catch (_) {}
+    } catch {}
   }
 
   // Exact Manish Tamang success harmonic chime
@@ -230,7 +230,7 @@ class SoundEngine {
       highGain.connect(ctx.destination);
       highOsc.start(t + 0.24);
       highOsc.stop(t + 0.45);
-    } catch (_) {}
+    } catch {}
   }
 }
 
