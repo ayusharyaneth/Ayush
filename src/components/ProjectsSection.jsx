@@ -147,7 +147,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               gap: '10px',
               overflowX: 'auto',
               paddingBottom: '6px',
-              marginBottom: '26px',
+              marginBottom: '14px',
               scrollbarWidth: 'none'
             }}
           >
@@ -432,7 +432,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           border: 1px solid var(--border-primary);
           box-shadow: var(--shadow-card);
           overflow: hidden;
-          padding: 36px 20px 0 20px;
+          padding: 24px 20px 0 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -441,8 +441,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
 
         @media (min-width: 768px) {
           .project-deck-stage {
-            min-height: 460px;
-            padding: 56px 32px 0 32px;
+            min-height: auto;
+            padding: 42px 32px 0 32px;
           }
         }
 
