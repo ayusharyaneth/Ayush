@@ -199,6 +199,63 @@
   text-decoration: underline;
 }
 
+/* Inline Email Row & Sleek Copy Action */
+.chanh-email-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chanh-email-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-family: var(--font-family-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-muted);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.chanh-email-copy-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border-color: var(--border-glow);
+  transform: translateY(-0.5px);
+}
+
+.chanh-email-copy-btn:active {
+  transform: translateY(0.5px);
+}
+
+.chanh-email-copy-btn.copied {
+  color: var(--accent);
+  background: var(--accent-tint);
+  border-color: var(--accent-border);
+}
+
+.chanh-copy-check-icon {
+  color: var(--accent);
+}
+
+.chanh-kbd-mini {
+  font-size: 0.58rem !important;
+  min-width: 15px !important;
+  height: 15px !important;
+  padding: 0 3px !important;
+  border-radius: 3px !important;
+  margin-left: 1px;
+}
+
 /* Bottom Divider between Grid and Bio/Actions */
 .chanh-bottom-divider {
   width: 100%;

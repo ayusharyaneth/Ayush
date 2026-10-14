@@ -3,6 +3,7 @@ import {
   Calendar,
   BadgeCheck,
   Copy,
+  Check,
   Lightbulb,
   MapPin,
   Mail,
@@ -27,6 +28,33 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
     '/avatars/avatar-primary.png',
     '/avatars/avatar-secondary.png'
   ];
+
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleCopyEmailAddress = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    sound.playSuccess();
+    onCopyEmail(chanh.email);
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
+
+  // Keyboard shortcut listener to reflect 'C' keypress on the copy button
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const tag = e.target.tagName.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'c') {
+        setEmailCopied(true);
+        setTimeout(() => setEmailCopied(false), 2000);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleAvatarClick = () => {
     sound.playClick();
@@ -311,19 +339,34 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                   <span className="chanh-badge">
                     <Mail size={13} />
                   </span>
-                  <div className="chanh-item-text">
+                  <div className="chanh-item-text chanh-email-row">
                     <a
                       href={`mailto:${chanh.email}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        sound.playClick();
-                        onCopyEmail(chanh.email);
-                      }}
                       className="chanh-link"
-                      title="Click to copy email"
+                      title={`Send email to ${chanh.email}`}
                     >
                       {chanh.email}
                     </a>
+                    <button
+                      type="button"
+                      onClick={handleCopyEmailAddress}
+                      className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
+                      title="Copy email to clipboard (or press C)"
+                      aria-label="Copy email address"
+                    >
+                      {emailCopied ? (
+                        <>
+                          <Check size={11} strokeWidth={2.5} className="chanh-copy-check-icon" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={11} />
+                          <span>Copy</span>
+                          <kbd className="kbd-chip chanh-kbd-mini">C</kbd>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -400,21 +443,6 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               >
                 <Calendar size={15} />
                 <span>Book an intro call</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  onCopyEmail(personal.email);
-                }}
-                className="btn-secondary"
-                title="Press C on keyboard to copy instantly"
-              >
-                <Copy size={14} />
-                <span>Copy email</span>
-                <kbd className="kbd-chip" style={{ marginLeft: '4px' }}>
-                  C
-                </kbd>
               </button>
             </div>
           </div>
