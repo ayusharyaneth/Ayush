@@ -3,7 +3,6 @@ import {
   ExternalLink,
   LayoutGrid,
   List,
-  Sparkles,
   ArrowUpRight,
   BookOpen
 } from 'lucide-react';
