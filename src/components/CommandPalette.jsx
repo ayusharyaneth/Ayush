@@ -279,7 +279,7 @@ export default function CommandPalette({
         </div>
 
         {/* Results List */}
-        <div style={{ maxHeight: '360px', overflowY: 'auto', padding: '8px' }} className="scroll-fade-effect-y">
+        <div data-lenis-prevent style={{ maxHeight: '360px', overflowY: 'auto', padding: '8px' }} className="scroll-fade-effect-y">
           {filtered.length === 0 ? (
             <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
               No results found for &ldquo;{query}&rdquo;

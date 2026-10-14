@@ -170,7 +170,7 @@ export default function ConsentManager({
           aria-modal="true"
           aria-labelledby="consent-modal-title"
         >
-          <div className="consent-modal-card scroll-fade-effect-y" onClick={(e) => e.stopPropagation()}>
+          <div className="consent-modal-card scroll-fade-effect-y" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
             {/* Modal Header */}
             <div className="consent-modal-header">
               <div className="consent-modal-header-info">

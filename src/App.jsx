@@ -18,7 +18,7 @@ import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
 import { haptic } from './utils/haptic';
-import { initAnchorScrollListener } from './utils/smoothScroll';
+import { initSmoothScroll, initAnchorScrollListener } from './utils/smoothScroll';
 
 export default function App() {
   // Theme & Appearance State
@@ -136,6 +136,22 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleCopyEmail, theme, showToast, handleThemeChange]);
+
+  // Initialize Lenis Smooth Scrolling (ossium.in inertial scroll engine)
+  useEffect(() => {
+    const cleanup = initSmoothScroll();
+    return () => cleanup?.();
+  }, []);
+
+  // Pause Lenis smooth scroll while blocking modal dialogs are open
+  useEffect(() => {
+    const isModalOpen = Boolean(selectedCaseStudy) || isConsentOpen || isCommandOpen;
+    if (isModalOpen) {
+      window.lenis?.stop();
+    } else {
+      window.lenis?.start();
+    }
+  }, [selectedCaseStudy, isConsentOpen, isCommandOpen]);
 
   // Global Anchor Smooth Scroll Interceptor
   useEffect(() => {

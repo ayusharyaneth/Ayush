@@ -32,6 +32,7 @@ export default function CaseStudyModal({ project, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent
         style={{
           width: '100%',
           maxWidth: '720px',
