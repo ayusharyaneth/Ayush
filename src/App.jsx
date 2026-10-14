@@ -48,7 +48,7 @@ export default function App() {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path === '/support' || hash === '#support') {
+      if (path === '/support' || hash === '#support' || hash === '#/support') {
         return 'support';
       }
     }
@@ -60,10 +60,16 @@ export default function App() {
     const handleLocationChange = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path === '/support' || hash === '#support') {
+      if (path === '/support' || hash === '#support' || hash === '#/support') {
         setCurrentView('support');
       } else {
         setCurrentView('home');
+        if (hash && hash !== '#' && hash !== '#top') {
+          const sectionId = hash.replace(/^#/, '');
+          setTimeout(() => {
+            smoothScrollTo(sectionId);
+          }, 60);
+        }
       }
     };
 
@@ -81,11 +87,16 @@ export default function App() {
       window.history.pushState(null, '', '/support');
       window.scrollTo({ top: 0, behavior: 'instant' });
     } else {
-      window.history.pushState(null, '', targetSection ? `#${targetSection}` : '/');
-      if (targetSection) {
-        setTimeout(() => {
-          smoothScrollTo(targetSection);
-        }, 60);
+      const cleanSection = targetSection && targetSection !== 'top' ? targetSection : '';
+      const newUrl = cleanSection ? `/#${cleanSection}` : '/';
+      window.history.pushState(null, '', newUrl);
+
+      if (cleanSection) {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            smoothScrollTo(cleanSection);
+          }, 80);
+        });
       } else {
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
