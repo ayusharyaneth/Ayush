@@ -77,12 +77,7 @@ export default function ContactSection({
       </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div
-          ref={containerRef}
-          onMouseMove={handlePointerMove}
-          onMouseLeave={handlePointerLeave}
-          className="contact-editorial-card"
-        >
+        <div className="contact-editorial-card">
           {/* Architectural Blueprint Corner Crosshair Indicators */}
           <span className="contact-card-corner contact-corner-tl" aria-hidden="true">+</span>
           <span className="contact-card-corner contact-corner-tr" aria-hidden="true">+</span>

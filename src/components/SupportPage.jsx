@@ -150,15 +150,11 @@ export default function SupportPage({
             <span className="support-title-slash">//</span>
             <span>support</span>
           </h1>
-          <p className="support-description">
-            {supportData.description || "If my work has helped you, here's how to support it."}
-          </p>
         </div>
 
         {/* 1. Quick Support Section */}
         <section className="support-section">
           <h2 className="support-section-title">Quick Support</h2>
-          <p className="support-section-desc">Fast platforms for one-time support.</p>
 
           <div className="support-quick-grid">
             {quickPlatforms.map((platform) => {
@@ -202,7 +198,6 @@ export default function SupportPage({
         {/* 2. Crypto Direct Transfers Section */}
         <section className="support-section">
           <h2 className="support-section-title">Crypto</h2>
-          <p className="support-section-desc">Direct wallet transfers — pick a coin, then its network.</p>
 
           {/* Select Dropdowns Row */}
           <div className={`support-select-row ${availableNetworks.length > 0 ? 'support-select-row-networks' : ''}`}>

@@ -254,7 +254,6 @@ export const portfolioData = {
     }
   ],
   support: {
-    description: "If my work has helped you, here's how to support it.",
     quickSupport: [
       {
         label: "PayPal",
