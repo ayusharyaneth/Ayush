@@ -3,6 +3,7 @@ import { ArrowUp } from 'lucide-react';
 import { GithubIcon, TwitterIcon, LinkedinIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { smoothScrollTo } from '../utils/smoothScroll';
+import { ScrollReveal } from './ScrollReveal';
 import './Footer.css';
 
 export default function Footer({ personal = {}, socials = [] }) {
@@ -24,7 +25,8 @@ export default function Footer({ personal = {}, socials = [] }) {
   return (
     <footer className="footer-section">
       <div className="container">
-        <div className="footer-card">
+        <ScrollReveal variant="fade-up" distance={16} duration={0.6}>
+          <div className="footer-card">
           {/* Top Primary Row: Branding & Social Pills */}
           <div className="footer-primary-row">
             {/* Left Column: Attribution */}
@@ -97,7 +99,8 @@ export default function Footer({ personal = {}, socials = [] }) {
             </div>
           </div>
         </div>
-      </div>
-    </footer>
-  );
+      </ScrollReveal>
+    </div>
+  </footer>
+);
 }
