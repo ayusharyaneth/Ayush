@@ -76,7 +76,7 @@ export function ScrollReveal({
       className={className}
       style={{
         ...style,
-        willChange: 'opacity, transform, filter'
+        willChange: 'opacity, transform'
       }}
       {...props}
     >
@@ -187,7 +187,7 @@ export function ScrollRevealItem({
       className={className}
       style={{
         ...style,
-        willChange: 'opacity, transform, filter'
+        willChange: 'opacity, transform'
       }}
       {...props}
     >
