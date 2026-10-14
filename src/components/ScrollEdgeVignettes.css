@@ -9,24 +9,36 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 72px;
   z-index: 75; /* Sits below desktop navbar (z-index: 80) and mobile nav (z-index: 990) */
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
 
   /* Progressive Backdrop Blur */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-  /* Masked gradient so blur softly fades into content */
-  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 100%);
+  /* Multi-stop feathered gradient mask so blur dissolves seamlessly into content */
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 30%,
+    rgba(0, 0, 0, 0.4) 65%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 30%,
+    rgba(0, 0, 0, 0.4) 65%,
+    transparent 100%
+  );
 
   /* Soft chromatic background gradient fallback */
   background: linear-gradient(to bottom, var(--bg-primary) 0%, transparent 100%);
 
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
 }
 
@@ -36,24 +48,36 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 72px;
   z-index: 75; /* Sits below mobile nav dock (z-index: 990) and modals (z-index: 1000+) */
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
 
   /* Progressive Backdrop Blur */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-  /* Masked gradient so blur softly fades into content */
-  mask-image: linear-gradient(to top, black 0%, black 25%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to top, black 0%, black 25%, transparent 100%);
+  /* Multi-stop feathered gradient mask so blur dissolves seamlessly into content */
+  mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 30%,
+    rgba(0, 0, 0, 0.4) 65%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 30%,
+    rgba(0, 0, 0, 0.4) 65%,
+    transparent 100%
+  );
 
   /* Soft chromatic background gradient fallback */
   background: linear-gradient(to top, var(--bg-primary) 0%, transparent 100%);
 
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
 }
 
@@ -66,3 +90,4 @@
     transition: none !important;
   }
 }
+

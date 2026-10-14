@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './ScrollEdgeVignettes.css';
 
 /**
@@ -11,10 +11,11 @@ import './ScrollEdgeVignettes.css';
  * - Bottom blur: Softly dissolves incoming content at the bottom of the viewport;
  *   smoothly fades away as the user reaches the footer so final content remains razor-sharp.
  * - Always pointer-events: none and sits beneath navigation controls (z-index: 75).
+ * - Directly updates DOM styles inside requestAnimationFrame to guarantee smooth 60fps/120fps scrolling.
  */
 export default function ScrollEdgeVignettes() {
-  const [topOpacity, setTopOpacity] = useState(0);
-  const [bottomOpacity, setBottomOpacity] = useState(0);
+  const topRef = useRef(null);
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     let ticking = false;
@@ -50,8 +51,12 @@ export default function ScrollEdgeVignettes() {
         }
       }
 
-      setTopOpacity(Number(nextTopOpacity.toFixed(3)));
-      setBottomOpacity(Number(nextBottomOpacity.toFixed(3)));
+      if (topRef.current) {
+        topRef.current.style.opacity = nextTopOpacity.toFixed(3);
+      }
+      if (bottomRef.current) {
+        bottomRef.current.style.opacity = nextBottomOpacity.toFixed(3);
+      }
       ticking = false;
     };
 
@@ -76,15 +81,17 @@ export default function ScrollEdgeVignettes() {
     <>
       {/* Top Edge Subtle Blur & Soft Fade */}
       <div
+        ref={topRef}
         className="scroll-vignette-top"
-        style={{ opacity: topOpacity }}
+        style={{ opacity: 0 }}
         aria-hidden="true"
       />
 
       {/* Bottom Edge Subtle Blur & Soft Fade */}
       <div
+        ref={bottomRef}
         className="scroll-vignette-bottom"
-        style={{ opacity: bottomOpacity }}
+        style={{ opacity: 0 }}
         aria-hidden="true"
       />
     </>

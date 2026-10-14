@@ -180,3 +180,39 @@ export function smoothScrollTo(target, options = {}) {
     activeAnimationId = requestAnimationFrame(step);
   });
 }
+
+/**
+ * Attaches a delegated click handler for in-page anchor links (e.g. <a href="#work">).
+ * Ensures smooth, unified scrolling while preserving browser history and avoiding jarring jumps.
+ */
+export function initAnchorScrollListener() {
+  if (typeof window === 'undefined') return () => {};
+
+  const handleClick = (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+      return;
+    }
+
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#' || href === '#!') return;
+
+    const targetId = href.slice(1);
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement && targetId !== 'top') return;
+
+    e.preventDefault();
+    smoothScrollTo(targetId, {
+      onComplete: () => {
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, '', href);
+        }
+      }
+    });
+  };
+
+  document.addEventListener('click', handleClick);
+  return () => document.removeEventListener('click', handleClick);
+}
