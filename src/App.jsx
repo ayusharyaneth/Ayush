@@ -84,7 +84,7 @@ export default function App() {
       // handled
     }
     sound.playSuccess();
-    showToast(`Copied ${emailToCopy} to clipboard!`, 'copy');
+    showToast('Copied', 'copy');
   }, [showToast]);
 
   const handleBookCall = useCallback(() => {

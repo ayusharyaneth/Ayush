@@ -357,7 +357,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                         type="button"
                         onClick={handleCopyEmailAddress}
                         className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
-                        title={emailCopied ? 'Copied to clipboard!' : 'Copy email (or press C)'}
+                        title={emailCopied ? 'Copied' : 'Copy email (or press C)'}
                         aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}
                       >
                         {emailCopied ? (
