@@ -1,0 +1,224 @@
+/* Contact & Collaboration Section Redesign */
+
+.contact-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 18px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+@media (max-width: 860px) {
+  .contact-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* Individual Bento Cards */
+.contact-bento-card {
+  padding: 26px 28px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-bento-card:hover {
+  border-color: var(--border-glow);
+}
+
+/* Status Radar Badge */
+.status-radar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  font-size: 0.74rem;
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  width: fit-content;
+}
+
+.status-radar-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.status-radar-ping {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: #10b981;
+  opacity: 0.75;
+  animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radar-ping {
+  70%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* Clock Display */
+.clock-display-box {
+  margin: 18px 0;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.clock-digits {
+  font-family: var(--font-family-mono);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* Inquiry Chips Group */
+.inquiry-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 20px;
+}
+
+.inquiry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  font-size: 0.78rem;
+  font-family: var(--font-family-mono);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.inquiry-chip:hover {
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.inquiry-chip.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.16);
+}
+
+/* Glassmorphic Email Dispatch Bar */
+.contact-email-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-secondary);
+  transition: all 0.22s ease;
+}
+
+.contact-email-bar:hover {
+  border-color: var(--border-glow);
+}
+
+.contact-email-text {
+  font-family: var(--font-family-mono);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Copy Pill inside Bar */
+.contact-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.76rem;
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  text-decoration: none;
+}
+
+.contact-copy-btn {
+  background: var(--bg-muted);
+  border: 1px solid var(--border-secondary);
+  color: var(--text-muted);
+}
+
+.contact-copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.contact-send-btn {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #0b0f17;
+  font-weight: 700;
+}
+
+.contact-send-btn:hover {
+  background: #7dd3fc;
+  border-color: #7dd3fc;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 540px) {
+  .contact-email-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .contact-bar-actions {
+    justify-content: flex-end;
+  }
+}
