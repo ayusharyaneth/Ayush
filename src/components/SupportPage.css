@@ -484,56 +484,6 @@
   font-family: var(--font-family-serif), Georgia, serif;
 }
 
-/* 4. Bottom Navigation Buttons */
-.support-bottom-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  margin-top: 36px;
-  margin-bottom: 24px;
-}
-
-.support-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--bg-card);
-  color: var(--text-primary);
-  text-decoration: none;
-  border-radius: var(--radius-sm, 6px);
-  font-size: 0.88rem;
-  font-family: var(--font-family-sans), sans-serif;
-  font-weight: 500;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1.5px dashed var(--border-dashed);
-  box-shadow: var(--shadow-card);
-  cursor: pointer;
-}
-
-.support-nav-btn:hover {
-  border-color: var(--accent);
-  background: var(--accent-tint);
-  color: var(--text-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15), 0 0 16px var(--accent-glow);
-}
-
-.support-nav-btn .nav-arrow {
-  transition: transform 0.25s ease;
-  color: var(--accent);
-}
-
-.support-nav-btn:hover .nav-arrow-left {
-  transform: translateX(-4px);
-}
-
-.support-nav-btn:hover .nav-arrow-right {
-  transform: translateX(4px);
-}
-
 /* Responsive Adaptation */
 @media (max-width: 700px) {
   .support-layout {
@@ -548,24 +498,9 @@
   .support-select-row-networks {
     grid-template-columns: 1fr;
   }
-
-  .support-nav-btn {
-    padding: 7px 14px;
-    font-size: 0.82rem;
-  }
 }
 
 @media (max-width: 480px) {
-  .support-bottom-nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .support-nav-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
   .support-address-row {
     flex-direction: column;
     align-items: flex-start;
