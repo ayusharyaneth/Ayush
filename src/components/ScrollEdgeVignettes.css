@@ -40,6 +40,8 @@
 
   transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* Bottom Edge Vignette */
@@ -79,6 +81,8 @@
 
   transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 /* Respect user's reduced motion preference */

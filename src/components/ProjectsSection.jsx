@@ -235,6 +235,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                           alt={project.title}
                           className="project-card-img"
                           loading="lazy"
+                          decoding="async"
                         />
                         <div className="project-card-img-gradient" />
 
@@ -310,6 +311,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>

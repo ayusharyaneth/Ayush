@@ -92,6 +92,7 @@ export default function CaseStudyModal({ project, onClose }) {
           <img
             src={project.image}
             alt={project.title}
+            decoding="async"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>

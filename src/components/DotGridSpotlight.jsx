@@ -47,6 +47,7 @@ export default function DotGridSpotlight({
     let width = 0;
     let height = 0;
     let renderFrameId = null;
+    let offscreenCanvas = null;
 
     const draw = () => {
       renderFrameId = null;
@@ -54,52 +55,46 @@ export default function DotGridSpotlight({
 
       ctx.clearRect(0, 0, width, height);
 
-      const offsetX = (width % spacing) / 2;
-      const offsetY = (height % spacing) / 2;
+      // Blit pre-rendered static base dots in a single instant GPU pass
+      if (offscreenCanvas) {
+        ctx.drawImage(offscreenCanvas, 0, 0, width, height);
+      }
 
       const mouseX = mouse.current.x;
       const mouseY = mouse.current.y;
       const isMouseActive = mouse.current.isActive;
-      const radiusSq = interactionRadius * interactionRadius;
 
-      // 1. Single-pass batch for ALL inactive base dots (1 GPU draw call!)
-      ctx.beginPath();
-      const activeDots = [];
+      // Localized spotlight dots: only calculate for the ~12 dots near the cursor
+      if (isMouseActive) {
+        const offsetX = (width % spacing) / 2;
+        const offsetY = (height % spacing) / 2;
+        const radiusSq = interactionRadius * interactionRadius;
 
-      for (let x = offsetX; x <= width; x += spacing) {
-        for (let y = offsetY; y <= height; y += spacing) {
-          if (isMouseActive) {
+        const startX = Math.max(offsetX, Math.floor((mouseX - interactionRadius - offsetX) / spacing) * spacing + offsetX);
+        const endX = Math.min(width, Math.ceil((mouseX + interactionRadius - offsetX) / spacing) * spacing + offsetX);
+        const startY = Math.max(offsetY, Math.floor((mouseY - interactionRadius - offsetY) / spacing) * spacing + offsetY);
+        const endY = Math.min(height, Math.ceil((mouseY + interactionRadius - offsetY) / spacing) * spacing + offsetY);
+
+        for (let x = startX; x <= endX; x += spacing) {
+          for (let y = startY; y <= endY; y += spacing) {
             const dx = x - mouseX;
             const dy = y - mouseY;
             const distSq = dx * dx + dy * dy;
             if (distSq < radiusSq) {
-              activeDots.push({ x, y, dist: Math.sqrt(distSq) });
-              continue;
+              const dist = Math.sqrt(distSq);
+              const factor = 1 - dist / interactionRadius;
+              const currentRadius = baseRadius + (activeRadius - baseRadius) * factor;
+              const currentAlpha = activeMinAlpha + (activeMaxAlpha - activeMinAlpha) * factor;
+
+              ctx.save();
+              ctx.globalAlpha = currentAlpha;
+              ctx.beginPath();
+              ctx.arc(x, y, currentRadius, 0, Math.PI * 2);
+              ctx.fillStyle = resolvedActiveDotColor;
+              ctx.fill();
+              ctx.restore();
             }
           }
-          ctx.moveTo(x + baseRadius, y);
-          ctx.arc(x, y, baseRadius, 0, Math.PI * 2);
-        }
-      }
-
-      ctx.fillStyle = resolvedDotColor;
-      ctx.fill();
-
-      // 2. Render only the small subset of active dots within the spotlight radius
-      if (isMouseActive && activeDots.length > 0) {
-        for (let i = 0; i < activeDots.length; i++) {
-          const { x, y, dist } = activeDots[i];
-          const factor = 1 - dist / interactionRadius;
-          const currentRadius = baseRadius + (activeRadius - baseRadius) * factor;
-          const currentAlpha = activeMinAlpha + (activeMaxAlpha - activeMinAlpha) * factor;
-
-          ctx.save();
-          ctx.globalAlpha = currentAlpha;
-          ctx.beginPath();
-          ctx.arc(x, y, currentRadius, 0, Math.PI * 2);
-          ctx.fillStyle = resolvedActiveDotColor;
-          ctx.fill();
-          ctx.restore();
         }
       }
     };
@@ -125,9 +120,34 @@ export default function DotGridSpotlight({
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
+      // Pre-render static dot grid once on resize onto an offscreen canvas
+      offscreenCanvas = document.createElement('canvas');
+      offscreenCanvas.width = canvas.width;
+      offscreenCanvas.height = canvas.height;
+      const offCtx = offscreenCanvas.getContext('2d');
+      if (offCtx) {
+        offCtx.setTransform(1, 0, 0, 1, 0, 0);
+        offCtx.scale(dpr, dpr);
+
+        const offsetX = (width % spacing) / 2;
+        const offsetY = (height % spacing) / 2;
+
+        offCtx.beginPath();
+        for (let x = offsetX; x <= width; x += spacing) {
+          for (let y = offsetY; y <= height; y += spacing) {
+            offCtx.moveTo(x + baseRadius, y);
+            offCtx.arc(x, y, baseRadius, 0, Math.PI * 2);
+          }
+        }
+        offCtx.fillStyle = resolvedDotColor;
+        offCtx.fill();
+      }
+
       draw();
       canvas.dataset.ready = 'true';
     };
+
+    const hasHover = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover)').matches;
 
     const handlePointerMove = (e) => {
       mouse.current = {
@@ -143,15 +163,19 @@ export default function DotGridSpotlight({
       requestDraw();
     };
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
-    window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+    if (hasHover) {
+      window.addEventListener('pointermove', handlePointerMove, { passive: true });
+      window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+    }
     window.addEventListener('resize', resizeCanvas, { passive: true });
 
     resizeCanvas();
 
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerleave', handlePointerLeave);
+      if (hasHover) {
+        window.removeEventListener('pointermove', handlePointerMove);
+        window.removeEventListener('pointerleave', handlePointerLeave);
+      }
       window.removeEventListener('resize', resizeCanvas);
       if (renderFrameId !== null) cancelAnimationFrame(renderFrameId);
     };

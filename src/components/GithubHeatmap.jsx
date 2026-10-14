@@ -17,6 +17,7 @@ export default function GithubHeatmap({ style = {} }) {
       return x - Math.floor(x);
     };
 
+    const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let totalCommits = 0;
 
     for (let w = totalWeeks - 1; w >= 0; w--) {
@@ -50,7 +51,7 @@ export default function GithubHeatmap({ style = {} }) {
         totalCommits += count;
 
         days.push({
-          date: cellDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          date: `${MONTH_NAMES[cellDate.getMonth()]} ${cellDate.getDate()}, ${cellDate.getFullYear()}`,
           count,
           level
         });

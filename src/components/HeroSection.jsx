@@ -174,6 +174,9 @@ export default function HeroSection({ personal, onCopyEmail }) {
                 {/* Photo 1 (Default / Opening Pic) */}
                 <img
                   src={avatarPhotos[0]}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = 'https://i.ibb.co/pB7wxbjb/bot-pfp-silver-star.png';
@@ -192,6 +195,8 @@ export default function HeroSection({ personal, onCopyEmail }) {
                 {/* Photo 2 (Secondary / Clicked Pic) */}
                 <img
                   src={avatarPhotos[1]}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
                     e.currentTarget.src = 'https://i.ibb.co/RGszBkXG/bot-pfp-warm-pebble.png';
