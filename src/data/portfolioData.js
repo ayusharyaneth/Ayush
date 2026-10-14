@@ -29,7 +29,7 @@ export const portfolioData = {
         company: "@Quaric",
         url: "https://quaric.com"
       },
-      location: "Ho Chi Minh City, Viet Nam",
+      location: "Uttarakhand, India",
       email: "eth@ayusharyan.in",
       phone: "+84 777 888 148",
       phoneTel: "+84777888148",

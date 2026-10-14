@@ -73,7 +73,7 @@ export default function HeroSection({ personal, onCopyEmail }) {
       company: '@Quaric',
       url: 'https://quaric.com'
     },
-    location: 'Ho Chi Minh City, Viet Nam',
+    location: 'Uttarakhand, India',
     email: 'eth@ayusharyan.in',
     socials: {
       twitter: 'https://x.com',
