@@ -38,7 +38,7 @@ export const portfolioData = {
         twitter: "https://x.com/ayusharyaneth",
         github: "https://github.com/ayusharyaneth/",
         linkedin: "https://www.linkedin.com/in/theayusharyan",
-        buymeacoffee: "https://buymeacoffee.com/ayusharyan",
+        buymeacoffee: "https://buymeacoffee.com/ayusharyaneth",
         producthunt: "https://www.producthunt.com/@ayusharyan"
       }
     },
@@ -263,7 +263,7 @@ export const portfolioData = {
       },
       {
         label: "Buy Me a Coffee",
-        url: "https://buymeacoffee.com/ayusharyan",
+        url: "https://buymeacoffee.com/ayusharyaneth",
         subtext: "Fuel my late-night builds"
       },
       {
