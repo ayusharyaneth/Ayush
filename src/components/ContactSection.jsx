@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, Copy, Check, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
 import {
   TwitterIcon,
   GithubIcon,
@@ -152,14 +152,14 @@ export default function ContactSection({
                   ? {}
                   : {
                       x: pointerOffset.x * 12,
-                      y: pointerOffset.y * 12 + Math.sin(Date.now() / 1000) * 4,
+                      y: [pointerOffset.y * 12 - 5, pointerOffset.y * 12 + 5, pointerOffset.y * 12 - 5],
                       rotate: [7, 9, 7]
                     }
               }
               transition={{
                 rotate: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' },
-                x: { duration: 0.25, ease: 'easeOut' },
-                y: { duration: 0.25, ease: 'easeOut' }
+                y: { duration: 4.8, repeat: Infinity, ease: 'easeInOut' },
+                x: { duration: 0.25, ease: 'easeOut' }
               }}
               className="contact-sticker sticker-ticket-admit"
               title="Click to interact"
