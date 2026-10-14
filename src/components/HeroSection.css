@@ -233,21 +233,29 @@
   }
 }
 
+/* Hide handwritten "Connect with Me" only in mobile view */
+@media (max-width: 768px) {
+  .chanh-outside-connect {
+    display: none !important;
+  }
+
+  .chanh-top-strip {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
 @media (max-width: 640px) {
   .hero-card {
     padding: 24px 16px !important;
   }
 
   .chanh-top-strip {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
     padding: 10px 14px;
-  }
-
-  .chanh-outside-connect {
-    margin-right: 0;
-    margin-bottom: 4px;
   }
   
   .chanh-info-grid {
