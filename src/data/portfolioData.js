@@ -152,6 +152,26 @@ export const portfolioData = {
         solution: "Built headless primitives with 100% WAI-ARIA compliance, CSS token injection, and spring-based physics micro-interactions.",
         outcome: "Vercel OSS Program Grant winner, merged into production apps by thousands of engineers."
       }
+    },
+    {
+      id: "veloce-engine",
+      category: "Systems",
+      eyebrow: "04 / Core Infrastructure",
+      title: "Veloce Engine",
+      tagline: "Ultra-Fast LSM In-Memory Key-Value Storage",
+      description:
+        "A high-throughput log-structured merge-tree database engine compiled to native binaries and WebAssembly. Delivers sub-millisecond p99 latencies for real-time multiplayer state synchronization.",
+      metrics: "140k Ops/sec · Sub-millisecond p99 Latency",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      featured: true,
+      demoUrl: "https://veloce.ayusharyan.dev",
+      githubUrl: "https://github.com/ayusharyan/veloce-engine",
+      technologies: ["Rust", "Tokio", "WebAssembly", "gRPC", "SIMD", "C++"],
+      caseStudy: {
+        problem: "Traditional Redis setups introduce memory fragmentation and network overhead for edge microservices.",
+        solution: "Wrote lock-free concurrency primitives using Rust atomics with zero-copy deserialization and persistent WAL journal.",
+        outcome: "Published peer-reviewed benchmarks showing a 3.4x throughput increase over standard embedded key-value stores."
+      }
     }
   ],
 
