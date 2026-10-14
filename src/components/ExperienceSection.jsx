@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Briefcase, Building2, MapPin, ChevronDown, ChevronUp, Sparkles, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import ChevronsUpDownIcon from './ChevronsUpDownIcon';
 import GithubHeatmap from './GithubHeatmap';
 import { sound } from '../utils/soundEffects';
+import { haptic } from '../utils/haptic';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function ExperienceSection({ experience = [] }) {
-  const [expandedIndex, setExpandedIndex] = useState(0);
+  const [expandedIndex, setExpandedIndex] = useState(-1);
 
   const toggleExpand = (index) => {
     sound.playClick();
+    haptic(35);
     setExpandedIndex(expandedIndex === index ? -1 : index);
   };
 

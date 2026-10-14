@@ -181,5 +181,4 @@ export function ProductHuntIcon({ size = 16, className = '', style = {}, ...prop
     </svg>
   );
 }
-
-
+export { ChevronsUpDownIcon } from './ChevronsUpDownIcon';
