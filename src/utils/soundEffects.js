@@ -37,14 +37,17 @@ class SoundEngine {
       const ctx = this.init();
       if (!ctx) return;
       const t = ctx.currentTime;
-      const n = ctx.createBufferSource();
-      const a = ctx.createBuffer(1, Math.floor(0.08 * ctx.sampleRate), ctx.sampleRate);
-      const ch = a.getChannelData(0);
-      for (let i = 0; i < ch.length; i++) {
-        const s = Math.sin((i / ch.length) * Math.PI);
-        ch[i] = (2 * Math.random() - 1) * s;
+      if (!this.whooshBuffer) {
+        const a = ctx.createBuffer(1, Math.floor(0.08 * ctx.sampleRate), ctx.sampleRate);
+        const ch = a.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) {
+          const s = Math.sin((i / ch.length) * Math.PI);
+          ch[i] = (2 * Math.random() - 1) * s;
+        }
+        this.whooshBuffer = a;
       }
-      n.buffer = a;
+      const n = ctx.createBufferSource();
+      n.buffer = this.whooshBuffer;
       const o = ctx.createBiquadFilter();
       o.type = 'bandpass';
       o.frequency.setValueAtTime(4000, t);
@@ -91,13 +94,16 @@ class SoundEngine {
       const ctx = this.init();
       if (!ctx) return;
       const t = ctx.currentTime;
-      const n = ctx.createBufferSource();
-      const a = ctx.createBuffer(1, Math.floor(0.008 * ctx.sampleRate), ctx.sampleRate);
-      const ch = a.getChannelData(0);
-      for (let i = 0; i < ch.length; i++) {
-        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 50);
+      if (!this.clickBuffer) {
+        const a = ctx.createBuffer(1, Math.floor(0.008 * ctx.sampleRate), ctx.sampleRate);
+        const ch = a.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) {
+          ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 50);
+        }
+        this.clickBuffer = a;
       }
-      n.buffer = a;
+      const n = ctx.createBufferSource();
+      n.buffer = this.clickBuffer;
       const o = ctx.createBiquadFilter();
       o.type = 'bandpass';
       o.frequency.value = 4000 + 1000 * Math.random();
@@ -118,13 +124,16 @@ class SoundEngine {
       const ctx = this.init();
       if (!ctx) return;
       const t = ctx.currentTime;
-      const n = ctx.createBufferSource();
-      const a = ctx.createBuffer(1, Math.floor(0.004 * ctx.sampleRate), ctx.sampleRate);
-      const ch = a.getChannelData(0);
-      for (let i = 0; i < ch.length; i++) {
-        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 20);
+      if (!this.tickBuffer) {
+        const a = ctx.createBuffer(1, Math.floor(0.004 * ctx.sampleRate), ctx.sampleRate);
+        const ch = a.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) {
+          ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 20);
+        }
+        this.tickBuffer = a;
       }
-      n.buffer = a;
+      const n = ctx.createBufferSource();
+      n.buffer = this.tickBuffer;
       const o = ctx.createBiquadFilter();
       o.type = 'highpass';
       o.frequency.value = 3000;
@@ -149,13 +158,16 @@ class SoundEngine {
       const ctx = this.init();
       if (!ctx) return;
       const t = ctx.currentTime;
-      const n = ctx.createBufferSource();
-      const a = ctx.createBuffer(1, Math.floor(0.012 * ctx.sampleRate), ctx.sampleRate);
-      const ch = a.getChannelData(0);
-      for (let i = 0; i < ch.length; i++) {
-        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 80);
+      if (!this.toggleBuffer) {
+        const a = ctx.createBuffer(1, Math.floor(0.012 * ctx.sampleRate), ctx.sampleRate);
+        const ch = a.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) {
+          ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 80);
+        }
+        this.toggleBuffer = a;
       }
-      n.buffer = a;
+      const n = ctx.createBufferSource();
+      n.buffer = this.toggleBuffer;
       const o = ctx.createBiquadFilter();
       o.type = 'bandpass';
       o.frequency.value = 2500;

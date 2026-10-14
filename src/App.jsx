@@ -18,8 +18,6 @@ const SettingsBar = lazy(() => import('./components/SettingsBar'));
 const CommandPalette = lazy(() => import('./components/CommandPalette'));
 const CaseStudyModal = lazy(() => import('./components/CaseStudyModal'));
 const ConsentManager = lazy(() => import('./components/ConsentManager'));
-import GithubHeatmap from './components/GithubHeatmap';
-import { ScrollReveal } from './components/ScrollReveal';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -176,6 +174,25 @@ export default function App() {
     return () => unbind();
   }, []);
 
+  // Idle prefetch overlay modals for instant response on user interaction
+  useEffect(() => {
+    const prefetchModals = () => {
+      import('./components/CommandPalette');
+      import('./components/CaseStudyModal');
+      import('./components/SettingsBar');
+      import('./components/ConsentManager');
+    };
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        const id = window.requestIdleCallback(prefetchModals, { timeout: 3000 });
+        return () => window.cancelIdleCallback(id);
+      } else {
+        const timer = setTimeout(prefetchModals, 2000);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
+
   return (
     <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative' }}>
       {/* Interactive Dot Grid Spotlight Canvas (Chanh Dai) */}
@@ -200,19 +217,23 @@ export default function App() {
       <div className="navbar-spacer" style={{ height: 'var(--header-height)' }} aria-hidden="true" />
 
       {/* Floating Interface Customizer Panel (Mukund Kapoor style) */}
-      <SettingsBar
-        theme={theme}
-        setTheme={handleThemeChange}
-        font={font}
-        setFont={setFont}
-        palette={palette}
-        setPalette={setPalette}
-        soundMuted={soundMuted}
-        setSoundMuted={setSoundMuted}
-        isOpen={isSettingsOpen}
-        setIsOpen={setIsSettingsOpen}
-        onOpenConsent={() => setIsConsentOpen(true)}
-      />
+      <Suspense fallback={null}>
+        {isSettingsOpen && (
+          <SettingsBar
+            theme={theme}
+            setTheme={handleThemeChange}
+            font={font}
+            setFont={setFont}
+            palette={palette}
+            setPalette={setPalette}
+            soundMuted={soundMuted}
+            setSoundMuted={setSoundMuted}
+            isOpen={isSettingsOpen}
+            setIsOpen={setIsSettingsOpen}
+            onOpenConsent={() => setIsConsentOpen(true)}
+          />
+        )}
+      </Suspense>
 
       {/* Main Content Assembly */}
       <main style={{ position: 'relative', zIndex: 1 }}>
@@ -254,32 +275,36 @@ export default function App() {
         onOpenConsent={() => setIsConsentOpen(true)}
       />
 
-      {/* Command Palette Modal (⌘K) */}
-      <CommandPalette
-        isOpen={isCommandOpen}
-        setIsOpen={setIsCommandOpen}
-        onCopyEmail={handleCopyEmail}
-        theme={theme}
-        setTheme={handleThemeChange}
-        soundMuted={soundMuted}
-        setSoundMuted={setSoundMuted}
-        projects={portfolioData.projects}
-        onOpenCaseStudy={(project) => setSelectedCaseStudy(project)}
-        onOpenConsent={() => setIsConsentOpen(true)}
-      />
+      {/* Secondary Modals & Overlays Wrapped in Suspense */}
+      <Suspense fallback={null}>
+        {isCommandOpen && (
+          <CommandPalette
+            isOpen={isCommandOpen}
+            setIsOpen={setIsCommandOpen}
+            onCopyEmail={handleCopyEmail}
+            theme={theme}
+            setTheme={handleThemeChange}
+            soundMuted={soundMuted}
+            setSoundMuted={setSoundMuted}
+            projects={portfolioData.projects}
+            onOpenCaseStudy={(project) => setSelectedCaseStudy(project)}
+            onOpenConsent={() => setIsConsentOpen(true)}
+          />
+        )}
 
-      {/* Case Study Deep Dive Modal */}
-      <CaseStudyModal
-        project={selectedCaseStudy}
-        onClose={() => setSelectedCaseStudy(null)}
-      />
+        {selectedCaseStudy && (
+          <CaseStudyModal
+            project={selectedCaseStudy}
+            onClose={() => setSelectedCaseStudy(null)}
+          />
+        )}
 
-      {/* Cookie & Telemetry Consent Manager (c15t / Chanh Dai) */}
-      <ConsentManager
-        isOpen={isConsentOpen}
-        setIsOpen={setIsConsentOpen}
-        onShowToast={showToast}
-      />
+        <ConsentManager
+          isOpen={isConsentOpen}
+          setIsOpen={setIsConsentOpen}
+          onShowToast={showToast}
+        />
+      </Suspense>
 
       {/* Instant Toast Notification */}
       <Toast toast={toast} onClose={() => setToast(null)} />
