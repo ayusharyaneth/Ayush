@@ -11,8 +11,6 @@ import {
   TwitterIcon,
   GithubIcon,
   LinkedinIcon,
-  FigmaIcon,
-  DribbbleIcon,
   BuyMeACoffeeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
@@ -100,8 +98,6 @@ export default function HeroSection({ personal, onCopyEmail }) {
       twitter: 'https://x.com',
       github: 'https://github.com',
       linkedin: 'https://linkedin.com',
-      figma: 'https://figma.com/@ayusharyan',
-      dribbble: 'https://dribbble.com/ayusharyan',
       buymeacoffee: 'https://buymeacoffee.com/ayusharyan'
     }
   };
@@ -110,8 +106,6 @@ export default function HeroSection({ personal, onCopyEmail }) {
     { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://linkedin.com' },
-    { name: 'Figma', icon: FigmaIcon, url: chanh.socials?.figma || 'https://figma.com/@ayusharyan' },
-    { name: 'Dribbble', icon: DribbbleIcon, url: chanh.socials?.dribbble || 'https://dribbble.com/ayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
   ];
 

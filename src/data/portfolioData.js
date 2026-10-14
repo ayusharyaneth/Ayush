@@ -38,8 +38,6 @@ export const portfolioData = {
         twitter: "https://x.com",
         github: "https://github.com",
         linkedin: "https://linkedin.com",
-        figma: "https://figma.com/@ayusharyan",
-        dribbble: "https://dribbble.com/ayusharyan",
         buymeacoffee: "https://buymeacoffee.com/ayusharyan",
         producthunt: "https://www.producthunt.com/@ayusharyan"
       }

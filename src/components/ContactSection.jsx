@@ -5,7 +5,6 @@ import {
   TwitterIcon,
   GithubIcon,
   LinkedinIcon,
-  FigmaIcon,
   BuyMeACoffeeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
@@ -78,7 +77,6 @@ export default function ContactSection({
     { name: 'X / Twitter', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com' },
     { name: 'GitHub', icon: GithubIcon, url: personal?.chanhCard?.socials?.github || 'https://github.com' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: personal?.chanhCard?.socials?.linkedin || 'https://linkedin.com' },
-    { name: 'Figma', icon: FigmaIcon, url: personal?.chanhCard?.socials?.figma || 'https://figma.com/@ayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: personal?.chanhCard?.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
   ];
 
