@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BadgeCheck,
   Copy,
@@ -29,6 +29,28 @@ export default function HeroSection({ personal, onCopyEmail }) {
   ];
 
   const [emailCopied, setEmailCopied] = useState(false);
+
+  // Blueprint hover highlight & mouse spotlight tracking (manishx.in reference)
+  const heroCardRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleCardMouseMove = (e) => {
+    if (!heroCardRef.current) return;
+    const rect = heroCardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  const handleCardMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleCardMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const handleCopyEmailAddress = (e) => {
     if (e) {
@@ -103,16 +125,42 @@ export default function HeroSection({ personal, onCopyEmail }) {
       }}
     >
       <div className="container">
-        {/* Main Hero Card with fluid staggered entry */}
+        {/* Main Hero Card with architectural blueprint dashed border & hover highlight (manishx.in reference) */}
         <ScrollRevealGroup
           as="div"
-          className="screen-box hero-card"
+          ref={heroCardRef}
+          onMouseMove={handleCardMouseMove}
+          onMouseEnter={handleCardMouseEnter}
+          onMouseLeave={handleCardMouseLeave}
+          className={`screen-box hero-card blueprint-hero-card ${isHovered ? 'is-hovered' : ''}`}
           style={{
             padding: '36px 32px'
           }}
           stagger={0.08}
           delayChildren={0.04}
         >
+          {/* Architectural Blueprint Dashed Border Lines with Crosshair Overshoots */}
+          <div className="blueprint-border-line blueprint-line-top" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-bottom" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-left" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-right" aria-hidden="true" />
+
+          {/* Corner Crosshair (+) Markers */}
+          <span className="blueprint-corner blueprint-corner-tl" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-tr" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-bl" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-br" aria-hidden="true">+</span>
+
+          {/* Interactive Mouse Spotlight Radial Glow */}
+          <div
+            className="blueprint-spotlight"
+            style={{
+              opacity: isHovered ? 1 : 0,
+              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, var(--hero-spotlight, rgba(255,255,255,0.04)), transparent 65%)`
+            }}
+            aria-hidden="true"
+          />
+
           {/* Profile Bar with Dual Avatar Reveal */}
           <ScrollRevealItem distance={16}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
