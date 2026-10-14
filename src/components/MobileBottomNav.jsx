@@ -24,12 +24,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
   const scrollEndTimerRef = useRef(null);
   const menuContainerRef = useRef(null);
 
-  // Auto-close menu if copy action ducks the dock
-  useEffect(() => {
-    if (isCopiedActive && isOpen) {
-      setIsOpen(false);
-    }
-  }, [isCopiedActive, isOpen]);
+  const isMenuOpen = isOpen && !isCopiedActive;
 
   // Active section display label
   const activeItem = NAV_ITEMS.find((item) => item.id === activeSection) || NAV_ITEMS[0];
@@ -118,7 +113,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
 
   // Dismiss menu on outside tap or touch
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isMenuOpen) return;
 
     const handleOutsideClick = (e) => {
       if (menuContainerRef.current && !menuContainerRef.current.contains(e.target)) {
@@ -141,7 +136,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
       document.removeEventListener('touchstart', handleOutsideClick);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isMenuOpen]);
 
   // Scroll to section handler
   const handleSelectSection = useCallback((targetId) => {
@@ -203,7 +198,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
     <>
       {/* Backdrop overlay when menu is open */}
       <AnimatePresence>
-        {isOpen && (
+        {isMenuOpen && (
           <motion.div
             key="mobile-nav-backdrop"
             initial={{ opacity: 0 }}
@@ -225,7 +220,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
       >
         {/* Expandable Menu Panel (Centered directly above pill) */}
         <AnimatePresence>
-          {isOpen && (
+          {isMenuOpen && (
             <motion.div
               id="mobile-nav-panel"
               key="mobile-nav-panel"
@@ -326,7 +321,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
               <button
                 onClick={handleToggleMenu}
                 className="mobile-nav-trigger-btn"
-                aria-expanded={isOpen}
+                aria-expanded={isMenuOpen}
                 aria-controls="mobile-nav-panel"
                 aria-label={`Current section: ${activeItem.label}. Tap to open navigation menu.`}
               >
@@ -345,7 +340,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
 
                 <ChevronUp
                   size={14}
-                  className={`mobile-nav-chevron ${isOpen ? 'open' : ''}`}
+                  className={`mobile-nav-chevron ${isMenuOpen ? 'open' : ''}`}
                 />
               </button>
             </div>
