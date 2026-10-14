@@ -107,11 +107,6 @@ export default function App() {
     }, 2200);
   }, [showToast]);
 
-  const handleBookCall = useCallback(() => {
-    sound.playClick();
-    window.open(portfolioData.personal.calLink, '_blank');
-  }, []);
-
   // Global Keyboard Shortcuts Listener
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -245,12 +240,7 @@ export default function App() {
         <TheCollection collection={portfolioData.theCollection} />
 
         {/* Contact CTA */}
-        <ContactSection
-          personal={portfolioData.personal}
-          socials={portfolioData.socials}
-          onCopyEmail={handleCopyEmail}
-          onBookCall={handleBookCall}
-        />
+        <ContactSection />
       </main>
 
       {/* Footer & Signature */}
