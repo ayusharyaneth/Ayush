@@ -232,7 +232,19 @@ class SoundEngine {
       highOsc.stop(t + 0.45);
     } catch (_) {}
   }
+export const sound = new SoundEngine();
+
+// Auto-unlock AudioContext on first user gesture (pointerdown, keydown, touchstart)
+if (typeof window !== 'undefined') {
+  const unlock = () => {
+    sound.init();
+    window.removeEventListener('pointerdown', unlock);
+    window.removeEventListener('keydown', unlock);
+    window.removeEventListener('touchstart', unlock);
+  };
+  window.addEventListener('pointerdown', unlock, { once: true, passive: true });
+  window.addEventListener('keydown', unlock, { once: true, passive: true });
+  window.addEventListener('touchstart', unlock, { once: true, passive: true });
 }
 
-export const sound = new SoundEngine();
 

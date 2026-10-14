@@ -196,9 +196,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     <div
                       key={project.id}
                       className={`project-deck-card ${rotationClass} group`}
-                      onMouseEnter={() => sound.playWhoosh()}
+                      onMouseEnter={() => sound.playTick()}
                       onClick={() => {
-                        sound.playPop();
+                        sound.playClick();
                         onSelectProject(project);
                       }}
                       role="button"
@@ -207,7 +207,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
-                          sound.playPop();
+                          sound.playClick();
                           onSelectProject(project);
                         }
                       }}
@@ -301,9 +301,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   <div
                     key={project.id}
                     className="project-mobile-card group"
-                    onMouseEnter={() => sound.playWhoosh()}
+                    onMouseEnter={() => sound.playTick()}
                     onClick={() => {
-                      sound.playPop();
+                      sound.playClick();
                       onSelectProject(project);
                     }}
                     role="button"
@@ -339,9 +339,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               <div
                 key={project.id}
                 className="screen-box"
-                onMouseEnter={() => sound.playWhoosh()}
+                onMouseEnter={() => sound.playTick()}
                 onClick={() => {
-                  sound.playPop();
+                  sound.playClick();
                   onSelectProject(project);
                 }}
                 style={{
