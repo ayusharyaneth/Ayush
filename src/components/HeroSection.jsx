@@ -5,9 +5,7 @@ import {
   Check,
   Lightbulb,
   MapPin,
-  Mail,
-  Clock,
-  Phone
+  Mail
 } from 'lucide-react';
 import {
   TwitterIcon,
@@ -64,40 +62,6 @@ export default function HeroSection({ personal, onCopyEmail }) {
     setAvatarIndex((prev) => (prev + 1) % avatarPhotos.length);
   };
 
-  // Live ticking clock for Asia/Ho_Chi_Minh timezone as shown in reference
-  const [liveTime, setLiveTime] = useState(() => {
-    try {
-      return new Intl.DateTimeFormat('en-US', {
-        timeZone: 'Asia/Ho_Chi_Minh',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-      }).format(new Date());
-    } catch {
-      return '11:13 PM';
-    }
-  });
-
-  useEffect(() => {
-    const updateTime = () => {
-      try {
-        setLiveTime(
-          new Intl.DateTimeFormat('en-US', {
-            timeZone: 'Asia/Ho_Chi_Minh',
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-          }).format(new Date())
-        );
-      } catch {
-        // preserve current
-      }
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
   const chanh = personal?.chanhCard || {
     role1: {
       title: 'Design Engineer',
@@ -111,9 +75,6 @@ export default function HeroSection({ personal, onCopyEmail }) {
     },
     location: 'Ho Chi Minh City, Viet Nam',
     email: 'eth@ayusharyan.in',
-    phone: '+84 777 888 148',
-    phoneTel: '+84777888148',
-    timeComment: '// 1h ahead',
     socials: {
       twitter: 'https://x.com',
       github: 'https://github.com',
@@ -380,46 +341,14 @@ export default function HeroSection({ personal, onCopyEmail }) {
                   </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="chanh-grid-column right-col">
-                  <div className="chanh-grid-item">
-                    <span className="chanh-badge">
-                      <Clock size={13} />
-                    </span>
-                    <div className="chanh-item-text">
-                      <span>{liveTime}</span>
-                      <span style={{ color: 'var(--text-muted)' }}>{chanh.timeComment}</span>
-                    </div>
-                  </div>
-
-                  <div className="chanh-grid-item">
-                    <span className="chanh-badge">
-                      <Phone size={13} />
-                    </span>
-                    <div className="chanh-item-text">
-                      <a href={`tel:${chanh.phoneTel}`} className="chanh-link">
-                        {chanh.phone}
-                      </a>
-                    </div>
-                  </div>
+                {/* Right Column: About / Bio Text */}
+                <div className="chanh-grid-column right-col chanh-about-col">
+                  <p className="chanh-about-text">
+                    {personal.shortBio}
+                  </p>
                 </div>
               </div>
             </div>
-          </ScrollRevealItem>
-
-          {/* Bio Paragraph */}
-          <ScrollRevealItem distance={16}>
-            <p
-              style={{
-                fontSize: '0.92rem',
-                lineHeight: 1.65,
-                color: 'var(--text-secondary)',
-                marginBottom: 0,
-                maxWidth: '680px'
-              }}
-            >
-              {personal.shortBio}
-            </p>
           </ScrollRevealItem>
         </ScrollRevealGroup>
       </div>
