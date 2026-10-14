@@ -4,8 +4,7 @@ import {
   Layers,
   List,
   ArrowUpRight,
-  BookOpen,
-  Sparkles
+  BookOpen
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
@@ -40,15 +39,10 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   color: 'var(--accent)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.08em',
-                  fontWeight: 600,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
+                  fontWeight: 600
                 }}
               >
-                <span>01 / Selected Work</span>
-                <span style={{ opacity: 0.4 }}>•</span>
-                <span style={{ color: 'var(--text-muted)' }}>Deck of 3 Releases</span>
+                01 / Selected Work
               </div>
               <h2
                 style={{
@@ -73,22 +67,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               </h2>
             </div>
 
-            {/* View Mode Toggle & Interactive Hint */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div
-                className="desktop-hint"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '0.72rem',
-                  fontFamily: 'var(--font-family-mono)',
-                  color: 'var(--text-muted)'
-                }}
-              >
-                <Sparkles size={12} style={{ color: 'var(--accent)' }} />
-                <span>Hover card to inspect</span>
-              </div>
+            {/* View Mode Toggle */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
 
               <div
                 style={{
@@ -820,12 +800,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
-        }
-
-        @media (max-width: 767px) {
-          .desktop-hint {
-            display: none !important;
-          }
         }
       `}</style>
     </section>

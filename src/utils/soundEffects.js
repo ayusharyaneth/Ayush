@@ -232,6 +232,8 @@ class SoundEngine {
       highOsc.stop(t + 0.45);
     } catch (_) {}
   }
+}
+
 export const sound = new SoundEngine();
 
 // Auto-unlock AudioContext on first user gesture (pointerdown, keydown, touchstart)
