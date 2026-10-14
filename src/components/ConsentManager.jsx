@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Cookie, Sliders, X, Check, Lock, Info, Activity, Sparkles } from 'lucide-react';
+import { ShieldCheck, Cookie, X, Check, Lock, Activity, Sparkles } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 import './ConsentManager.css';
 

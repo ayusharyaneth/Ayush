@@ -23,7 +23,7 @@ import { haptic } from '../utils/haptic';
 import { ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 import './HeroSection.css';
 
-export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
+export default function HeroSection({ personal, onCopyEmail }) {
   // Avatar toggle / cycle state (Opening Pic vs Clicked Pic)
   const [avatarIndex, setAvatarIndex] = useState(0);
   const avatarPhotos = [

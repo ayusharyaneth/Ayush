@@ -9,11 +9,8 @@ import {
   FileText,
   Moon,
   Sun,
-  Palette,
   Volume2,
   VolumeX,
-  ExternalLink,
-  X,
   ShieldCheck
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
@@ -25,10 +22,6 @@ export default function CommandPalette({
   onCopyEmail,
   theme,
   setTheme,
-  font,
-  setFont,
-  palette,
-  setPalette,
   soundMuted,
   setSoundMuted,
   projects = [],

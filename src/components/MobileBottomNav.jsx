@@ -107,7 +107,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      clearTimeout(scrollEndTimerRef.current);
+      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
     };
   }, []);
 

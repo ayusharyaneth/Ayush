@@ -14,8 +14,6 @@ import './Navbar.css';
 export default function Navbar({
   theme,
   setTheme,
-  soundMuted,
-  setSoundMuted,
   onOpenCommand,
   onToggleSettings,
   isSettingsOpen
@@ -223,7 +221,7 @@ export default function Navbar({
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleUserScrollInterrupt);
       window.removeEventListener('touchmove', handleUserScrollInterrupt);
-      clearTimeout(scrollEndTimerRef.current);
+      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
       cancelSmoothScroll();
     };
   }, []);
