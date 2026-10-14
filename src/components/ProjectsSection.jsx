@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ExternalLink,
   LayoutGrid,
@@ -12,7 +12,23 @@ import { ScrollReveal } from './ScrollReveal';
 
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' (deck) | 'list'
+  const [hasManuallyToggled, setHasManuallyToggled] = useState(false);
+  const [viewMode, setViewMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? 'list' : 'grid';
+    }
+    return 'grid';
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!hasManuallyToggled && typeof window !== 'undefined') {
+        setViewMode(window.innerWidth < 768 ? 'list' : 'grid');
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [hasManuallyToggled]);
 
   const categories = ['All', 'Full-Stack', 'AI & ML', 'Systems', 'Open Source'];
 
@@ -92,6 +108,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                 <button
                   onClick={() => {
                     sound.playClick();
+                    setHasManuallyToggled(true);
                     setViewMode('grid');
                   }}
                   style={{
@@ -114,6 +131,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                 <button
                   onClick={() => {
                     sound.playClick();
+                    setHasManuallyToggled(true);
                     setViewMode('list');
                   }}
                   style={{
