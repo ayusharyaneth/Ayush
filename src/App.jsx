@@ -17,7 +17,6 @@ import { ScrollReveal } from './components/ScrollReveal';
 const SettingsBar = lazy(() => import('./components/SettingsBar'));
 const CommandPalette = lazy(() => import('./components/CommandPalette'));
 const CaseStudyModal = lazy(() => import('./components/CaseStudyModal'));
-const ConsentManager = lazy(() => import('./components/ConsentManager'));
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
@@ -38,7 +37,6 @@ export default function App() {
   // Modal & Drawer State
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isConsentOpen, setIsConsentOpen] = useState(false);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState(null);
   const [toast, setToast] = useState(null);
   const [isCopiedActive, setIsCopiedActive] = useState(false);
@@ -160,13 +158,13 @@ export default function App() {
 
   // Pause Lenis smooth scroll while blocking modal dialogs are open
   useEffect(() => {
-    const isModalOpen = Boolean(selectedCaseStudy) || isConsentOpen || isCommandOpen;
+    const isModalOpen = Boolean(selectedCaseStudy) || isCommandOpen;
     if (isModalOpen) {
       window.lenis?.stop();
     } else {
       window.lenis?.start();
     }
-  }, [selectedCaseStudy, isConsentOpen, isCommandOpen]);
+  }, [selectedCaseStudy, isCommandOpen]);
 
   // Global Anchor Smooth Scroll Interceptor
   useEffect(() => {
@@ -180,7 +178,6 @@ export default function App() {
       import('./components/CommandPalette');
       import('./components/CaseStudyModal');
       import('./components/SettingsBar');
-      import('./components/ConsentManager');
     };
     if (typeof window !== 'undefined') {
       if ('requestIdleCallback' in window) {
@@ -230,7 +227,6 @@ export default function App() {
             setSoundMuted={setSoundMuted}
             isOpen={isSettingsOpen}
             setIsOpen={setIsSettingsOpen}
-            onOpenConsent={() => setIsConsentOpen(true)}
           />
         )}
       </Suspense>
@@ -276,7 +272,6 @@ export default function App() {
       <Footer
         personal={portfolioData.personal}
         socials={portfolioData.socials}
-        onOpenConsent={() => setIsConsentOpen(true)}
       />
 
       {/* Secondary Modals & Overlays Wrapped in Suspense */}
@@ -292,7 +287,6 @@ export default function App() {
             setSoundMuted={setSoundMuted}
             projects={portfolioData.projects}
             onOpenCaseStudy={(project) => setSelectedCaseStudy(project)}
-            onOpenConsent={() => setIsConsentOpen(true)}
           />
         )}
 
@@ -302,12 +296,6 @@ export default function App() {
             onClose={() => setSelectedCaseStudy(null)}
           />
         )}
-
-        <ConsentManager
-          isOpen={isConsentOpen}
-          setIsOpen={setIsConsentOpen}
-          onShowToast={showToast}
-        />
       </Suspense>
 
       {/* Instant Toast Notification */}

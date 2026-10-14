@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Sun, Moon, Volume2, VolumeX, Sliders, Check, ShieldCheck } from 'lucide-react';
+import { Sun, Moon, Volume2, VolumeX, Sliders, Check } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 
 export default function SettingsBar({
@@ -12,8 +12,7 @@ export default function SettingsBar({
   soundMuted,
   setSoundMuted,
   isOpen,
-  setIsOpen,
-  onOpenConsent
+  setIsOpen
 }) {
   const panelRef = useRef(null);
 
@@ -249,30 +248,6 @@ export default function SettingsBar({
           <span>{soundMuted ? 'Muted' : 'Enabled'}</span>
         </button>
       </div>
-
-      {/* Privacy & Consent Manager Trigger */}
-      {onOpenConsent && (
-        <div style={{ paddingTop: '10px', borderTop: '1px dashed var(--border-dashed)' }}>
-          <button
-            onClick={() => {
-              sound.playClick();
-              onOpenConsent();
-              setIsOpen(false);
-            }}
-            className="btn-secondary"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              padding: '7px 12px',
-              fontSize: '0.75rem',
-              gap: '6px'
-            }}
-          >
-            <ShieldCheck size={14} style={{ color: 'var(--accent)' }} />
-            <span>Manage Cookie Consent</span>
-          </button>
-        </div>
-      )}
     </div>
   );
 }
