@@ -378,9 +378,11 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     </div>
                   </div>
                 </div>
-              </ScrollRevealItem>
+              </div>
+            </ScrollRevealItem>
             ))}
-          </ScrollRevealGroup>
+            </ScrollRevealGroup>
+          </GlowCardGrid>
         ) : (
           /* List View */
           <ScrollRevealGroup
