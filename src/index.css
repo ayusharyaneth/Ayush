@@ -332,8 +332,9 @@ button {
   color: var(--text-primary);
 }
 
-/* Experience Accordion Expander Button */
-.experience-expander-btn {
+/* Experience & Collection Accordion Expander Button */
+.experience-expander-btn,
+.collection-expander-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -349,7 +350,8 @@ button {
   outline: none;
 }
 
-.experience-expander-btn:hover {
+.experience-expander-btn:hover,
+.collection-expander-btn:hover {
   color: var(--accent);
   border-color: var(--accent);
   background: rgba(56, 189, 248, 0.08);
@@ -357,24 +359,33 @@ button {
   transform: translateY(-1px);
 }
 
-.experience-expander-btn:active {
+.experience-expander-btn:active,
+.collection-expander-btn:active {
   transform: scale(0.94);
 }
 
-.experience-expander-btn[aria-expanded="true"] {
+.experience-expander-btn[aria-expanded="true"],
+.collection-expander-btn[aria-expanded="true"] {
   color: var(--accent);
   border-color: var(--accent);
   background: rgba(56, 189, 248, 0.12);
 }
 
-.screen-box:hover .experience-expander-btn {
+.screen-box:hover .experience-expander-btn,
+.screen-box:hover .collection-expander-btn {
   border-color: var(--border-glow);
   color: var(--text-secondary);
 }
 
-.screen-box:hover .experience-expander-btn:hover {
+.screen-box:hover .experience-expander-btn:hover,
+.screen-box:hover .collection-expander-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.collection-item-card:hover {
+  border-color: var(--border-glow) !important;
+  transform: translateY(-1px);
 }
 
 /* Keyboard Shortcut Key Chip */
