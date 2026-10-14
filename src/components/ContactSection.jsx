@@ -1,5 +1,4 @@
 import React from 'react';
-import SocialCards from './SocialCards';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function ContactSection({ personal, socials }) {
@@ -73,31 +72,13 @@ export default function ContactSection({ personal, socials }) {
                     color: 'var(--text-secondary)',
                     maxWidth: '520px',
                     lineHeight: 1.6,
-                    marginBottom: '32px',
+                    marginBottom: 0,
                     marginLeft: 'auto',
                     marginRight: 'auto'
                   }}
                 >
                   Always excited to discuss founding engineer roles, technical advisory, high-craft design systems, or early-stage 0 → 1 prototypes.
                 </p>
-              </ScrollRevealItem>
-
-
-              {/* Social Profiles Row */}
-              <ScrollRevealItem distance={14}>
-                <div>
-                  <div
-                    style={{
-                      fontSize: '0.75rem',
-                      fontFamily: 'var(--font-family-mono)',
-                      color: 'var(--text-muted)',
-                      marginBottom: '14px'
-                    }}
-                  >
-                    Or connect across social networks:
-                  </div>
-                  <SocialCards socials={socials} email={personal.email} />
-                </div>
               </ScrollRevealItem>
             </ScrollRevealGroup>
           </div>
