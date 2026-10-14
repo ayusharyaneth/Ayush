@@ -10,6 +10,7 @@ import {
   Search
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function TheCollection({ collection = [] }) {
   const [openSections, setOpenSections] = useState({ 0: true, 1: false, 2: false });
@@ -34,47 +35,58 @@ export default function TheCollection({ collection = [] }) {
     <section id="collection" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '24px' }}>
-          <div
-            style={{
-              fontSize: '0.75rem',
-              fontFamily: 'var(--font-family-mono)',
-              color: 'var(--accent)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              fontWeight: 600
-            }}
-          >
-            03 / Curiosities & Accolades
+        <ScrollReveal variant="fade-up" distance={20} duration={0.6}>
+          <div style={{ marginBottom: '24px' }}>
+            <div
+              style={{
+                fontSize: '0.75rem',
+                fontFamily: 'var(--font-family-mono)',
+                color: 'var(--accent)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                fontWeight: 600
+              }}
+            >
+              03 / Curiosities & Accolades
+            </div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                color: 'var(--text-primary)',
+                marginTop: '4px'
+              }}
+            >
+              The collection.{' '}
+              <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
+                More work, more curiosity.
+              </span>
+            </h2>
+            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
+              Responsible disclosures, engineering recognitions, publications, and independent security research.
+            </p>
           </div>
-          <h2
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              color: 'var(--text-primary)',
-              marginTop: '4px'
-            }}
-          >
-            The collection.{' '}
-            <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
-              More work, more curiosity.
-            </span>
-          </h2>
-          <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
-            Responsible disclosures, engineering recognitions, publications, and independent security research.
-          </p>
-        </div>
+        </ScrollReveal>
 
         {/* Accordion List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <ScrollRevealGroup
+          style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}
+          stagger={0.08}
+        >
           {collection.map((cat, idx) => {
             const Icon = getSectionIcon(cat.category);
             const isOpen = !!openSections[idx];
 
             return (
-              <div key={cat.category} className="screen-box" style={{ overflow: 'hidden' }}>
+              <ScrollRevealItem
+                key={cat.category}
+                as="div"
+                className="screen-box"
+                distance={18}
+                style={{ overflow: 'hidden' }}
+              >
                 {/* Accordion Title Trigger */}
                 <button
                   onClick={() => toggleSection(idx)}
@@ -181,10 +193,10 @@ export default function TheCollection({ collection = [] }) {
                     </div>
                   </div>
                 )}
-              </div>
+              </ScrollRevealItem>
             );
           })}
-        </div>
+        </ScrollRevealGroup>
       </div>
     </section>
   );

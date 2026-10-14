@@ -378,16 +378,22 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     </div>
                   </div>
                 </div>
-              </article>
+              </ScrollRevealItem>
             ))}
-          </div>
+          </ScrollRevealGroup>
         ) : (
           /* List View */
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <ScrollRevealGroup
+            key={`list-${activeCategory}`}
+            style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}
+            stagger={0.05}
+          >
             {filtered.map((project) => (
-              <div
+              <ScrollRevealItem
                 key={project.id}
+                as="div"
                 className="screen-box"
+                distance={16}
                 onClick={() => {
                   sound.playClick();
                   onSelectProject(project);
@@ -430,9 +436,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   </span>
                   <ArrowUpRight size={16} style={{ color: 'var(--text-muted)' }} />
                 </div>
-              </div>
+              </ScrollRevealItem>
             ))}
-          </div>
+          </ScrollRevealGroup>
         )}
       </div>
 

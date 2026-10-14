@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Briefcase, Building2, MapPin, ChevronDown, ChevronUp, Sparkles, CheckCircle } from 'lucide-react';
 import GithubHeatmap from './GithubHeatmap';
 import { sound } from '../utils/soundEffects';
+import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function ExperienceSection({ experience = [] }) {
   const [expandedIndex, setExpandedIndex] = useState(0);
@@ -15,45 +16,52 @@ export default function ExperienceSection({ experience = [] }) {
     <section id="experience" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
       <div className="container">
         {/* Section Header */}
-        <div style={{ marginBottom: '24px' }}>
-          <div
-            style={{
-              fontSize: '0.75rem',
-              fontFamily: 'var(--font-family-mono)',
-              color: 'var(--accent)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              fontWeight: 600
-            }}
-          >
-            02 / Work & Craft
+        <ScrollReveal variant="fade-up" distance={20} duration={0.6}>
+          <div style={{ marginBottom: '24px' }}>
+            <div
+              style={{
+                fontSize: '0.75rem',
+                fontFamily: 'var(--font-family-mono)',
+                color: 'var(--accent)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                fontWeight: 600
+              }}
+            >
+              02 / Work & Craft
+            </div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                color: 'var(--text-primary)',
+                marginTop: '4px'
+              }}
+            >
+              In good company.{' '}
+              <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
+                Teams & systems.
+              </span>
+            </h2>
           </div>
-          <h2
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              color: 'var(--text-primary)',
-              marginTop: '4px'
-            }}
-          >
-            In good company.{' '}
-            <span style={{ fontFamily: 'var(--font-family-serif)', fontStyle: 'italic', fontWeight: 400 }}>
-              Teams & systems.
-            </span>
-          </h2>
-        </div>
+        </ScrollReveal>
 
         {/* Timeline Stack */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <ScrollRevealGroup
+          style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+          stagger={0.09}
+        >
           {experience.map((item, index) => {
             const isExpanded = expandedIndex === index;
 
             return (
-              <div
+              <ScrollRevealItem
                 key={item.company}
+                as="div"
                 className="screen-box"
+                distance={18}
                 style={{
                   padding: '24px 26px',
                   transition: 'all 0.2s ease',
@@ -181,13 +189,15 @@ export default function ExperienceSection({ experience = [] }) {
                     </div>
                   </div>
                 )}
-              </div>
+              </ScrollRevealItem>
             );
           })}
-        </div>
+        </ScrollRevealGroup>
 
         {/* Embedded Interactive 52-Week GitHub Heatmap */}
-        <GithubHeatmap />
+        <ScrollReveal variant="fade-up" distance={18} delay={0.12} duration={0.65}>
+          <GithubHeatmap />
+        </ScrollReveal>
       </div>
     </section>
   );
