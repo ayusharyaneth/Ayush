@@ -10,8 +10,7 @@ import {
   Moon,
   Sun,
   Volume2,
-  VolumeX,
-  ShieldCheck
+  VolumeX
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 import { smoothScrollTo } from '../utils/smoothScroll';
@@ -25,8 +24,7 @@ export default function CommandPalette({
   soundMuted,
   setSoundMuted,
   projects = [],
-  onOpenCaseStudy,
-  onOpenConsent
+  onOpenCaseStudy
 }) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -151,18 +149,6 @@ export default function CommandPalette({
         const isMuted = sound.toggleMute();
         setSoundMuted(isMuted);
         if (!isMuted) sound.playClick();
-        setIsOpen(false);
-      }
-    },
-    {
-      category: 'Preferences',
-      id: 'pref-consent',
-      title: 'Cookie Consent & Privacy',
-      subtitle: 'Manage tracking and offline storage permissions (c15t)',
-      icon: ShieldCheck,
-      run: () => {
-        sound.playClick();
-        if (onOpenConsent) onOpenConsent();
         setIsOpen(false);
       }
     }

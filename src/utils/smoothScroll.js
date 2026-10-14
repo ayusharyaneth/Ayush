@@ -87,7 +87,7 @@ export function initSmoothScroll() {
         if (!node || !(node instanceof Element)) return false;
         return Boolean(
           node.closest(
-            '.overflow-y-auto, .overflow-y-scroll, .overflow-auto, .overflow-scroll, .consent-modal-card, [data-lenis-prevent], [data-lenis-prevent-wheel], [data-lenis-prevent-touch]'
+            '.overflow-y-auto, .overflow-y-scroll, .overflow-auto, .overflow-scroll, [data-lenis-prevent], [data-lenis-prevent-wheel], [data-lenis-prevent-touch]'
           )
         );
       }
