@@ -59,27 +59,7 @@ export function LinkedinIcon({ size = 16, className = '', style = {}, ...props }
   );
 }
 
-export function LeetCodeIcon({ size = 16, className = '', style = {}, ...props }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      style={{ display: 'inline-block', verticalAlign: 'middle', ...style }}
-      {...props}
-    >
-      <path d="m16 18 4-4-4-4" />
-      <path d="m8 6-4 4 4 4" />
-      <path d="m14.5 4-5 16" />
-    </svg>
-  );
-}
+
 
 
 
