@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react';
-import { Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
 export default function GithubHeatmap({ style = {} }) {
@@ -210,10 +209,6 @@ export default function GithubHeatmap({ style = {} }) {
           ) : (
             <span>Hover over any grid tile to inspect daily commit density</span>
           )}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent)' }}>
-          <Sparkles size={11} />
-          <span>Synced with GitHub GraphQL API</span>
         </div>
       </div>
     </div>

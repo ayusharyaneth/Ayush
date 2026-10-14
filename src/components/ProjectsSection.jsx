@@ -199,35 +199,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         {viewMode === 'grid' ? (
           <ScrollReveal variant="fade-up" distance={24} duration={0.65}>
             <div className="project-deck-stage screen-box">
-              {/* Subtle Stage Top Banner / Watermark */}
-              <div className="project-stage-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="live-indicator-dot" />
-                  <span
-                    style={{
-                      fontSize: '0.7rem',
-                      fontFamily: 'var(--font-family-mono)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      color: 'var(--text-muted)'
-                    }}
-                  >
-                    Interactive Portfolio Deck
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontSize: '0.68rem',
-                    fontFamily: 'var(--font-family-mono)',
-                    color: 'var(--text-dim)'
-                  }}
-                >
-                  {displayDeck.length} OF {projects.length} DISPLAYED
-                </div>
-              </div>
-
               {/* DESKTOP DECK: 3 Fanned Cards (-rotate-3, rotate-1, rotate-3) */}
-              <div className="project-deck-row hidden md:flex">
+              <div className="project-deck-row">
                 {displayDeck.map((project, idx) => {
                   const isMulti = displayDeck.length > 1;
                   const rotationClass = !isMulti
@@ -348,42 +321,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   );
                 })}
               </div>
-
-              {/* MOBILE VIEW (< 768px): Sleek Responsive List with Sound Effects */}
-              <div className="project-mobile-list flex md:hidden">
-                {displayDeck.map((project, idx) => (
-                  <div
-                    key={project.id}
-                    className="project-mobile-card group"
-                    onMouseEnter={() => sound.playTick()}
-                    onClick={() => {
-                      sound.playClick();
-                      onSelectProject(project);
-                    }}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="project-mobile-thumb">
-                      <img src={project.image} alt={project.title} loading="lazy" />
-                      <div className="project-mobile-thumb-badge">0{idx + 1}</div>
-                    </div>
-
-                    <div className="project-mobile-info">
-                      <div className="project-mobile-meta">
-                        <span className="project-mobile-cat">{project.category}</span>
-                        <span className="project-mobile-metric">
-                          {project.metrics ? project.metrics.split('·')[0].trim() : ''}
-                        </span>
-                      </div>
-                      <h4 className="project-mobile-title">
-                        <span>{project.title}</span>
-                        <ArrowUpRight size={14} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-                      </h4>
-                      <p className="project-mobile-desc">{project.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </ScrollReveal>
         ) : (
@@ -495,41 +432,18 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           border: 1px solid var(--border-primary);
           box-shadow: var(--shadow-card);
           overflow: hidden;
-          padding: 24px 24px 0 24px;
+          padding: 36px 20px 0 20px;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          align-items: center;
+          justify-content: flex-end;
         }
 
         @media (min-width: 768px) {
           .project-deck-stage {
-            min-height: 480px;
-            padding: 28px 32px 0 32px;
+            min-height: 460px;
+            padding: 56px 32px 0 32px;
           }
-        }
-
-        .project-stage-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding-bottom: 20px;
-          border-bottom: 1px solid var(--border-secondary);
-          margin-bottom: auto;
-        }
-
-        .live-indicator-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: #10B981;
-          box-shadow: 0 0 8px #10B981;
-          display: inline-block;
-          animation: pulseGreen 2.5s infinite;
-        }
-
-        @keyframes pulseGreen {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(0.9); }
         }
 
         /* Desktop Deck row - Tuck cards into bottom edge (-mb-12 like reference) */
@@ -540,10 +454,30 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           align-items: flex-end;
           gap: 16px;
           width: 100%;
-          margin-top: 24px;
+          margin-top: 0;
           margin-bottom: -46px; /* Signature reference tuck */
           padding-bottom: 0;
           position: relative;
+        }
+
+        @media (max-width: 767px) {
+          .project-deck-stage {
+            padding: 24px 16px 28px 16px;
+            min-height: auto;
+          }
+          .project-deck-row {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 0;
+          }
+          .project-deck-card {
+            width: 100%;
+            max-width: 330px;
+            height: auto;
+            min-height: 340px;
+            transform: none !important;
+          }
         }
 
         /* Individual Card Dimensions & Bezier */
@@ -769,111 +703,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         .project-ext-icon:hover {
           color: var(--accent);
           transform: translateY(-1px);
-        }
-
-        /* Mobile View (< 768px) */
-        .project-mobile-list {
-          flex-direction: column;
-          gap: 12px;
-          width: 100%;
-          padding: 16px 0 20px 0;
-        }
-
-        .project-mobile-card {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-          padding: 12px;
-          border-radius: var(--radius-md);
-          background: var(--bg-surface);
-          border: 1px solid var(--border-secondary);
-          cursor: pointer;
-          transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-        }
-
-        .project-mobile-card:active {
-          transform: scale(0.98);
-        }
-
-        .project-mobile-card:hover {
-          border-color: var(--border-primary);
-          background: var(--bg-muted);
-        }
-
-        .project-mobile-thumb {
-          position: relative;
-          width: 80px;
-          height: 64px;
-          border-radius: var(--radius-sm);
-          overflow: hidden;
-          flex-shrink: 0;
-          border: 1px solid var(--border-secondary);
-        }
-
-        .project-mobile-thumb img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .project-mobile-thumb-badge {
-          position: absolute;
-          bottom: 2px;
-          left: 2px;
-          background: rgba(0, 0, 0, 0.7);
-          padding: 1px 4px;
-          border-radius: 3px;
-          font-size: 0.58rem;
-          font-family: var(--font-family-mono);
-          color: #fff;
-        }
-
-        .project-mobile-info {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .project-mobile-meta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 2px;
-        }
-
-        .project-mobile-cat {
-          font-size: 0.62rem;
-          font-family: var(--font-family-mono);
-          color: var(--accent);
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-        }
-
-        .project-mobile-metric {
-          font-size: 0.62rem;
-          font-family: var(--font-family-mono);
-          color: var(--text-muted);
-        }
-
-        .project-mobile-title {
-          font-size: 0.92rem;
-          font-weight: 600;
-          color: var(--text-primary);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: 1px;
-          margin-bottom: 3px;
-        }
-
-        .project-mobile-desc {
-          font-size: 0.74rem;
-          color: var(--text-secondary);
-          line-height: 1.35;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
         }
       `}</style>
     </section>
