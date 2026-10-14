@@ -27,12 +27,12 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
   return (
     <section id="work" style={{ paddingTop: '32px', paddingBottom: '32px' }}>
       <div className="container">
-        {/* Section Header with Editorial Serif Flourish */}
+        {/* Section Header with Editorial Serif Flourish (Image 1 reference) */}
         <ScrollReveal variant="fade-up" distance={20} duration={0.6}>
           <div
             style={{
               display: 'flex',
-              alignItems: 'flex-end',
+              alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               gap: '16px',
@@ -42,24 +42,26 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
             <div>
               <div
                 style={{
-                  fontSize: '0.75rem',
+                  fontSize: '0.74rem',
                   fontFamily: 'var(--font-family-mono)',
                   color: 'var(--accent)',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: 600
+                  letterSpacing: '0.09em',
+                  fontWeight: 600,
+                  marginBottom: '6px'
                 }}
               >
-                01 / Selected Work
+                01 / SELECTED WORK
               </div>
               <h2
                 style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                  fontSize: 'clamp(1.85rem, 3.6vw, 2.5rem)',
                   fontWeight: 700,
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.025em',
                   color: 'var(--text-primary)',
-                  marginTop: '4px'
+                  margin: 0,
+                  lineHeight: 1.15
                 }}
               >
                 Featured products.{' '}
@@ -82,9 +84,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   display: 'flex',
                   alignItems: 'center',
                   padding: '3px',
-                  borderRadius: 'var(--radius-sm)',
-                  background: 'var(--bg-muted)',
-                  border: '1px solid var(--border-secondary)'
+                  borderRadius: '8px',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
                 }}
               >
                 <button
@@ -93,19 +95,21 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     setViewMode('grid');
                   }}
                   style={{
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    background: viewMode === 'grid' ? 'var(--bg-surface)' : 'transparent',
-                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'var(--text-muted)',
+                    padding: '6px 8px',
+                    borderRadius: '6px',
+                    background: viewMode === 'grid' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'rgba(255, 255, 255, 0.45)',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                   title="Grid / Deck view"
                   aria-label="Grid / Deck view"
                 >
-                  <LayoutGrid size={14} />
+                  <LayoutGrid size={15} />
                 </button>
                 <button
                   onClick={() => {
@@ -113,19 +117,21 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     setViewMode('list');
                   }}
                   style={{
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    background: viewMode === 'list' ? 'var(--bg-surface)' : 'transparent',
-                    color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-muted)',
+                    padding: '6px 8px',
+                    borderRadius: '6px',
+                    background: viewMode === 'list' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                    color: viewMode === 'list' ? 'var(--text-primary)' : 'rgba(255, 255, 255, 0.45)',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                   title="List view"
                   aria-label="List view"
                 >
-                  <List size={14} />
+                  <List size={15} />
                 </button>
               </div>
             </div>
@@ -138,9 +144,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: '10px',
               overflowX: 'auto',
-              paddingBottom: '8px',
+              paddingBottom: '6px',
               marginBottom: '26px',
               scrollbarWidth: 'none'
             }}
@@ -155,17 +161,31 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     setActiveCategory(cat);
                   }}
                   style={{
-                    padding: '5px 12px',
-                    borderRadius: 'var(--radius-full)',
-                    fontSize: '0.78rem',
-                    fontFamily: 'var(--font-family-mono)',
+                    padding: '6px 16px',
+                    borderRadius: '9999px',
+                    fontSize: '0.82rem',
+                    fontFamily: 'var(--font-body)',
                     whiteSpace: 'nowrap',
-                    background: active ? 'var(--accent)' : 'var(--bg-muted)',
-                    color: active ? '#000' : 'var(--text-secondary)',
-                    border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
+                    background: active ? 'var(--accent)' : 'rgba(255, 255, 255, 0.04)',
+                    color: active ? '#000000' : 'rgba(255, 255, 255, 0.65)',
+                    border: active ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.08)',
                     fontWeight: active ? 600 : 400,
                     cursor: 'pointer',
-                    transition: 'all 0.15s ease'
+                    transition: 'all 0.18s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                      e.currentTarget.style.color = '#ffffff';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    }
                   }}
                 >
                   {cat}
