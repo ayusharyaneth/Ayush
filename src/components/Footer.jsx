@@ -37,7 +37,7 @@ export default function Footer({ personal = {}, socials = [] }) {
               </div>
 
               <div className="footer-copy-text">
-                <span>Built with Love in Late Night.</span>
+                <span>Built with Love & Late-Night Commits.</span>
               </div>
             </div>
 
