@@ -16,13 +16,20 @@ const NAV_ITEMS = [
   { id: 'contact', label: 'Contact', hasArrow: true }
 ];
 
-export default function MobileBottomNav() {
+export default function MobileBottomNav({ isCopiedActive = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const [scrollProgress, setScrollProgress] = useState(0);
   const isClickScrollingRef = useRef(false);
   const scrollEndTimerRef = useRef(null);
   const menuContainerRef = useRef(null);
+
+  // Auto-close menu if copy action ducks the dock
+  useEffect(() => {
+    if (isCopiedActive && isOpen) {
+      setIsOpen(false);
+    }
+  }, [isCopiedActive, isOpen]);
 
   // Active section display label
   const activeItem = NAV_ITEMS.find((item) => item.id === activeSection) || NAV_ITEMS[0];
@@ -212,7 +219,7 @@ export default function MobileBottomNav() {
 
       {/* Floating Bottom Dock Container */}
       <nav
-        className="mobile-bottom-nav-root"
+        className={`mobile-bottom-nav-root ${isCopiedActive ? 'copied-hidden' : ''}`}
         aria-label="Mobile Bottom Navigation"
         ref={menuContainerRef}
       >

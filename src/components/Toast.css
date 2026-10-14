@@ -1,0 +1,100 @@
+/* ==========================================================================
+   APP TOAST NOTIFICATIONS
+   Adaptive positioning: Bottom-Right on Desktop, Top-Center on Mobile
+   Eliminates collision with mobile bottom navigation dock and OS toasts
+   ========================================================================== */
+
+.app-toast-container {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  box-shadow: var(--shadow-popover);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.app-toast-icon {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.app-toast-message {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.app-toast-close {
+  margin-left: 4px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.app-toast-close:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Desktop Placement: Bottom Right */
+@media (min-width: 721px) {
+  .app-toast-container {
+    bottom: 24px;
+    right: 24px;
+    animation: toastSlideUpDesktop 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+/* Mobile Placement: Top Center (Guarantees zero overlap with bottom dock and OS clipboard popups) */
+@media (max-width: 720px) {
+  .app-toast-container {
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-glow);
+    animation: toastSlideDownMobile 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes toastSlideUpDesktop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideDownMobile {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -16px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
