@@ -4,9 +4,7 @@ import {
   Check,
   Copy,
   ChevronDown,
-  QrCode,
-  ArrowLeft,
-  ArrowRight
+  QrCode
 } from 'lucide-react';
 import {
   PayPalIcon,
@@ -30,8 +28,6 @@ import './SupportPage.css';
  */
 export default function SupportPage({
   supportData = {},
-  onNavigateHome,
-  onNavigateProjects,
   showToast
 }) {
   const [copiedKey, setCopiedKey] = useState(null);
@@ -400,33 +396,6 @@ export default function SupportPage({
             Double-check the network before sending — sending on the wrong network may result in loss of funds.
           </p>
         </section>
-
-        {/* 4. Bottom Navigation */}
-        <div className="support-bottom-nav">
-          <button
-            type="button"
-            className="support-nav-btn"
-            onClick={() => {
-              sound.playClick();
-              onNavigateHome?.();
-            }}
-          >
-            <ArrowLeft size={16} className="nav-arrow nav-arrow-left" />
-            <span>Back to Home</span>
-          </button>
-
-          <button
-            type="button"
-            className="support-nav-btn"
-            onClick={() => {
-              sound.playClick();
-              onNavigateProjects?.();
-            }}
-          >
-            <span>View Projects</span>
-            <ArrowRight size={16} className="nav-arrow nav-arrow-right" />
-          </button>
-        </div>
       </div>
     </div>
   );

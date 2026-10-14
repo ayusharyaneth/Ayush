@@ -292,8 +292,6 @@ export default function App() {
         {currentView === 'support' ? (
           <SupportPage
             supportData={portfolioData.support}
-            onNavigateHome={() => navigateTo('home', 'top')}
-            onNavigateProjects={() => navigateTo('home', 'work')}
             showToast={showToast}
           />
         ) : (
@@ -336,11 +334,13 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer & Signature */}
-      <Footer
-        personal={portfolioData.personal}
-        socials={portfolioData.socials}
-      />
+      {/* Footer & Signature (Hidden on /support page) */}
+      {currentView !== 'support' && (
+        <Footer
+          personal={portfolioData.personal}
+          socials={portfolioData.socials}
+        />
+      )}
 
       {/* Secondary Modals & Overlays Wrapped in Suspense */}
       <Suspense fallback={null}>
