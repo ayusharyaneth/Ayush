@@ -87,8 +87,8 @@ export default function ContactSection({
     <section id="contact" className="editorial-contact-section">
       {/* Atmospheric Ambient Lighting & Rotating Celestial Orbit */}
       <div className="contact-atmosphere" aria-hidden="true">
-        <div className="contact-glow-lime" />
-        <div className="contact-glow-cyan" />
+        <div className="contact-glow-accent" />
+        <div className="contact-glow-secondary" />
         <div className="contact-grid-pattern" />
 
         <div className="contact-orbital-wrapper">
@@ -128,7 +128,7 @@ export default function ContactSection({
             className="contact-meta-header"
           >
             <div className="contact-badge-label">
-              <span className="contact-lime-dot" />
+              <span className="contact-accent-dot" />
               <span>GET IN TOUCH</span>
             </div>
 
@@ -244,7 +244,7 @@ export default function ContactSection({
                   d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                   fill="none"
                 />
-                <text fill="#ccff00" fontSize="9.2" fontFamily="monospace" letterSpacing="2">
+                <text fill="var(--accent)" fontSize="9.2" fontFamily="monospace" letterSpacing="2">
                   <textPath href="#sealTextPath" startOffset="0%">
                     · HIGH CRAFT · 0 TO 1 CODE · DESIGN ·
                   </textPath>
@@ -335,7 +335,7 @@ export default function ContactSection({
               <div className="cta-text-block">
                 <span className="cta-lead-label">
                   {copied ? 'Email Copied!' : 'Initiate Transmission'}
-                  {copied ? <Check size={14} style={{ color: 'var(--lime-electric)' }} /> : <Sparkles size={14} style={{ color: 'var(--lime-electric)' }} />}
+                  {copied ? <Check size={14} style={{ color: 'var(--accent)' }} /> : <Sparkles size={14} style={{ color: 'var(--accent)' }} />}
                 </span>
                 <span className="cta-email-sub">{contactEmail}</span>
               </div>

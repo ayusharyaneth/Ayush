@@ -260,7 +260,7 @@ export default function App() {
         {/* The Collection: Security Research, Milestones & Writing */}
         <TheCollection collection={portfolioData.theCollection} />
 
-        {/* Contact CTA (Editorial Headline & Lime Graphic Stickers) */}
+        {/* Contact CTA (Editorial Headline & Graphic Stickers) */}
         <ContactSection
           personal={portfolioData.personal}
           onCopyEmail={handleCopyEmail}
