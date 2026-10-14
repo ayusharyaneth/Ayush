@@ -7,10 +7,10 @@
   position: relative;
 }
 
-/* Handwritten "Follow Me" placed OUTSIDE the card dashed border ("market line") */
+/* Handwritten "Follow Me" placed OUTSIDE the card dashed border, pointing into first box only */
 .chanh-outside-connect {
   position: absolute;
-  right: calc(100% - 10px);
+  right: calc(100% + 6px);
   top: 50%;
   transform: translateY(-48px);
   display: flex;
@@ -31,7 +31,7 @@
   letter-spacing: -0.01em;
   transform: rotate(-3deg);
   white-space: nowrap;
-  margin-right: 56px; /* Positions the text completely outside the hero card dashed line with 10px extra clearance */
+  margin-right: 40px; /* Positions the text 14px outside the hero card dashed line */
   margin-bottom: 2px;
   transition: color 0.2s ease;
 }
@@ -41,7 +41,7 @@
   display: inline-block;
   opacity: 0.85;
   transition: transform 0.2s ease, color 0.2s ease;
-  margin-right: 0; /* Arrow tip reaches directly in front of the first social button */
+  margin-right: 0; /* Arrow tip stays inside first box without crossing into second box */
 }
 
 .chanh-outside-connect:hover .chanh-connect-arrow {

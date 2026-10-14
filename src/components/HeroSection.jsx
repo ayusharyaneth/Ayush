@@ -253,9 +253,9 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
               <div className="chanh-outside-connect">
                 <span className="chanh-connect-text">Follow Me</span>
                 <svg
-                  width="66"
+                  width="46"
                   height="34"
-                  viewBox="0 0 66 34"
+                  viewBox="0 0 46 34"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -264,8 +264,8 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                   className="chanh-connect-arrow"
                   aria-hidden="true"
                 >
-                  <path d="M 6 4 C 6 16, 28 24, 58 24" />
-                  <path d="M 50 18 L 58 24 L 50 30" />
+                  <path d="M 5 4 C 5 16, 16 24, 44 24" />
+                  <path d="M 36 18 L 44 24 L 36 30" />
                 </svg>
               </div>
 
