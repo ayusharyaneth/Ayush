@@ -1,22 +1,26 @@
 /**
  * Smooth Scrolling Controller for Antigravity Portfolio
  * 
- * Implements fluid, natural easing with controlled acceleration and deceleration.
- * Automatically adapts to desktop sticky navbar and mobile bottom navigation dock.
- * Respects prefers-reduced-motion and supports instant cancellation on manual scroll.
+ * Powered by Lenis (the exact buttery-smooth inertial scroll engine behind ossium.in).
+ * Features:
+ * - Exponential decay easing with organic deceleration on wheel/touchpad
+ * - Zero lag native 1:1 touch preservation on mobile (syncTouch: false)
+ * - Automatic prevention inside scrollable modals, command palette, and code blocks
+ * - Seamless integration with sticky header offsets (72px desktop, 20px mobile)
+ * - Full prefers-reduced-motion accessibility compliance and graceful RAF fallback
  */
 
+import Lenis from 'lenis';
+
+let lenisInstance = null;
 let activeAnimationId = null;
 let activeInterruptHandler = null;
 
 /**
- * Natural cubic-bezier easing curve (easeInOutCubic)
- * Offers gentle acceleration, fluid velocity through mid-scroll, and soft landing.
+ * Access the active Lenis smooth scroll instance
  */
-function easeInOutCubic(t) {
-  return t < 0.5
-    ? 4 * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+export function getLenis() {
+  return lenisInstance;
 }
 
 /**
@@ -34,9 +38,84 @@ export function getHeaderOffset() {
 }
 
 /**
+ * Natural cubic-bezier easing curve (easeInOutCubic) for fallback animation
+ */
+function easeInOutCubic(t) {
+  return t < 0.5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+/**
+ * Initialize Lenis smooth scroll engine (matching ossium.in)
+ * 
+ * @returns {Function} cleanup function to destroy the instance
+ */
+export function initSmoothScroll() {
+  if (typeof window === 'undefined') return () => {};
+
+  // Respect user preference for reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return () => {};
+  }
+
+  // If already initialized, return cleanup
+  if (lenisInstance) {
+    return () => {
+      lenisInstance?.destroy();
+      lenisInstance = null;
+      if (typeof window !== 'undefined') window.lenis = null;
+    };
+  }
+
+  try {
+    // Exact configuration matching ossium.in:
+    // - duration: 1.1s
+    // - easing: 1 - 2^(-10t) exponential deceleration
+    // - smoothWheel: true
+    // - syncTouch: false (native responsive touch feel)
+    // - autoRaf: true (built-in RAF loop)
+    // - prevent: ignores wheel on modals, popovers, and inner scrollable regions
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+      autoRaf: true,
+      anchors: false, // delegated to initAnchorScrollListener for responsive header offsets
+      prevent: (node) => {
+        if (!node || !(node instanceof Element)) return false;
+        return Boolean(
+          node.closest(
+            '.overflow-y-auto, .overflow-y-scroll, .overflow-auto, .overflow-scroll, .consent-modal-card, [data-lenis-prevent], [data-lenis-prevent-wheel], [data-lenis-prevent-touch]'
+          )
+        );
+      }
+    });
+
+    lenisInstance = lenis;
+    window.lenis = lenis;
+
+    return () => {
+      lenis.destroy();
+      lenisInstance = null;
+      window.lenis = null;
+    };
+  } catch (err) {
+    console.warn('[SmoothScroll] Failed to initialize Lenis, falling back to RAF:', err);
+    return () => {};
+  }
+}
+
+/**
  * Cancels any in-progress smooth scroll immediately.
  */
 export function cancelSmoothScroll() {
+  if (lenisInstance) {
+    // Halts active programmatic scroll smoothly
+    lenisInstance.stop();
+    lenisInstance.start();
+  }
   if (activeAnimationId !== null) {
     cancelAnimationFrame(activeAnimationId);
     activeAnimationId = null;
@@ -49,6 +128,7 @@ export function cancelSmoothScroll() {
 
 /**
  * Smoothly scrolls the window to a specified section, element, or Y position.
+ * Uses Lenis when available, with a high-fidelity cubic bezier fallback.
  * 
  * @param {string|number|HTMLElement} target - Section ID ('top', 'work', etc.), pixel coordinate, or element
  * @param {Object} [options]
@@ -56,6 +136,7 @@ export function cancelSmoothScroll() {
  * @param {number} [options.duration] - Optional custom animation duration in ms
  * @param {Function} [options.onComplete] - Callback executed upon reaching destination
  * @param {Function} [options.onInterrupt] - Callback executed if user cancels via touch/wheel
+ * @param {boolean} [options.immediate] - Jump directly to target
  * @returns {Promise<void>}
  */
 export function smoothScrollTo(target, options = {}) {
@@ -65,11 +146,67 @@ export function smoothScrollTo(target, options = {}) {
       return;
     }
 
+    const headerOffset = options.offset !== undefined ? options.offset : getHeaderOffset();
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Resolve target Y position
+    // Reduced motion: jump immediately
+    if (prefersReducedMotion || options.immediate) {
+      if (typeof target === 'number') {
+        window.scrollTo({ top: target, behavior: 'auto' });
+      } else if (target === 'top' || target === '#top' || target === '#') {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      } else {
+        const elementId = typeof target === 'string' ? target.replace(/^#/, '') : null;
+        const element = elementId
+          ? document.getElementById(elementId)
+          : (target instanceof HTMLElement ? target : null);
+
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          window.scrollTo({ top: rect.top + window.scrollY - headerOffset, behavior: 'auto' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+      }
+      options.onComplete?.();
+      resolve();
+      return;
+    }
+
+    // PRIMARY PATH: Lenis Smooth Scroll Engine (ossium.in)
+    if (lenisInstance) {
+      let resolvedTarget;
+      let computedOffset = -headerOffset;
+
+      if (typeof target === 'number') {
+        resolvedTarget = target;
+        computedOffset = 0;
+      } else if (target === 'top' || target === '#top' || target === '#') {
+        resolvedTarget = 0;
+        computedOffset = 0;
+      } else if (typeof target === 'string') {
+        const elementId = target.replace(/^#/, '');
+        resolvedTarget = document.getElementById(elementId) || target;
+      } else {
+        resolvedTarget = target;
+      }
+
+      lenisInstance.scrollTo(resolvedTarget, {
+        offset: computedOffset,
+        duration: options.duration ? options.duration / 1000 : 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        immediate: false,
+        onComplete: () => {
+          options.onComplete?.();
+          resolve();
+        }
+      });
+      return;
+    }
+
+    // FALLBACK PATH: Physics-based Cubic Bezier Animation Loop
     let targetY = 0;
     if (typeof target === 'number') {
       targetY = target;
@@ -83,49 +220,32 @@ export function smoothScrollTo(target, options = {}) {
 
       if (element) {
         const rect = element.getBoundingClientRect();
-        const headerOffset = options.offset !== undefined ? options.offset : getHeaderOffset();
         targetY = rect.top + window.scrollY - headerOffset;
       } else {
         targetY = 0;
       }
     }
 
-    // Clamp target within document bounds
     const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
     targetY = Math.max(0, Math.min(targetY, maxScroll));
 
     const startY = window.scrollY;
     const distance = targetY - startY;
 
-    // If already at destination
     if (Math.abs(distance) < 2) {
       options.onComplete?.();
       resolve();
       return;
     }
 
-    // If user prefers reduced motion, scroll immediately without animation
-    if (prefersReducedMotion) {
-      window.scrollTo({ top: targetY, behavior: 'auto' });
-      options.onComplete?.();
-      resolve();
-      return;
-    }
-
-    // Cancel any active animation
     cancelSmoothScroll();
 
-    // Natural physics-based duration:
-    // Scale duration with sqrt(distance) so short jumps are snappy (~450ms)
-    // and long traverses remain graceful and controlled (~800ms)
     const duration = options.duration || Math.min(
       850,
       Math.max(450, Math.round(Math.sqrt(Math.abs(distance)) * 22))
     );
 
     let startTime = null;
-
-    // Temporarily disable CSS scroll-behavior: smooth on html to avoid interpolation conflicts
     const root = document.documentElement;
     const prevScrollBehavior = root.style.scrollBehavior;
     root.style.scrollBehavior = 'auto';
@@ -169,7 +289,6 @@ export function smoothScrollTo(target, options = {}) {
       if (progress < 1) {
         activeAnimationId = requestAnimationFrame(step);
       } else {
-        // Animation completed successfully
         window.scrollTo(0, targetY);
         cleanup();
         options.onComplete?.();
