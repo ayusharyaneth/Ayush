@@ -214,7 +214,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
 
       {/* Floating Bottom Dock Container */}
       <nav
-        className={`mobile-bottom-nav-root ${isCopiedActive ? 'copied-hidden' : ''}`}
+        className="mobile-bottom-nav-root"
         aria-label="Mobile Bottom Navigation"
         ref={menuContainerRef}
       >

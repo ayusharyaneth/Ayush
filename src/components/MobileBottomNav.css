@@ -31,13 +31,6 @@
     will-change: transform, opacity;
   }
 
-  /* Temporarily duck downward when copy action is active to prevent OS/Toast overlap */
-  .mobile-bottom-nav-root.copied-hidden {
-    transform: translate(-50%, calc(100% + 36px)) !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
   /* Dismiss backdrop when menu is open */
   .mobile-nav-backdrop {
     position: fixed;
