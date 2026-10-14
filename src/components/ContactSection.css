@@ -1,11 +1,10 @@
 /* ==========================================================================
    EDITORIAL CONTACT SECTION (COMPACT & MINIMAL CRAFT)
-   Bold Editorial Typography · Graphic Tickets · Dynamic Theme System
+   Bold Editorial Typography · Dynamic Theme System
    ========================================================================== */
 
 .editorial-contact-section {
-  --contact-ticket-bg: var(--accent);
-  --contact-ticket-text: #09090b;
+  --contact-contrast-fg: #09090b;
   position: relative;
   padding-top: 10px;
   padding-bottom: 16px;
@@ -17,17 +16,17 @@
 
 .palette-violet .editorial-contact-section,
 .palette-rose .editorial-contact-section {
-  --contact-ticket-text: #ffffff;
+  --contact-contrast-fg: #ffffff;
 }
 
 .theme-light .editorial-contact-section,
 [data-theme="light"] .editorial-contact-section {
-  --contact-ticket-text: #ffffff;
+  --contact-contrast-fg: #ffffff;
 }
 
 .theme-light.palette-monochrome .editorial-contact-section,
 [data-theme="light"].palette-monochrome .editorial-contact-section {
-  --contact-ticket-text: #ffffff;
+  --contact-contrast-fg: #ffffff;
 }
 
 /* ==========================================================================
@@ -269,112 +268,6 @@
   text-shadow: 0 0 12px var(--accent-glow);
 }
 
-/* ==========================================================================
-   GRAPHIC ELEMENTS & TICKETS (THEME-SYNCED & COMPACT)
-   ========================================================================== */
-
-.contact-stickers-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Base Sticker Props */
-.contact-sticker {
-  position: absolute;
-  pointer-events: auto;
-  cursor: grab;
-  user-select: none;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
-}
-
-.contact-sticker:active {
-  cursor: grabbing;
-}
-
-/* STICKER 1: VIP COLLAB TICKET (Top-Right) */
-.sticker-ticket-admit {
-  top: 5%;
-  right: 3%;
-  background: var(--contact-ticket-bg);
-  color: var(--contact-ticket-text);
-  padding: 5px 11px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.28), 0 0 12px var(--accent-glow);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  position: absolute;
-  z-index: 3;
-}
-
-.ticket-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.ticket-admit-text {
-  font-family: var(--font-family-sans), sans-serif;
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.ticket-star {
-  font-size: 0.68rem;
-}
-
-.ticket-perforation {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1.5px dashed currentColor;
-  opacity: 0.35;
-  margin: 1px 0;
-}
-
-.ticket-barcode-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.ticket-barcode-svg {
-  height: 11px;
-  opacity: 0.85;
-}
-
-.ticket-serial {
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.56rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-
-/* Scalloped Side Cutouts for Ticket Stub */
-.ticket-notch-left,
-.ticket-notch-right {
-  position: absolute;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  transform: translateY(-50%);
-}
-.ticket-notch-left { left: -3px; }
-.ticket-notch-right { right: -3px; }
-
-/* Sticker Hover Elevations */
-.contact-sticker:hover {
-  transform: scale(1.06) rotate(0deg) !important;
-  box-shadow: 0 12px 24px -2px rgba(0, 0, 0, 0.35), 0 0 16px var(--accent-glow) !important;
-}
 
 /* ==========================================================================
    SUPPORTING STATEMENT (Italic Serif - Compact)
@@ -479,7 +372,7 @@
 .contact-primary-cta-group:hover .contact-arrow-circle {
   border-color: var(--accent);
   background: var(--accent);
-  color: var(--contact-ticket-text);
+  color: var(--contact-contrast-fg);
   transform: rotate(45deg);
   box-shadow: 0 0 14px var(--accent-glow);
 }
@@ -529,12 +422,6 @@
   .contact-editorial-card {
     padding: 20px 18px 18px;
   }
-
-  .sticker-ticket-admit {
-    right: 2%;
-    top: 4%;
-    transform: scale(0.85) !important;
-  }
 }
 
 @media (max-width: 640px) {
@@ -573,38 +460,7 @@
     line-height: 1.4;
   }
 
-  /* Compact stickers layout for mobile: place ticket and status pill in a tidy row without dead space */
-  .contact-stickers-layer {
-    position: relative;
-    inset: auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin: 2px auto 8px;
-  }
 
-  .sticker-ticket-admit {
-    position: static;
-    margin: 0;
-    transform: none !important;
-    display: inline-flex;
-    pointer-events: auto;
-    padding: 4px 9px;
-  }
-
-  .ticket-admit-text {
-    font-size: 0.58rem;
-  }
-
-  .ticket-barcode-svg {
-    height: 10px;
-  }
-
-  .ticket-serial {
-    font-size: 0.54rem;
-  }
 
   .contact-action-hub {
     gap: 10px;
@@ -644,14 +500,8 @@
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .contact-orbital-ring,
-  .seal-svg-rotating,
   .contact-glow-accent,
   .contact-glow-secondary {
     animation: none !important;
-  }
-
-  .contact-sticker {
-    transform: none !important;
-    transition: none !important;
   }
 }

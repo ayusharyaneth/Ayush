@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
 import {
@@ -13,7 +13,7 @@ import './ContactSection.css';
 
 /**
  * Editorial Contact Section
- * Inspired by high-craft typography, vibrant lime-green graphic stickers,
+ * High-craft typography, clean architectural card layout,
  * near-black canvas, and cinematic coordinated motion.
  */
 export default function ContactSection({
@@ -22,27 +22,10 @@ export default function ContactSection({
   showToast
 }) {
   const prefersReducedMotion = useReducedMotion();
-  const containerRef = useRef(null);
-  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
   const [copied, setCopied] = useState(false);
 
   const contactEmail =
     personal?.chanhCard?.email || personal?.email || 'eth@ayusharyan.in';
-
-  // Pointer tracking for organic parallax on desktop
-  const handlePointerMove = (e) => {
-    if (prefersReducedMotion) return;
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    // Calculate normalized coordinate from -1 to 1
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    setPointerOffset({ x, y });
-  };
-
-  const handlePointerLeave = () => {
-    setPointerOffset({ x: 0, y: 0 });
-  };
 
   const handleActionClick = (e) => {
     e.preventDefault();
@@ -119,60 +102,6 @@ export default function ContactSection({
               <span>GET IN TOUCH</span>
             </div>
           </motion.div>
-
-          {/* Floating Lime-Green Ticket Stickers & Graphic Elements */}
-          <div className="contact-stickers-layer">
-            {/* STICKER 1: ADMIT ONE / COLLAB TICKET (Top-Right) */}
-            <motion.div
-              onClick={handleStickerClick}
-              initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.75, rotate: 0 }}
-              whileInView={prefersReducedMotion ? {} : { opacity: 1, scale: 1, rotate: 7 }}
-              viewport={{ once: true, amount: 0.2 }}
-              animate={
-                prefersReducedMotion
-                  ? {}
-                  : {
-                      x: pointerOffset.x * 12,
-                      y: [pointerOffset.y * 12 - 5, pointerOffset.y * 12 + 5, pointerOffset.y * 12 - 5],
-                      rotate: [7, 9, 7]
-                    }
-              }
-              transition={{
-                rotate: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' },
-                y: { duration: 4.8, repeat: Infinity, ease: 'easeInOut' },
-                x: { duration: 0.25, ease: 'easeOut' }
-              }}
-              className="contact-sticker sticker-ticket-admit"
-              title="Click to interact"
-            >
-              <span className="ticket-notch-left" />
-              <span className="ticket-notch-right" />
-              <div className="ticket-header">
-                <span className="ticket-admit-text">ADMIT ONE ✦ COLLAB</span>
-                <span className="ticket-star">★</span>
-              </div>
-              <div className="ticket-perforation" />
-              <div className="ticket-barcode-row">
-                <svg className="ticket-barcode-svg" viewBox="0 0 64 16" fill="currentColor">
-                  <rect x="0" y="0" width="2" height="16" />
-                  <rect x="4" y="0" width="4" height="16" />
-                  <rect x="10" y="0" width="1" height="16" />
-                  <rect x="13" y="0" width="3" height="16" />
-                  <rect x="18" y="0" width="2" height="16" />
-                  <rect x="22" y="0" width="5" height="16" />
-                  <rect x="29" y="0" width="1" height="16" />
-                  <rect x="32" y="0" width="3" height="16" />
-                  <rect x="37" y="0" width="2" height="16" />
-                  <rect x="41" y="0" width="4" height="16" />
-                  <rect x="47" y="0" width="1" height="16" />
-                  <rect x="50" y="0" width="3" height="16" />
-                  <rect x="55" y="0" width="2" height="16" />
-                  <rect x="59" y="0" width="5" height="16" />
-                </svg>
-                <span className="ticket-serial">№ 2026-ETH</span>
-              </div>
-            </motion.div>
-          </div>
 
           {/* Oversized Cinematic Editorial Headline */}
           <div className="contact-headline-stage">
