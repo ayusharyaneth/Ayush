@@ -109,7 +109,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
       url: 'https://quaric.com'
     },
     location: 'Ho Chi Minh City, Viet Nam',
-    email: 'dai@chanhdai.com',
+    email: 'eth@ayusharyan.in',
     phone: '+84 777 888 148',
     phoneTel: '+84777888148',
     timeComment: '// 1h ahead',

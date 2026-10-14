@@ -1,20 +1,8 @@
-import React, { useState } from 'react';
-import { Mail, Calendar, ArrowUpRight, Check } from 'lucide-react';
+import React from 'react';
 import SocialCards from './SocialCards';
-import { sound } from '../utils/soundEffects';
-import { haptic } from '../utils/haptic';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
-export default function ContactSection({ personal, socials, onCopyEmail, onBookCall }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    haptic(45);
-    sound.playSuccess();
-    onCopyEmail();
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+export default function ContactSection({ personal, socials }) {
 
   return (
     <section id="contact" style={{ paddingTop: '28px', paddingBottom: '36px' }}>
@@ -94,53 +82,6 @@ export default function ContactSection({ personal, socials, onCopyEmail, onBookC
                 </p>
               </ScrollRevealItem>
 
-              {/* Email Trigger Box with Copy feedback */}
-              <ScrollRevealItem distance={14}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '12px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: '36px'
-                  }}
-                >
-                  <button
-                    onClick={handleCopy}
-                    className="btn-primary"
-                    style={{
-                      padding: '12px 24px',
-                      fontSize: '1rem',
-                      borderRadius: 'var(--radius-lg)'
-                    }}
-                    title="Click or press C on your keyboard"
-                  >
-                    {copied ? <Check size={18} /> : <Mail size={18} />}
-                    <span>{personal.email}</span>
-                    <kbd className="kbd-chip" style={{ marginLeft: '4px', background: 'rgba(0,0,0,0.15)', color: 'inherit' }}>
-                      C
-                    </kbd>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      sound.playClick();
-                      onBookCall();
-                    }}
-                    className="btn-secondary"
-                    style={{
-                      padding: '12px 20px',
-                      fontSize: '0.95rem',
-                      borderRadius: 'var(--radius-lg)'
-                    }}
-                  >
-                    <Calendar size={16} />
-                    <span>Book a 15-min call</span>
-                    <ArrowUpRight size={15} />
-                  </button>
-                </div>
-              </ScrollRevealItem>
 
               {/* Social Profiles Row */}
               <ScrollRevealItem distance={14}>
