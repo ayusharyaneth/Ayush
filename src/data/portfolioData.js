@@ -35,9 +35,9 @@ export const portfolioData = {
       phoneTel: "+84777888148",
       timeComment: "// 1h ahead",
       socials: {
-        twitter: "https://x.com",
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
+        twitter: "https://x.com/ayusharyaneth",
+        github: "https://github.com/ayusharyaneth/",
+        linkedin: "https://www.linkedin.com/in/theayusharyan",
         buymeacoffee: "https://buymeacoffee.com/ayusharyan",
         producthunt: "https://www.producthunt.com/@ayusharyan"
       }
@@ -62,22 +62,22 @@ export const portfolioData = {
   socials: [
     {
       name: "GitHub",
-      username: "@ayusharyan",
-      url: "https://github.com",
+      username: "@ayusharyaneth",
+      url: "https://github.com/ayusharyaneth/",
       stats: { primary: "12.4k stars", secondary: "1,420 commits this year" },
       bio: "Crafting open-source developer tooling, React primitives, and Rust engines."
     },
     {
       name: "Twitter / X",
-      username: "@ayusharyan_ui",
-      url: "https://x.com",
+      username: "@ayusharyaneth",
+      url: "https://x.com/ayusharyaneth",
       stats: { primary: "18.5k followers", secondary: "Daily design & code" },
       bio: "Sharing micro-interactions, UI teardowns, and engineering architectures."
     },
     {
       name: "LinkedIn",
-      username: "ayush-aryan-dev",
-      url: "https://linkedin.com",
+      username: "theayusharyan",
+      url: "https://www.linkedin.com/in/theayusharyan",
       stats: { primary: "500+ connections", secondary: "Design Engineering" },
       bio: "Founding Engineer & Product Architect. Building high-growth tech companies."
     },

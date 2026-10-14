@@ -95,17 +95,17 @@ export default function HeroSection({ personal, onCopyEmail }) {
     location: 'Uttarakhand, India',
     email: 'eth@ayusharyan.in',
     socials: {
-      twitter: 'https://x.com',
-      github: 'https://github.com',
-      linkedin: 'https://linkedin.com',
+      twitter: 'https://x.com/ayusharyaneth',
+      github: 'https://github.com/ayusharyaneth/',
+      linkedin: 'https://www.linkedin.com/in/theayusharyan',
       buymeacoffee: 'https://buymeacoffee.com/ayusharyan'
     }
   };
 
   const socialLinks = [
-    { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com' },
-    { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com' },
-    { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://linkedin.com' },
+    { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
+    { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com/ayusharyaneth/' },
+    { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
   ];
 
