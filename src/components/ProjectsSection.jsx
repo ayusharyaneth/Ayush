@@ -421,7 +421,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         @media (min-width: 768px) {
           .project-deck-stage {
             min-height: auto;
-            padding: 48px 28px 0 28px;
+            padding: 40px 24px 0 24px;
           }
         }
 
@@ -431,30 +431,30 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           flex-direction: row;
           justify-content: center;
           align-items: flex-end;
-          gap: 14px;
+          gap: 12px;
           width: 100%;
           margin-top: 0;
-          margin-bottom: -28px; /* Signature reference tuck */
+          margin-bottom: -24px; /* Signature reference tuck */
           padding-bottom: 0;
           position: relative;
         }
 
         @media (max-width: 767px) {
           .project-deck-stage {
-            padding: 20px 14px 24px 14px;
+            padding: 18px 12px 20px 12px;
             min-height: auto;
           }
           .project-deck-row {
             flex-direction: column;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
             margin-bottom: 0;
           }
           .project-deck-card {
             width: 100%;
-            max-width: 290px;
+            max-width: 265px;
             height: auto;
-            min-height: 300px;
+            min-height: 275px;
             transform: none !important;
           }
         }
@@ -462,13 +462,13 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         /* Individual Card Dimensions & Bezier */
         .project-deck-card {
           position: relative;
-          width: 240px;
-          height: 320px;
+          width: 218px;
+          height: 288px;
           background: var(--bg-surface);
-          border-radius: 12px;
+          border-radius: 11px;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 16px 30px -8px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 14px 26px -8px rgba(0, 0, 0, 0.45);
           border: 1px solid var(--border-primary);
           cursor: pointer;
           user-select: none;
@@ -497,19 +497,19 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         /* Card Hover Behavior: Lift up, un-rotate, scale gently, elevated z-index & shadow without clipping */
         .project-deck-card:hover,
         .project-deck-card:focus-visible {
-          transform: translateY(-18px) scale(1.025) rotate(0deg) !important;
+          transform: translateY(-16px) scale(1.025) rotate(0deg) !important;
           z-index: 40 !important;
           border-color: var(--accent-border) !important;
-          box-shadow: 0 24px 46px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--accent-glow) !important;
+          box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--accent-glow) !important;
         }
 
         /* Card Top Thumbnail */
         .project-card-image-box {
           position: relative;
           width: 100%;
-          height: 128px;
-          border-top-left-radius: 11px;
-          border-top-right-radius: 11px;
+          height: 114px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
           overflow: hidden;
           background: var(--bg-muted);
         }
@@ -534,22 +534,22 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         /* Top Banner Chip */
         .project-card-pill-top {
           position: absolute;
-          top: 10px;
-          left: 10px;
-          padding: 3px 8px;
-          border-radius: 5px;
+          top: 8px;
+          left: 8px;
+          padding: 2px 6px;
+          border-radius: 4px;
           background: rgba(0, 0, 0, 0.65);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
           border: 1px solid rgba(255, 255, 255, 0.15);
           color: #ffffff;
-          font-size: 0.65rem;
+          font-size: 0.60rem;
           font-family: var(--font-family-mono);
           font-weight: 600;
           letter-spacing: 0.04em;
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 4px;
         }
 
         .project-pill-sep {
@@ -559,10 +559,10 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         /* Top Right Arrow */
         .project-card-arrow-badge {
           position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 26px;
-          height: 26px;
+          top: 8px;
+          right: 8px;
+          width: 22px;
+          height: 22px;
           border-radius: 50%;
           background: rgba(0, 0, 0, 0.6);
           backdrop-filter: blur(8px);
@@ -584,29 +584,29 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         /* Metric Pill at bottom of image */
         .project-card-metric-pill {
           position: absolute;
-          bottom: 8px;
-          left: 10px;
-          padding: 2px 7px;
-          border-radius: 4px;
+          bottom: 6px;
+          left: 8px;
+          padding: 1px 6px;
+          border-radius: 3px;
           background: rgba(0, 0, 0, 0.7);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
           border: 1px solid rgba(255, 255, 255, 0.1);
           color: var(--accent);
-          font-size: 0.65rem;
+          font-size: 0.60rem;
           font-family: var(--font-family-mono);
           font-weight: 500;
         }
 
         /* Bottom Body */
         .project-card-body {
-          padding: 13px 15px;
+          padding: 10px 12px;
           flex: 1;
           display: flex;
           flex-direction: column;
           background: var(--bg-surface);
-          border-bottom-left-radius: 11px;
-          border-bottom-right-radius: 11px;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
           border-top: 1px solid var(--border-secondary);
         }
 
@@ -614,14 +614,14 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 5px;
+          margin-bottom: 4px;
         }
 
         .project-category-badge {
           display: inline-block;
-          padding: 2px 7px;
-          border-radius: 4px;
-          font-size: 0.62rem;
+          padding: 1px 6px;
+          border-radius: 3px;
+          font-size: 0.58rem;
           font-family: var(--font-family-mono);
           font-weight: 700;
           letter-spacing: 0.08em;
@@ -632,19 +632,19 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         }
 
         .project-date-eyebrow {
-          font-size: 0.65rem;
+          font-size: 0.60rem;
           font-family: var(--font-family-mono);
           color: var(--text-muted);
         }
 
         .project-card-title {
           font-family: var(--font-heading);
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           font-weight: 600;
           line-height: 1.25;
           color: var(--text-primary);
-          margin-top: 3px;
-          margin-bottom: 5px;
+          margin-top: 2px;
+          margin-bottom: 4px;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
@@ -652,9 +652,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         }
 
         .project-card-desc {
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           color: var(--text-secondary);
-          line-height: 1.4;
+          line-height: 1.35;
           margin-bottom: 0;
           display: -webkit-box;
           -webkit-line-clamp: 3;
