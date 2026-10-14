@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   ExternalLink,
-  Layers,
+  LayoutGrid,
   List,
   ArrowUpRight,
   BookOpen
@@ -11,15 +11,23 @@ import { sound } from '../utils/soundEffects';
 import { ScrollReveal } from './ScrollReveal';
 
 export default function ProjectsSection({ projects = [], onSelectProject }) {
-  const [viewMode, setViewMode] = useState('deck'); // 'deck' (default reference) | 'list'
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' (deck) | 'list'
 
-  // Restrict to exactly 3 projects for the signature 3-card deck
-  const deckProjects = projects.slice(0, 3);
+  const categories = ['All', 'Full-Stack', 'AI & ML', 'Systems', 'Open Source'];
+
+  const filtered =
+    activeCategory === 'All'
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
+
+  // When All is active in grid view, show the signature 3-card deck; otherwise show filtered
+  const displayDeck = activeCategory === 'All' ? projects.slice(0, 3) : filtered;
 
   return (
     <section id="work" style={{ paddingTop: '32px', paddingBottom: '32px' }}>
       <div className="container">
-        {/* Section Header */}
+        {/* Section Header with Editorial Serif Flourish */}
         <ScrollReveal variant="fade-up" distance={20} duration={0.6}>
           <div
             style={{
@@ -28,7 +36,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               justifyContent: 'space-between',
               flexWrap: 'wrap',
               gap: '16px',
-              marginBottom: '22px'
+              marginBottom: '20px'
             }}
           >
             <div>
@@ -67,9 +75,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               </h2>
             </div>
 
-            {/* View Mode Toggle */}
+            {/* View Mode Toggle: Grid icon & List icon */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-
               <div
                 style={{
                   display: 'flex',
@@ -83,26 +90,22 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                 <button
                   onClick={() => {
                     sound.playClick();
-                    setViewMode('deck');
+                    setViewMode('grid');
                   }}
                   style={{
                     padding: '4px 8px',
                     borderRadius: '4px',
-                    background: viewMode === 'deck' ? 'var(--bg-surface)' : 'transparent',
-                    color: viewMode === 'deck' ? 'var(--text-primary)' : 'var(--text-muted)',
+                    background: viewMode === 'grid' ? 'var(--bg-surface)' : 'transparent',
+                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'var(--text-muted)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '5px',
-                    fontSize: '0.74rem',
-                    fontFamily: 'var(--font-family-mono)',
                     border: 'none',
                     cursor: 'pointer'
                   }}
-                  title="Deck view (Reference)"
-                  aria-label="Deck view"
+                  title="Grid / Deck view"
+                  aria-label="Grid / Deck view"
                 >
-                  <Layers size={13} />
-                  <span className="hidden sm:inline">Deck</span>
+                  <LayoutGrid size={14} />
                 </button>
                 <button
                   onClick={() => {
@@ -116,25 +119,64 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-muted)',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '5px',
-                    fontSize: '0.74rem',
-                    fontFamily: 'var(--font-family-mono)',
                     border: 'none',
                     cursor: 'pointer'
                   }}
                   title="List view"
                   aria-label="List view"
                 >
-                  <List size={13} />
-                  <span className="hidden sm:inline">List</span>
+                  <List size={14} />
                 </button>
               </div>
             </div>
           </div>
         </ScrollReveal>
 
+        {/* Category Pills Bar (Image 1 reference) */}
+        <ScrollReveal variant="fade-up" distance={14} delay={0.06} duration={0.55}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              overflowX: 'auto',
+              paddingBottom: '8px',
+              marginBottom: '26px',
+              scrollbarWidth: 'none'
+            }}
+          >
+            {categories.map((cat) => {
+              const active = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    sound.playClick();
+                    setActiveCategory(cat);
+                  }}
+                  style={{
+                    padding: '5px 12px',
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: '0.78rem',
+                    fontFamily: 'var(--font-family-mono)',
+                    whiteSpace: 'nowrap',
+                    background: active ? 'var(--accent)' : 'var(--bg-muted)',
+                    color: active ? '#000' : 'var(--text-secondary)',
+                    border: `1px solid ${active ? 'var(--accent-border)' : 'var(--border-secondary)'}`,
+                    fontWeight: active ? 600 : 400,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+
         {/* 3-CARD DECK PRESENTATION (Matching manishtamang.com) */}
-        {viewMode === 'deck' ? (
+        {viewMode === 'grid' ? (
           <ScrollReveal variant="fade-up" distance={24} duration={0.65}>
             <div className="project-deck-stage screen-box">
               {/* Subtle Stage Top Banner / Watermark */}
@@ -160,17 +202,29 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     color: 'var(--text-dim)'
                   }}
                 >
-                  3 OF 3 DISPLAYED
+                  {displayDeck.length} OF {projects.length} DISPLAYED
                 </div>
               </div>
 
               {/* DESKTOP DECK: 3 Fanned Cards (-rotate-3, rotate-1, rotate-3) */}
               <div className="project-deck-row hidden md:flex">
-                {deckProjects.map((project, idx) => {
-                  const rotationClass =
-                    idx === 0 ? 'card-left' : idx === 1 ? 'card-center' : 'card-right';
+                {displayDeck.map((project, idx) => {
+                  const isMulti = displayDeck.length > 1;
+                  const rotationClass = !isMulti
+                    ? 'card-center'
+                    : idx === 0
+                    ? 'card-left'
+                    : idx === 1
+                    ? 'card-center'
+                    : 'card-right';
                   const dateLabel =
-                    idx === 0 ? 'v2.4 • Mac' : idx === 1 ? 'v1.8 • AI Studio' : 'v3.2 • OSS';
+                    project.category === 'Full-Stack'
+                      ? 'v2.4 • Mac'
+                      : project.category === 'AI & ML'
+                      ? 'v1.8 • AI Studio'
+                      : project.category === 'Systems'
+                      ? 'v1.4 • Core'
+                      : 'v3.2 • OSS';
 
                   return (
                     <div
@@ -277,7 +331,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
 
               {/* MOBILE VIEW (< 768px): Sleek Responsive List with Sound Effects */}
               <div className="project-mobile-list flex md:hidden">
-                {deckProjects.map((project, idx) => (
+                {displayDeck.map((project, idx) => (
                   <div
                     key={project.id}
                     className="project-mobile-card group"
@@ -315,7 +369,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         ) : (
           /* EDITORIAL LIST VIEW */
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {deckProjects.map((project, idx) => (
+            {filtered.map((project, idx) => (
               <div
                 key={project.id}
                 className="screen-box"
