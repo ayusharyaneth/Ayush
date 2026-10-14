@@ -341,7 +341,7 @@ export default function ContactSection({
               </div>
 
               <div className="contact-arrow-circle">
-                <ArrowUpRight size={22} className="contact-arrow-icon" strokeWidth={2} />
+                <ArrowUpRight size={18} className="contact-arrow-icon" strokeWidth={2} />
               </div>
             </div>
 
