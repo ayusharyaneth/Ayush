@@ -105,7 +105,7 @@ export default function CommandPalette({
       category: 'Navigation',
       id: 'nav-support',
       title: 'Jump to Support // Buy Me a Coffee',
-      subtitle: 'UPI, PayPal, GitHub Sponsors & Crypto transfers',
+      subtitle: 'PayPal, Buy Me a Coffee & Crypto transfers',
       icon: Heart,
       run: () => {
         onNavigate?.('support');

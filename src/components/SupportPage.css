@@ -158,48 +158,7 @@
   color: var(--accent) !important;
 }
 
-/* 2. UPI Section */
-.support-upi-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px dashed var(--border-dashed);
-  border-radius: var(--radius-md, 8px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: var(--shadow-card);
-}
-
-.support-upi-row:hover {
-  border-color: var(--accent);
-  background: var(--accent-tint);
-}
-
-.support-upi-icon {
-  font-size: 20px;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.support-upi-id {
-  flex: 1;
-  min-width: 0;
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 3. Crypto Dropdowns & Address Box */
+/* 2. Crypto Dropdowns & Address Box */
 .support-select-row {
   display: grid;
   grid-template-columns: 1fr;

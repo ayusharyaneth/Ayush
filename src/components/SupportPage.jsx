@@ -9,7 +9,6 @@ import {
 import {
   PayPalIcon,
   BuyMeACoffeeIcon,
-  UpiIcon,
   EthereumIcon,
   UsdtIcon,
   UsdcIcon,
@@ -142,8 +141,6 @@ export default function SupportPage({
     return { ...item, icon };
   });
 
-  const upiId = supportData.upi?.id || 'eth@ayusharyan.in';
-
   return (
     <div className="support-layout">
       <div className="support-container">
@@ -202,37 +199,7 @@ export default function SupportPage({
           </div>
         </section>
 
-        {/* 2. UPI (India) Section */}
-        <section className="support-section">
-          <h2 className="support-section-title">UPI (India)</h2>
-          <p className="support-section-desc">
-            {supportData.upi?.subtext || 'Instant transfers for supporters in India.'}
-          </p>
-
-          <div className="support-upi-row">
-            <span className="support-upi-icon" aria-hidden="true">
-              <UpiIcon size={20} />
-            </span>
-            <span className="support-upi-id" title={upiId}>
-              {upiId}
-            </span>
-
-            <div className="support-copy-wrap">
-              <button
-                type="button"
-                className={`support-copy-btn ${copiedKey === 'upi' ? 'support-copy-btn-copied' : ''}`}
-                onClick={() => handleCopy(upiId, 'upi', 'UPI ID')}
-                title={copiedKey === 'upi' ? 'UPI ID copied!' : 'Copy UPI ID'}
-                aria-label="Copy UPI ID"
-              >
-                {copiedKey === 'upi' ? <Check size={15} /> : <Copy size={15} />}
-              </button>
-              {copiedKey === 'upi' && <span className="support-copy-status">Copied</span>}
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Crypto Direct Transfers Section */}
+        {/* 2. Crypto Direct Transfers Section */}
         <section className="support-section">
           <h2 className="support-section-title">Crypto</h2>
           <p className="support-section-desc">Direct wallet transfers — pick a coin, then its network.</p>

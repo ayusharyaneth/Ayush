@@ -267,10 +267,6 @@ export const portfolioData = {
         subtext: "Fuel my late-night builds"
       }
     ],
-    upi: {
-      id: "eth@ayusharyan.in",
-      subtext: "Instant transfers for supporters in India."
-    },
     crypto: [
       {
         key: "ETH",
