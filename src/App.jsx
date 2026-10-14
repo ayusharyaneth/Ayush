@@ -70,10 +70,20 @@ export default function App() {
     }, 2800);
   }, []);
 
-  const handleCopyEmail = useCallback(() => {
-    navigator.clipboard.writeText(portfolioData.personal.email);
+  const handleCopyEmail = useCallback((targetEmail) => {
+    const emailToCopy =
+      typeof targetEmail === 'string' && targetEmail
+        ? targetEmail
+        : portfolioData.personal.chanhCard?.email || portfolioData.personal.email;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(emailToCopy);
+      }
+    } catch {
+      // handled
+    }
     sound.playSuccess();
-    showToast(`Copied ${portfolioData.personal.email} to clipboard!`, 'copy');
+    showToast(`Copied ${emailToCopy} to clipboard!`, 'copy');
   }, [showToast]);
 
   const handleBookCall = useCallback(() => {
