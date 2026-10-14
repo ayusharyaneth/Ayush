@@ -252,5 +252,87 @@ export const portfolioData = {
         { title: "Featured on The Pragmatic Engineer", desc: "Case study on building high-density desktop dashboards", url: "#" }
       ]
     }
-  ]
+  ],
+  support: {
+    description: "If my work has helped you, here's how to support it.",
+    quickSupport: [
+      {
+        label: "PayPal",
+        url: "https://paypal.me/theayusharyan",
+        subtext: "One-time gift via PayPal"
+      },
+      {
+        label: "Buy Me a Coffee",
+        url: "https://buymeacoffee.com/ayusharyan",
+        subtext: "Fuel my late-night builds"
+      },
+      {
+        label: "GitHub Sponsors",
+        url: "https://github.com/sponsors/ayusharyaneth",
+        subtext: "Recurring support on GitHub"
+      }
+    ],
+    upi: {
+      id: "eth@ayusharyan.in",
+      subtext: "Instant transfers for supporters in India."
+    },
+    crypto: [
+      {
+        key: "ETH",
+        label: "ETH / EVM",
+        networks: ["Ethereum", "Arbitrum One", "Base", "Optimism", "Polygon"],
+        addresses: {
+          Ethereum: { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Base: { badge: "Base", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Optimism: { badge: "Optimism", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+        }
+      },
+      {
+        key: "USDT",
+        label: "USDT",
+        networks: ["Arbitrum One", "Polygon", "TRC20", "Solana", "BEP20", "ERC-20"],
+        addresses: {
+          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          TRC20: { badge: "TRC-20", address: "TYGQJk85Qhm818RGZtJV8CpMvqeK2JT8Vt" },
+          Solana: { badge: "SOL", address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6" },
+          BEP20: { badge: "BEP-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+        }
+      },
+      {
+        key: "USDC",
+        label: "USDC",
+        networks: ["Arbitrum One", "Polygon", "Solana", "BEP20", "ERC-20"],
+        addresses: {
+          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          Solana: { badge: "SOL", address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6" },
+          BEP20: { badge: "BEP-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
+          "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+        }
+      },
+      {
+        key: "SOL",
+        label: "SOL",
+        badge: "SOL",
+        address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6"
+      },
+      {
+        key: "BTC",
+        label: "BTC",
+        badge: "BTC",
+        address: "bc1qlvtnllrvcczzuwhng0nhdpuu8hktnu6trantap"
+      },
+      {
+        key: "LTC",
+        label: "LTC",
+        badge: "LTC",
+        address: "ltc1qlvtnllrvcczzuwhng0nhdpuu8hktnu6t8pf093"
+      }
+    ]
+  }
 };
+
