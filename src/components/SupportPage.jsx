@@ -9,7 +9,6 @@ import {
 import {
   PayPalIcon,
   BuyMeACoffeeIcon,
-  GithubSponsorsIcon,
   UpiIcon,
   EthereumIcon,
   UsdtIcon,
@@ -139,8 +138,6 @@ export default function SupportPage({
     let icon = <BuyMeACoffeeIcon size={20} />;
     if (item.label.includes('PayPal')) {
       icon = <PayPalIcon size={20} />;
-    } else if (item.label.includes('GitHub')) {
-      icon = <GithubSponsorsIcon size={20} />;
     }
     return { ...item, icon };
   });
@@ -164,7 +161,7 @@ export default function SupportPage({
         {/* 1. Quick Support Section */}
         <section className="support-section">
           <h2 className="support-section-title">Quick Support</h2>
-          <p className="support-section-desc">Three fast platforms for one-time support.</p>
+          <p className="support-section-desc">Fast platforms for one-time support.</p>
 
           <div className="support-quick-grid">
             {quickPlatforms.map((platform) => {
