@@ -1,19 +1,23 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import MobileBottomNav from './components/MobileBottomNav';
-import SettingsBar from './components/SettingsBar';
-import CommandPalette from './components/CommandPalette';
 import HeroSection from './components/HeroSection';
 import ProjectsSection from './components/ProjectsSection';
 import ExperienceSection from './components/ExperienceSection';
 import TheCollection from './components/TheCollection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
-import CaseStudyModal from './components/CaseStudyModal';
 import Toast from './components/Toast';
-import ConsentManager from './components/ConsentManager';
 import DotGridSpotlight from './components/DotGridSpotlight';
 import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
+import GithubHeatmap from './components/GithubHeatmap';
+import { ScrollReveal } from './components/ScrollReveal';
+
+// Secondary Modals & Drawers: Split into asynchronous chunks to keep initial bundle ultra-light
+const SettingsBar = lazy(() => import('./components/SettingsBar'));
+const CommandPalette = lazy(() => import('./components/CommandPalette'));
+const CaseStudyModal = lazy(() => import('./components/CaseStudyModal'));
+const ConsentManager = lazy(() => import('./components/ConsentManager'));
 import GithubHeatmap from './components/GithubHeatmap';
 import { ScrollReveal } from './components/ScrollReveal';
 
