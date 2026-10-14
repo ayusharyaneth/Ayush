@@ -13,7 +13,7 @@ export default function Footer({ personal = {}, socials = [] }) {
     sound.playClick();
     smoothScrollTo('top');
     if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', '#');
+      window.history.replaceState(null, '', window.location.pathname);
     }
   };
 

@@ -239,13 +239,34 @@ export default function Navbar({
     e.preventDefault();
     sound.playClick();
 
+    if (targetId === 'top') {
+      if (currentView !== 'home') {
+        onNavigate?.('home');
+        return;
+      }
+      setActiveSection('');
+      isClickScrollingRef.current = true;
+      smoothScrollTo('top', {
+        onComplete: () => {
+          isClickScrollingRef.current = false;
+          setActiveSection('');
+        },
+        onInterrupt: () => {
+          isClickScrollingRef.current = false;
+        }
+      });
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+      return;
+    }
+
     if (currentView === 'support') {
       onNavigate?.('home', targetId);
       return;
     }
 
-    const targetSection = targetId === 'top' ? '' : targetId;
-    setActiveSection(targetSection);
+    setActiveSection(targetId);
 
     // Lock scroll spy during smooth scroll to prevent intermediate indicator jumping
     isClickScrollingRef.current = true;
@@ -253,7 +274,7 @@ export default function Navbar({
     smoothScrollTo(targetId, {
       onComplete: () => {
         isClickScrollingRef.current = false;
-        setActiveSection(targetSection);
+        setActiveSection(targetId);
       },
       onInterrupt: () => {
         isClickScrollingRef.current = false;
@@ -261,7 +282,7 @@ export default function Navbar({
     });
 
     if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
+      window.history.replaceState(null, '', `#${targetId}`);
     }
   };
 
@@ -304,7 +325,7 @@ export default function Navbar({
 
         {/* Brand Monogram */}
         <a
-          href="#top"
+          href="/"
           onClick={(e) => handleNavClick(e, 'top')}
           className="navbar-brand"
           title="Ayush Aryan Portfolio"

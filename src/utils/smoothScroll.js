@@ -325,8 +325,14 @@ export function initAnchorScrollListener() {
     e.preventDefault();
     smoothScrollTo(targetId, {
       onComplete: () => {
-        if (window.history && window.history.pushState) {
-          window.history.pushState(null, '', href);
+        if (targetId === 'top') {
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
+        } else {
+          if (window.history && window.history.pushState) {
+            window.history.pushState(null, '', href);
+          }
         }
       }
     });

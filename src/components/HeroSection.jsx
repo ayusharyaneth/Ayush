@@ -106,7 +106,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
     { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com/ayusharyaneth/' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
-    { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: '/support', isSupport: true }
+    { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyaneth' }
   ];
 
   return (
@@ -295,23 +295,6 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                 <div className="chanh-social-row">
                   {socialLinks.map((item) => {
                     const Icon = item.icon;
-                    if (item.isSupport) {
-                      return (
-                        <a
-                          key={item.name}
-                          href="/support"
-                          className="chanh-social-btn"
-                          title="Support / Buy Me a Coffee"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            sound.playClick();
-                            onNavigateSupport?.();
-                          }}
-                        >
-                          <Icon size={14} />
-                        </a>
-                      );
-                    }
                     return (
                       <a
                         key={item.name}

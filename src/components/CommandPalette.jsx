@@ -56,7 +56,11 @@ export default function CommandPalette({
       subtitle: 'Browse 5 production case studies',
       icon: FolderGit2,
       run: () => {
-        smoothScrollTo('work');
+        if (onNavigate) {
+          onNavigate('home', 'work');
+        } else {
+          smoothScrollTo('work');
+        }
         setIsOpen(false);
       }
     },
@@ -67,7 +71,11 @@ export default function CommandPalette({
       subtitle: 'Career timeline & 52-week activity heatmap',
       icon: Briefcase,
       run: () => {
-        smoothScrollTo('experience');
+        if (onNavigate) {
+          onNavigate('home', 'experience');
+        } else {
+          smoothScrollTo('experience');
+        }
         setIsOpen(false);
       }
     },

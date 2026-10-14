@@ -151,6 +151,28 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
       return;
     }
 
+    if (targetId === 'top' || targetId === 'home') {
+      if (currentView !== 'home') {
+        onNavigate?.('home');
+        return;
+      }
+      setActiveSection('top');
+      isClickScrollingRef.current = true;
+      smoothScrollTo('top', {
+        onComplete: () => {
+          isClickScrollingRef.current = false;
+          setActiveSection('top');
+        },
+        onInterrupt: () => {
+          isClickScrollingRef.current = false;
+        }
+      });
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+      return;
+    }
+
     if (currentView === 'support') {
       onNavigate?.('home', targetId);
       return;
@@ -170,7 +192,7 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
     });
 
     if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
+      window.history.replaceState(null, '', `#${targetId}`);
     }
   }, [currentView, onNavigate]);
 
@@ -192,7 +214,7 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
     });
 
     if (window.history && window.history.replaceState) {
-      window.history.replaceState(null, '', '#');
+      window.history.replaceState(null, '', window.location.pathname);
     }
   }, []);
 
