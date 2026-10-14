@@ -56,7 +56,7 @@ class SoundEngine {
       o.connect(l);
       l.connect(ctx.destination);
       n.start(t);
-    } catch (_) {}
+    } catch {}
   }
 
   // Exact Manish Tamang pop synthesizer for card clicks & opening modals
@@ -81,7 +81,7 @@ class SoundEngine {
 
       osc.start(t);
       osc.stop(t + 0.05);
-    } catch (_) {}
+    } catch {}
   }
 
   // Exact Manish Tamang tactile click synthesizer
@@ -108,7 +108,7 @@ class SoundEngine {
       o.connect(l);
       l.connect(ctx.destination);
       n.start(t);
-    } catch (_) {}
+    } catch {}
   }
 
   // Exact Manish Tamang tick synthesizer
@@ -134,7 +134,7 @@ class SoundEngine {
       o.connect(l);
       l.connect(ctx.destination);
       n.start(t);
-    } catch (_) {}
+    } catch {}
   }
 
   // Alias for hover to use whoosh/tick

@@ -189,8 +189,6 @@ export default function App() {
       <Navbar
         theme={theme}
         setTheme={handleThemeChange}
-        soundMuted={soundMuted}
-        setSoundMuted={setSoundMuted}
         onOpenCommand={() => setIsCommandOpen(true)}
         onToggleSettings={() => setIsSettingsOpen((prev) => !prev)}
         isSettingsOpen={isSettingsOpen}
@@ -223,7 +221,6 @@ export default function App() {
         <HeroSection
           personal={portfolioData.personal}
           onCopyEmail={handleCopyEmail}
-          onBookCall={handleBookCall}
         />
 
         {/* Open Source Activity (GitHub Heatmap) */}
@@ -270,10 +267,6 @@ export default function App() {
         onCopyEmail={handleCopyEmail}
         theme={theme}
         setTheme={handleThemeChange}
-        font={font}
-        setFont={setFont}
-        palette={palette}
-        setPalette={setPalette}
         soundMuted={soundMuted}
         setSoundMuted={setSoundMuted}
         projects={portfolioData.projects}

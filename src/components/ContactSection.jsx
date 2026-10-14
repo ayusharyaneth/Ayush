@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
-export default function ContactSection({ personal, socials }) {
+export default function ContactSection() {
 
   return (
     <section id="contact" style={{ paddingTop: '28px', paddingBottom: '36px' }}>
