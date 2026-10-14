@@ -17,6 +17,7 @@ import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
+import { initAnchorScrollListener } from './utils/smoothScroll';
 
 export default function App() {
   // Theme & Appearance State
@@ -133,6 +134,12 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleCopyEmail, theme, showToast, handleThemeChange]);
+
+  // Global Anchor Smooth Scroll Interceptor
+  useEffect(() => {
+    const unbind = initAnchorScrollListener();
+    return () => unbind();
+  }, []);
 
   return (
     <div className="bg-schematic-grid" style={{ minHeight: '100vh', position: 'relative' }}>

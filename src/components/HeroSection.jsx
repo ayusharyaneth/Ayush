@@ -18,6 +18,7 @@ import {
   LeetCodeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
+import { ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 import './HeroSection.css';
 
 export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
@@ -139,291 +140,302 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
       }}
     >
       <div className="container">
-        {/* Main Hero Card */}
-        <div
+        {/* Main Hero Card with fluid staggered entry */}
+        <ScrollRevealGroup
+          as="div"
           className="screen-box hero-card"
           style={{
             padding: '36px 32px'
           }}
+          stagger={0.08}
+          delayChildren={0.04}
         >
           {/* Profile Bar with Dual Avatar Reveal */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
-            <div
-              onClick={handleAvatarClick}
-              className="avatar-container"
-              style={{
-                position: 'relative',
-                width: '64px',
-                height: '64px',
-                borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden',
-                cursor: 'pointer',
-                border: '2px solid var(--border-glow)',
-                boxShadow: 'var(--shadow-card)'
-              }}
-              title="Click to switch photo"
-            >
-              {/* Photo 1 (Default / Opening Pic) */}
-              <img
-                src={avatarPhotos[0]}
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://i.ibb.co/pB7wxbjb/bot-pfp-silver-star.png';
-                }}
-                alt={personal.name}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  position: 'absolute',
-                  inset: 0,
-                  opacity: avatarIndex === 0 ? 1 : 0,
-                  transition: 'opacity 0.3s ease, transform 0.4s ease'
-                }}
-              />
-              {/* Photo 2 (Secondary / Clicked Pic) */}
-              <img
-                src={avatarPhotos[1]}
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://i.ibb.co/RGszBkXG/bot-pfp-warm-pebble.png';
-                }}
-                alt={`${personal.name} avatar secondary`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  position: 'absolute',
-                  inset: 0,
-                  opacity: avatarIndex === 1 ? 1 : 0,
-                  transition: 'opacity 0.3s ease, transform 0.4s ease'
-                }}
-              />
-              {/* Click Badge */}
+          <ScrollRevealItem distance={16}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
               <div
+                onClick={handleAvatarClick}
+                className="avatar-container"
                 style={{
-                  position: 'absolute',
-                  bottom: '2px',
-                  right: '2px',
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
-                  background: 'var(--accent)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 0 6px var(--accent)'
+                  position: 'relative',
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: 'var(--radius-lg)',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  border: '2px solid var(--border-glow)',
+                  boxShadow: 'var(--shadow-card)'
                 }}
+                title="Click to switch photo"
               >
-                <span style={{ fontSize: '8px', color: '#000', fontWeight: 'bold' }}>✦</span>
-              </div>
-            </div>
-
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <h1
+                {/* Photo 1 (Default / Opening Pic) */}
+                <img
+                  src={avatarPhotos[0]}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://i.ibb.co/pB7wxbjb/bot-pfp-silver-star.png';
+                  }}
+                  alt={personal.name}
                   style={{
-                    fontSize: '1.45rem',
-                    fontWeight: 700,
-                    letterSpacing: '-0.02em',
-                    color: 'var(--text-primary)'
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    inset: 0,
+                    opacity: avatarIndex === 0 ? 1 : 0,
+                    transition: 'opacity 0.3s ease, transform 0.4s ease'
+                  }}
+                />
+                {/* Photo 2 (Secondary / Clicked Pic) */}
+                <img
+                  src={avatarPhotos[1]}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://i.ibb.co/RGszBkXG/bot-pfp-warm-pebble.png';
+                  }}
+                  alt={`${personal.name} avatar secondary`}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    inset: 0,
+                    opacity: avatarIndex === 1 ? 1 : 0,
+                    transition: 'opacity 0.3s ease, transform 0.4s ease'
+                  }}
+                />
+                {/* Click Badge */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '2px',
+                    right: '2px',
+                    width: '14px',
+                    height: '14px',
+                    borderRadius: '50%',
+                    background: 'var(--accent)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 0 6px var(--accent)'
                   }}
                 >
-                  {personal.name}
-                </h1>
-                <BadgeCheck size={18} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                  <span style={{ fontSize: '8px', color: '#000', fontWeight: 'bold' }}>✦</span>
+                </div>
               </div>
-              <div
-                style={{
-                  fontSize: '0.82rem',
-                  fontFamily: 'var(--font-family-mono)',
-                  color: 'var(--text-muted)'
-                }}
-              >
-                {personal.title}
+
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <h1
+                    style={{
+                      fontSize: '1.45rem',
+                      fontWeight: 700,
+                      letterSpacing: '-0.02em',
+                      color: 'var(--text-primary)'
+                    }}
+                  >
+                    {personal.name}
+                  </h1>
+                  <BadgeCheck size={18} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.82rem',
+                    fontFamily: 'var(--font-family-mono)',
+                    color: 'var(--text-muted)'
+                  }}
+                >
+                  {personal.title}
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollRevealItem>
 
           {/* Chanh Dai Signature Hero Box */}
-          <div className="chanh-hero-wrapper">
-            {/* Top Social Row - Clean, clear background */}
-            <div className="chanh-top-strip">
-              {/* Handwritten "Follow Me" placed OUTSIDE the card dashed border, pointing directly at the first social button */}
-              <div className="chanh-outside-connect">
-                <span className="chanh-connect-text">Follow Me</span>
-                <svg
-                  width="46"
-                  height="34"
-                  viewBox="0 0 46 34"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chanh-connect-arrow"
-                  aria-hidden="true"
-                >
-                  <path d="M 5 4 C 5 16, 16 24, 44 24" />
-                  <path d="M 36 18 L 44 24 L 36 30" />
-                </svg>
+          <ScrollRevealItem distance={18}>
+            <div className="chanh-hero-wrapper">
+              {/* Top Social Row - Clean, clear background */}
+              <div className="chanh-top-strip">
+                {/* Handwritten "Follow Me" placed OUTSIDE the card dashed border, pointing directly at the first social button */}
+                <div className="chanh-outside-connect">
+                  <span className="chanh-connect-text">Follow Me</span>
+                  <svg
+                    width="46"
+                    height="34"
+                    viewBox="0 0 46 34"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="chanh-connect-arrow"
+                    aria-hidden="true"
+                  >
+                    <path d="M 5 4 C 5 16, 16 24, 44 24" />
+                    <path d="M 36 18 L 44 24 L 36 30" />
+                  </svg>
+                </div>
+
+                <div className="chanh-social-row">
+                  {socialLinks.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chanh-social-btn"
+                        title={item.name}
+                        onClick={() => sound.playClick()}
+                      >
+                        <Icon size={14} />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="chanh-social-row">
-                {socialLinks.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="chanh-social-btn"
-                      title={item.name}
-                      onClick={() => sound.playClick()}
-                    >
-                      <Icon size={14} />
-                    </a>
-                  );
-                })}
+              {/* Two-Column Information Grid */}
+              <div className="chanh-info-grid">
+                {/* Left Column */}
+                <div className="chanh-grid-column">
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">&lt;/&gt;</span>
+                    <div className="chanh-item-text">
+                      <span>{chanh.role1.title}</span>
+                      <a
+                        href={chanh.role1.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chanh-handle"
+                      >
+                        {chanh.role1.company}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">
+                      <Lightbulb size={13} />
+                    </span>
+                    <div className="chanh-item-text">
+                      <span>{chanh.role2.title}</span>
+                      <a
+                        href={chanh.role2.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chanh-handle"
+                      >
+                        {chanh.role2.company}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">
+                      <MapPin size={13} />
+                    </span>
+                    <div className="chanh-item-text">
+                      <span>{chanh.location}</span>
+                    </div>
+                  </div>
+
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">
+                      <Mail size={13} />
+                    </span>
+                    <div className="chanh-item-text chanh-email-row">
+                      <a
+                        href={`mailto:${chanh.email}`}
+                        className="chanh-link"
+                        title={`Send email to ${chanh.email}`}
+                      >
+                        {chanh.email}
+                      </a>
+                      <button
+                        type="button"
+                        onClick={handleCopyEmailAddress}
+                        className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
+                        title={emailCopied ? 'Copied to clipboard!' : 'Copy email (or press C)'}
+                        aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}
+                      >
+                        {emailCopied ? (
+                          <Check size={12} strokeWidth={2.4} className="chanh-copy-check-icon" />
+                        ) : (
+                          <Copy size={12} strokeWidth={1.8} className="chanh-copy-idle-icon" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="chanh-grid-column right-col">
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">
+                      <Clock size={13} />
+                    </span>
+                    <div className="chanh-item-text">
+                      <span>{liveTime}</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{chanh.timeComment}</span>
+                    </div>
+                  </div>
+
+                  <div className="chanh-grid-item">
+                    <span className="chanh-badge">
+                      <Phone size={13} />
+                    </span>
+                    <div className="chanh-item-text">
+                      <a href={`tel:${chanh.phoneTel}`} className="chanh-link">
+                        {chanh.phone}
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Two-Column Information Grid */}
-            <div className="chanh-info-grid">
-              {/* Left Column */}
-              <div className="chanh-grid-column">
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">&lt;/&gt;</span>
-                  <div className="chanh-item-text">
-                    <span>{chanh.role1.title}</span>
-                    <a
-                      href={chanh.role1.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="chanh-handle"
-                    >
-                      {chanh.role1.company}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">
-                    <Lightbulb size={13} />
-                  </span>
-                  <div className="chanh-item-text">
-                    <span>{chanh.role2.title}</span>
-                    <a
-                      href={chanh.role2.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="chanh-handle"
-                    >
-                      {chanh.role2.company}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">
-                    <MapPin size={13} />
-                  </span>
-                  <div className="chanh-item-text">
-                    <span>{chanh.location}</span>
-                  </div>
-                </div>
-
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">
-                    <Mail size={13} />
-                  </span>
-                  <div className="chanh-item-text chanh-email-row">
-                    <a
-                      href={`mailto:${chanh.email}`}
-                      className="chanh-link"
-                      title={`Send email to ${chanh.email}`}
-                    >
-                      {chanh.email}
-                    </a>
-                    <button
-                      type="button"
-                      onClick={handleCopyEmailAddress}
-                      className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
-                      title={emailCopied ? 'Copied to clipboard!' : 'Copy email (or press C)'}
-                      aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}
-                    >
-                      {emailCopied ? (
-                        <Check size={12} strokeWidth={2.4} className="chanh-copy-check-icon" />
-                      ) : (
-                        <Copy size={12} strokeWidth={1.8} className="chanh-copy-idle-icon" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="chanh-grid-column right-col">
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">
-                    <Clock size={13} />
-                  </span>
-                  <div className="chanh-item-text">
-                    <span>{liveTime}</span>
-                    <span style={{ color: 'var(--text-muted)' }}>{chanh.timeComment}</span>
-                  </div>
-                </div>
-
-                <div className="chanh-grid-item">
-                  <span className="chanh-badge">
-                    <Phone size={13} />
-                  </span>
-                  <div className="chanh-item-text">
-                    <a href={`tel:${chanh.phoneTel}`} className="chanh-link">
-                      {chanh.phone}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </ScrollRevealItem>
 
           {/* Bio Paragraph */}
-          <p
-            style={{
-              fontSize: '0.92rem',
-              lineHeight: 1.65,
-              color: 'var(--text-secondary)',
-              marginBottom: '20px',
-              maxWidth: '680px'
-            }}
-          >
-            {personal.shortBio}
-          </p>
-
-          {/* Availability Pill */}
-          <div>
-            <div
+          <ScrollRevealItem distance={16}>
+            <p
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '5px 12px',
-                borderRadius: 'var(--radius-full)',
-                background: 'var(--accent-tint)',
-                border: '1px solid var(--accent-border)',
-                fontSize: '0.75rem',
-                color: 'var(--text-primary)',
-                fontWeight: 500,
-                marginBottom: 0
+                fontSize: '0.92rem',
+                lineHeight: 1.65,
+                color: 'var(--text-secondary)',
+                marginBottom: '20px',
+                maxWidth: '680px'
               }}
             >
-              <span className="pulsing-dot" />
-              <span>{personal.statusText}</span>
+              {personal.shortBio}
+            </p>
+          </ScrollRevealItem>
+
+          {/* Availability Pill */}
+          <ScrollRevealItem distance={14}>
+            <div>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '5px 12px',
+                  borderRadius: 'var(--radius-full)',
+                  background: 'var(--accent-tint)',
+                  border: '1px solid var(--accent-border)',
+                  fontSize: '0.75rem',
+                  color: 'var(--text-primary)',
+                  fontWeight: 500,
+                  marginBottom: 0
+                }}
+              >
+                <span className="pulsing-dot" />
+                <span>{personal.statusText}</span>
+              </div>
             </div>
-          </div>
-        </div>
+          </ScrollRevealItem>
+        </ScrollRevealGroup>
       </div>
 
       <style>{`
