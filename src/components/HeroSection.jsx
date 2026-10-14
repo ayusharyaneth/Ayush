@@ -18,7 +18,7 @@ import { haptic } from '../utils/haptic';
 import { ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 import './HeroSection.css';
 
-export default function HeroSection({ personal, onCopyEmail }) {
+export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }) {
   // Avatar toggle / cycle state (Opening Pic vs Clicked Pic)
   const [avatarIndex, setAvatarIndex] = useState(0);
   const avatarPhotos = [
@@ -106,7 +106,7 @@ export default function HeroSection({ personal, onCopyEmail }) {
     { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com/ayusharyaneth/' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
-    { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
+    { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: '/support', isSupport: true }
   ];
 
   return (
@@ -289,6 +289,23 @@ export default function HeroSection({ personal, onCopyEmail }) {
                 <div className="chanh-social-row">
                   {socialLinks.map((item) => {
                     const Icon = item.icon;
+                    if (item.isSupport) {
+                      return (
+                        <a
+                          key={item.name}
+                          href="/support"
+                          className="chanh-social-btn"
+                          title="Support / Buy Me a Coffee"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            sound.playClick();
+                            onNavigateSupport?.();
+                          }}
+                        >
+                          <Icon size={14} />
+                        </a>
+                      );
+                    }
                     return (
                       <a
                         key={item.name}
@@ -311,7 +328,16 @@ export default function HeroSection({ personal, onCopyEmail }) {
                 {/* Left Column */}
                 <div className="chanh-grid-column">
                   <div className="chanh-grid-item">
-                    <span className="chanh-badge" title="Buy Me a Coffee" aria-label="Buy Me a Coffee">
+                    <span
+                      className="chanh-badge"
+                      title="Support / Buy Me a Coffee"
+                      aria-label="Support / Buy Me a Coffee"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        sound.playClick();
+                        onNavigateSupport?.();
+                      }}
+                    >
                       <BuyMeACoffeeIcon size={14} />
                     </span>
                     <div className="chanh-item-text">

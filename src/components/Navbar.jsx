@@ -3,8 +3,7 @@ import {
   Sliders,
   Moon,
   Sun,
-  Search,
-  ArrowUpRight
+  Search
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { sound } from '../utils/soundEffects';

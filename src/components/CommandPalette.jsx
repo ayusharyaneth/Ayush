@@ -78,7 +78,11 @@ export default function CommandPalette({
       subtitle: 'Security research, honors & publications',
       icon: Layers,
       run: () => {
-        onNavigate ? onNavigate('home', 'collection') : smoothScrollTo('collection');
+        if (onNavigate) {
+          onNavigate('home', 'collection');
+        } else {
+          smoothScrollTo('collection');
+        }
         setIsOpen(false);
       }
     },
@@ -89,7 +93,11 @@ export default function CommandPalette({
       subtitle: 'Send an inquiry or book an intro call',
       icon: Mail,
       run: () => {
-        onNavigate ? onNavigate('home', 'contact') : smoothScrollTo('contact');
+        if (onNavigate) {
+          onNavigate('home', 'contact');
+        } else {
+          smoothScrollTo('contact');
+        }
         setIsOpen(false);
       }
     },

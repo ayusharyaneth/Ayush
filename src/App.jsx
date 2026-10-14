@@ -12,6 +12,7 @@ import DotGridSpotlight from './components/DotGridSpotlight';
 import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
 import GithubHeatmap from './components/GithubHeatmap';
 import { ScrollReveal } from './components/ScrollReveal';
+import SupportPage from './components/SupportPage';
 
 // Secondary Modals & Drawers: Split into asynchronous chunks to keep initial bundle ultra-light
 const SettingsBar = lazy(() => import('./components/SettingsBar'));
@@ -21,7 +22,7 @@ const CaseStudyModal = lazy(() => import('./components/CaseStudyModal'));
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
 import { haptic } from './utils/haptic';
-import { initSmoothScroll, initAnchorScrollListener } from './utils/smoothScroll';
+import { initSmoothScroll, initAnchorScrollListener, smoothScrollTo } from './utils/smoothScroll';
 
 export default function App() {
   // Theme & Appearance State
@@ -41,6 +42,55 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [isCopiedActive, setIsCopiedActive] = useState(false);
   const copiedTimerRef = useRef(null);
+
+  // View Routing: 'home' | 'support' (standalone page accessible only via nav/button)
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/support' || hash === '#support') {
+        return 'support';
+      }
+    }
+    return 'home';
+  });
+
+  // Handle browser Back/Forward buttons and hash changes
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path === '/support' || hash === '#support') {
+        setCurrentView('support');
+      } else {
+        setCurrentView('home');
+      }
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, []);
+
+  const navigateTo = useCallback((view, targetSection = '') => {
+    setCurrentView(view);
+    if (view === 'support') {
+      window.history.pushState(null, '', '/support');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } else {
+      window.history.pushState(null, '', targetSection ? `#${targetSection}` : '/');
+      if (targetSection) {
+        setTimeout(() => {
+          smoothScrollTo(targetSection);
+        }, 60);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+  }, []);
 
   // Clean up copied state timer on unmount
   useEffect(() => {
@@ -205,10 +255,16 @@ export default function App() {
         onOpenCommand={() => setIsCommandOpen(true)}
         onToggleSettings={() => setIsSettingsOpen((prev) => !prev)}
         isSettingsOpen={isSettingsOpen}
+        currentView={currentView}
+        onNavigate={navigateTo}
       />
 
       {/* Mobile Bottom Navigation Pill & Expandable Menu (srbh.site reference) */}
-      <MobileBottomNav isCopiedActive={isCopiedActive} />
+      <MobileBottomNav
+        isCopiedActive={isCopiedActive}
+        currentView={currentView}
+        onNavigate={navigateTo}
+      />
 
       {/* Header layout spacer so page flow begins naturally beneath fixed navbar on desktop */}
       <div className="navbar-spacer" style={{ height: 'var(--header-height)' }} aria-hidden="true" />
@@ -233,39 +289,51 @@ export default function App() {
 
       {/* Main Content Assembly */}
       <main style={{ position: 'relative', zIndex: 1 }}>
-        {/* Hero Section */}
-        <HeroSection
-          personal={portfolioData.personal}
-          onCopyEmail={handleCopyEmail}
-        />
+        {currentView === 'support' ? (
+          <SupportPage
+            supportData={portfolioData.support}
+            onNavigateHome={() => navigateTo('home', 'top')}
+            onNavigateProjects={() => navigateTo('home', 'work')}
+            showToast={showToast}
+          />
+        ) : (
+          <>
+            {/* Hero Section */}
+            <HeroSection
+              personal={portfolioData.personal}
+              onCopyEmail={handleCopyEmail}
+              onNavigateSupport={() => navigateTo('support')}
+            />
 
-        {/* Open Source Activity (GitHub Heatmap) */}
-        <section id="activity" style={{ paddingTop: '4px', paddingBottom: '24px' }}>
-          <div className="container">
-            <ScrollReveal variant="fade-up" distance={18} duration={0.65}>
-              <GithubHeatmap />
-            </ScrollReveal>
-          </div>
-        </section>
+            {/* Open Source Activity (GitHub Heatmap) */}
+            <section id="activity" style={{ paddingTop: '4px', paddingBottom: '24px' }}>
+              <div className="container">
+                <ScrollReveal variant="fade-up" distance={18} duration={0.65}>
+                  <GithubHeatmap />
+                </ScrollReveal>
+              </div>
+            </section>
 
-        {/* Featured Projects Section */}
-        <ProjectsSection
-          projects={portfolioData.projects}
-          onSelectProject={(project) => setSelectedCaseStudy(project)}
-        />
+            {/* Featured Projects Section */}
+            <ProjectsSection
+              projects={portfolioData.projects}
+              onSelectProject={(project) => setSelectedCaseStudy(project)}
+            />
 
-        {/* Experience Timeline */}
-        <ExperienceSection experience={portfolioData.experience} />
+            {/* Experience Timeline */}
+            <ExperienceSection experience={portfolioData.experience} />
 
-        {/* The Collection: Security Research, Milestones & Writing */}
-        <TheCollection collection={portfolioData.theCollection} />
+            {/* The Collection: Security Research, Milestones & Writing */}
+            <TheCollection collection={portfolioData.theCollection} />
 
-        {/* Contact CTA (Editorial Headline & Graphic Stickers) */}
-        <ContactSection
-          personal={portfolioData.personal}
-          onCopyEmail={handleCopyEmail}
-          showToast={showToast}
-        />
+            {/* Contact CTA (Editorial Headline & Graphic Stickers) */}
+            <ContactSection
+              personal={portfolioData.personal}
+              onCopyEmail={handleCopyEmail}
+              showToast={showToast}
+            />
+          </>
+        )}
       </main>
 
       {/* Footer & Signature */}
@@ -287,6 +355,7 @@ export default function App() {
             setSoundMuted={setSoundMuted}
             projects={portfolioData.projects}
             onOpenCaseStudy={(project) => setSelectedCaseStudy(project)}
+            onNavigate={navigateTo}
           />
         )}
 
