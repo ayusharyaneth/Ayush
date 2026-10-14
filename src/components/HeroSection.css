@@ -31,7 +31,7 @@
   letter-spacing: -0.01em;
   transform: rotate(-3deg);
   white-space: nowrap;
-  margin-right: 46px; /* Positions the text completely outside the hero card dashed line */
+  margin-right: 56px; /* Positions the text completely outside the hero card dashed line with 10px extra clearance */
   margin-bottom: 2px;
   transition: color 0.2s ease;
 }
