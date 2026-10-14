@@ -1,10 +1,165 @@
 /* ==========================================================================
-   CHANH DAI SIGNATURE HERO SECTION
-   Replicates the exact layout from chanhdai.com
+   CHANH DAI SIGNATURE HERO SECTION + ARCHITECTURAL BLUEPRINT BORDER
+   Reference: https://www.manishx.in/ & user blueprint crosshair border design
    ========================================================================== */
+
+:root {
+  --hero-bp-border: #444444;
+  --hero-bp-border-hover: #888888;
+  --hero-bp-corner-hover: #ffffff;
+  --hero-spotlight: rgba(255, 255, 255, 0.045);
+  --hero-card-glow: rgba(255, 255, 255, 0.07);
+}
+
+.theme-light {
+  --hero-bp-border: rgba(0, 0, 0, 0.16);
+  --hero-bp-border-hover: rgba(0, 0, 0, 0.48);
+  --hero-bp-corner-hover: #18181b;
+  --hero-spotlight: rgba(0, 0, 0, 0.035);
+  --hero-card-glow: rgba(0, 0, 0, 0.04);
+}
 
 .hero-card {
   position: relative;
+}
+
+/* Blueprint Hero Card Container: Sharp CAD boundary with overshooting dashed lines */
+.hero-card.blueprint-hero-card {
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+/* Card Elevation & Ambient Halo on Section Hover (manishx.in reference) */
+.hero-card.blueprint-hero-card:hover,
+.hero-card.blueprint-hero-card.is-hovered {
+  box-shadow: 0 0 32px -4px var(--hero-card-glow), 0 16px 40px -12px rgba(0, 0, 0, 0.45);
+}
+
+.theme-light .hero-card.blueprint-hero-card:hover,
+.theme-light .hero-card.blueprint-hero-card.is-hovered {
+  box-shadow: 0 0 32px -4px var(--hero-card-glow), 0 14px 32px -10px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   ARCHITECTURAL OVERSHOOTING DASHED LINES (Crosshair CAD Corners)
+   ========================================================================== */
+
+.blueprint-border-line {
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Top Horizontal Line: overshoots left & right by 12px */
+.blueprint-line-top {
+  top: 0;
+  left: -12px;
+  right: -12px;
+  height: 0;
+  border-top: 1.5px dashed var(--hero-bp-border);
+}
+
+/* Bottom Horizontal Line: overshoots left & right by 12px */
+.blueprint-line-bottom {
+  bottom: 0;
+  left: -12px;
+  right: -12px;
+  height: 0;
+  border-bottom: 1.5px dashed var(--hero-bp-border);
+}
+
+/* Left Vertical Line: overshoots top & bottom by 12px */
+.blueprint-line-left {
+  left: 0;
+  top: -12px;
+  bottom: -12px;
+  width: 0;
+  border-left: 1.5px dashed var(--hero-bp-border);
+}
+
+/* Right Vertical Line: overshoots top & bottom by 12px */
+.blueprint-line-right {
+  right: 0;
+  top: -12px;
+  bottom: -12px;
+  width: 0;
+  border-right: 1.5px dashed var(--hero-bp-border);
+}
+
+/* Smooth Highlight on Hover: all 4 lines illuminate to #888888 (manishx.in reference) */
+.hero-card.blueprint-hero-card:hover .blueprint-border-line,
+.hero-card.blueprint-hero-card.is-hovered .blueprint-border-line {
+  border-color: var(--hero-bp-border-hover);
+}
+
+/* ==========================================================================
+   CORNER CROSSHAIR (+) MARKERS AT ALL 4 INTERSECTIONS
+   ========================================================================== */
+
+.blueprint-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-mono), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--hero-bp-border);
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.blueprint-corner-tl {
+  top: -7px;
+  left: -7px;
+}
+.blueprint-corner-tr {
+  top: -7px;
+  right: -7px;
+}
+.blueprint-corner-bl {
+  bottom: -7px;
+  left: -7px;
+}
+.blueprint-corner-br {
+  bottom: -7px;
+  right: -7px;
+}
+
+.hero-card.blueprint-hero-card:hover .blueprint-corner,
+.hero-card.blueprint-hero-card.is-hovered .blueprint-corner {
+  color: var(--hero-bp-corner-hover);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+  transform: scale(1.15);
+}
+
+.theme-light .hero-card.blueprint-hero-card:hover .blueprint-corner,
+.theme-light .hero-card.blueprint-hero-card.is-hovered .blueprint-corner {
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   INTERACTIVE CURSOR SPOTLIGHT RADIAL GLOW
+   ========================================================================== */
+
+.blueprint-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.35s ease;
+  border-radius: 0;
 }
 
 /* Handwritten "Follow Me" placed OUTSIDE the card dashed border, pointing into first box only */
@@ -55,11 +210,11 @@
 
 .chanh-hero-wrapper {
   margin-top: 6px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-line);
+  border: 1.5px dashed var(--hero-bp-border);
   border-radius: var(--radius-md);
   background: var(--bg-card);
   backdrop-filter: blur(12px);
@@ -67,6 +222,12 @@
   overflow: visible;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chanh-hero-wrapper:hover {
+  border-color: var(--hero-bp-border-hover);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.18);
 }
 
 /* Top Strip: Clean, clear background with no hatch pattern */
@@ -77,9 +238,14 @@
   justify-content: flex-start;
   padding: 12px 18px;
   background: transparent;
-  border-bottom: 1px solid var(--border-line);
+  border-bottom: 1.5px dashed var(--hero-bp-border);
   border-top-left-radius: var(--radius-md);
   border-top-right-radius: var(--radius-md);
+  transition: border-color 0.3s ease;
+}
+
+.chanh-hero-wrapper:hover .chanh-top-strip {
+  border-bottom-color: var(--hero-bp-border-hover);
 }
 
 /* Social Buttons Row */
@@ -133,8 +299,13 @@
 }
 
 .chanh-grid-column.right-col {
-  border-left: 1px dashed var(--border-dashed);
+  border-left: 1.5px dashed var(--hero-bp-border);
   padding-left: 36px;
+  transition: border-color 0.3s ease;
+}
+
+.chanh-hero-wrapper:hover .chanh-grid-column.right-col {
+  border-left-color: var(--hero-bp-border-hover);
 }
 
 .chanh-about-col {
@@ -336,6 +507,23 @@
     padding: 24px 16px !important;
   }
 
+  .blueprint-line-top,
+  .blueprint-line-bottom {
+    left: -8px;
+    right: -8px;
+  }
+
+  .blueprint-line-left,
+  .blueprint-line-right {
+    top: -8px;
+    bottom: -8px;
+  }
+
+  .blueprint-corner-tl { top: -6px; left: -6px; }
+  .blueprint-corner-tr { top: -6px; right: -6px; }
+  .blueprint-corner-bl { bottom: -6px; left: -6px; }
+  .blueprint-corner-br { bottom: -6px; right: -6px; }
+
   .chanh-top-strip {
     flex-direction: row;
     align-items: center;
@@ -351,9 +539,13 @@
 
   .chanh-grid-column.right-col {
     border-left: none;
-    border-top: 1px dashed var(--border-dashed);
+    border-top: 1.5px dashed var(--hero-bp-border);
     padding-left: 0;
     padding-top: 14px;
+  }
+
+  .chanh-hero-wrapper:hover .chanh-grid-column.right-col {
+    border-top-color: var(--hero-bp-border-hover);
   }
 
   .chanh-about-text {
@@ -361,4 +553,5 @@
     line-height: 1.62;
   }
 }
+
 
