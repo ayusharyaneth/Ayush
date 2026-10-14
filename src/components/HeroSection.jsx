@@ -15,7 +15,8 @@ import {
   LinkedinIcon,
   FigmaIcon,
   DribbbleIcon,
-  LeetCodeIcon
+  LeetCodeIcon,
+  BuyMeACoffeeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { haptic } from '../utils/haptic';
@@ -303,7 +304,9 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                 {/* Left Column */}
                 <div className="chanh-grid-column">
                   <div className="chanh-grid-item">
-                    <span className="chanh-badge">&lt;/&gt;</span>
+                    <span className="chanh-badge" title="Buy Me a Coffee" aria-label="Buy Me a Coffee">
+                      <BuyMeACoffeeIcon size={14} />
+                    </span>
                     <div className="chanh-item-text">
                       <span>{chanh.role1.title}</span>
                       <a
