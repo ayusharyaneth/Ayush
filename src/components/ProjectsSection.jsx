@@ -85,8 +85,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   alignItems: 'center',
                   padding: '3px',
                   borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)'
+                  background: 'var(--bg-muted)',
+                  border: '1px solid var(--border-line)'
                 }}
               >
                 <button
@@ -97,8 +97,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   style={{
                     padding: '6px 8px',
                     borderRadius: '6px',
-                    background: viewMode === 'grid' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'rgba(255, 255, 255, 0.45)',
+                    background: viewMode === 'grid' ? 'var(--bg-card-hover)' : 'transparent',
+                    color: viewMode === 'grid' ? 'var(--text-primary)' : 'var(--text-muted)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -119,8 +119,8 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   style={{
                     padding: '6px 8px',
                     borderRadius: '6px',
-                    background: viewMode === 'list' ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                    color: viewMode === 'list' ? 'var(--text-primary)' : 'rgba(255, 255, 255, 0.45)',
+                    background: viewMode === 'list' ? 'var(--bg-card-hover)' : 'transparent',
+                    color: viewMode === 'list' ? 'var(--text-primary)' : 'var(--text-muted)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -138,7 +138,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           </div>
         </ScrollReveal>
 
-        {/* Category Pills Bar (Image 1 reference) */}
+        {/* Category Pills Bar (Theme-adaptive: high-contrast in both light & dark mode) */}
         <ScrollReveal variant="fade-up" distance={14} delay={0.06} duration={0.55}>
           <div
             style={{
@@ -147,7 +147,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               gap: '10px',
               overflowX: 'auto',
               paddingBottom: '6px',
-              marginBottom: '14px',
+              marginBottom: '16px',
               scrollbarWidth: 'none'
             }}
           >
@@ -156,36 +156,10 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               return (
                 <button
                   key={cat}
+                  className={`project-cat-pill ${active ? 'active' : ''}`}
                   onClick={() => {
                     sound.playClick();
                     setActiveCategory(cat);
-                  }}
-                  style={{
-                    padding: '6px 16px',
-                    borderRadius: '9999px',
-                    fontSize: '0.82rem',
-                    fontFamily: 'var(--font-body)',
-                    whiteSpace: 'nowrap',
-                    background: active ? 'var(--accent)' : 'rgba(255, 255, 255, 0.04)',
-                    color: active ? '#000000' : 'rgba(255, 255, 255, 0.65)',
-                    border: active ? '1px solid transparent' : '1px solid rgba(255, 255, 255, 0.08)',
-                    fontWeight: active ? 600 : 400,
-                    cursor: 'pointer',
-                    transition: 'all 0.18s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                      e.currentTarget.style.color = '#ffffff';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                    }
                   }}
                 >
                   {cat}
@@ -423,6 +397,35 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
 
       {/* Scoped CSS for the exact Manish Tamang 3-Card Deck & Physics */}
       <style>{`
+        /* Category filter pills - Theme-Adaptive */
+        .project-cat-pill {
+          padding: 6px 16px;
+          border-radius: var(--radius-full);
+          font-size: 0.82rem;
+          font-family: var(--font-body);
+          white-space: nowrap;
+          cursor: pointer;
+          transition: all 0.18s ease;
+          background: var(--bg-muted);
+          color: var(--text-secondary);
+          border: 1px solid var(--border-line);
+          font-weight: 500;
+        }
+
+        .project-cat-pill:hover {
+          background: var(--bg-card-hover);
+          color: var(--text-primary);
+          border-color: var(--border-glow);
+        }
+
+        .project-cat-pill.active {
+          background: var(--accent);
+          color: #000000 !important;
+          border-color: var(--accent);
+          font-weight: 600;
+          box-shadow: 0 0 12px var(--accent-glow);
+        }
+
         /* Stage container */
         .project-deck-stage {
           position: relative;
@@ -442,7 +445,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         @media (min-width: 768px) {
           .project-deck-stage {
             min-height: auto;
-            padding: 42px 32px 0 32px;
+            padding: 56px 32px 0 32px;
           }
         }
 
@@ -455,7 +458,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           gap: 16px;
           width: 100%;
           margin-top: 0;
-          margin-bottom: -46px; /* Signature reference tuck */
+          margin-bottom: -36px; /* Signature reference tuck */
           padding-bottom: 0;
           position: relative;
         }
@@ -494,7 +497,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           cursor: pointer;
           user-select: none;
           transform-origin: bottom center;
-          transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1);
           will-change: transform, box-shadow;
           outline: none;
         }
@@ -515,13 +518,13 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           z-index: 12;
         }
 
-        /* Card Hover Behavior: Lift up, un-rotate, scale, elevated z-index & shadow */
+        /* Card Hover Behavior: Lift up, un-rotate, scale gently, elevated z-index & shadow without clipping */
         .project-deck-card:hover,
         .project-deck-card:focus-visible {
-          transform: translateY(-38px) scale(1.05) rotate(0deg) !important;
+          transform: translateY(-22px) scale(1.025) rotate(0deg) !important;
           z-index: 40 !important;
           border-color: var(--accent-border) !important;
-          box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--accent-glow) !important;
+          box-shadow: 0 28px 52px -10px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--accent-glow) !important;
         }
 
         /* Card Top Thumbnail */
