@@ -13,7 +13,6 @@ import {
   Volume2,
   VolumeX,
   ExternalLink,
-  Sparkles,
   X,
   ShieldCheck
 } from 'lucide-react';
@@ -351,7 +350,6 @@ export default function CommandPalette({
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
             padding: '8px 16px',
             borderTop: '1px solid var(--border-secondary)',
             fontSize: '0.7rem',
@@ -362,10 +360,6 @@ export default function CommandPalette({
           <div style={{ display: 'flex', gap: '12px' }}>
             <span>↑↓ Navigate</span>
             <span>↵ Select</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={11} style={{ color: 'var(--accent)' }} />
-            <span>Interactive Command Console</span>
           </div>
         </div>
       </div>

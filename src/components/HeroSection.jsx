@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Calendar,
   BadgeCheck,
   Copy,
   Check,
@@ -410,9 +409,8 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
             {personal.shortBio}
           </p>
 
-          {/* Availability Pill & Quick Action CTA */}
+          {/* Availability Pill */}
           <div>
-            {/* Availability Indicator */}
             <div
               style={{
                 display: 'inline-flex',
@@ -425,25 +423,11 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                 fontSize: '0.75rem',
                 color: 'var(--text-primary)',
                 fontWeight: 500,
-                marginBottom: '20px'
+                marginBottom: 0
               }}
             >
               <span className="pulsing-dot" />
               <span>{personal.statusText}</span>
-            </div>
-
-            {/* Primary Call-to-Action Buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
-              <button
-                onClick={() => {
-                  sound.playClick();
-                  onBookCall();
-                }}
-                className="btn-primary"
-              >
-                <Calendar size={15} />
-                <span>Book an intro call</span>
-              </button>
             </div>
           </div>
         </div>
