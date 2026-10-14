@@ -133,14 +133,16 @@ export default function ExperienceSection({ experience = [] }) {
                     </div>
 
                     <button
-                      style={{
-                        color: 'var(--text-muted)',
-                        padding: '4px',
-                        borderRadius: '4px'
+                      type="button"
+                      className="experience-expander-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleExpand(index);
                       }}
+                      aria-expanded={isExpanded}
                       aria-label={isExpanded ? 'Collapse role' : 'Expand role'}
                     >
-                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                      <ChevronsUpDownIcon open={isExpanded} size={16} duration={0.25} />
                     </button>
                   </div>
                 </div>
@@ -158,40 +160,51 @@ export default function ExperienceSection({ experience = [] }) {
                 </p>
 
                 {/* Collapsible Details */}
-                {isExpanded && (
-                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px dashed var(--border-dashed)' }}>
-                    <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-family-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '10px' }}>
-                      Key Impact Deliverables
-                    </div>
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {item.achievements.map((ach, aIdx) => (
-                        <li
-                          key={aIdx}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            gap: '8px',
-                            fontSize: '0.85rem',
-                            color: 'var(--text-secondary)',
-                            lineHeight: 1.5
-                          }}
-                        >
-                          <span style={{ color: 'var(--accent)', marginTop: '2px' }}>✦</span>
-                          <span>{ach}</span>
-                        </li>
-                      ))}
-                    </ul>
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      key="details"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px dashed var(--border-dashed)' }}>
+                        <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-family-mono)', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '10px' }}>
+                          Key Impact Deliverables
+                        </div>
+                        <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {item.achievements.map((ach, aIdx) => (
+                            <li
+                              key={aIdx}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: '8px',
+                                fontSize: '0.85rem',
+                                color: 'var(--text-secondary)',
+                                lineHeight: 1.5
+                              }}
+                            >
+                              <span style={{ color: 'var(--accent)', marginTop: '2px' }}>✦</span>
+                              <span>{ach}</span>
+                            </li>
+                          ))}
+                        </ul>
 
-                    {/* Skill Tags */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '16px' }}>
-                      {item.skills.map((s) => (
-                        <span key={s} className="tech-tag">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                        {/* Skill Tags */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '16px' }}>
+                          {item.skills.map((s) => (
+                            <span key={s} className="tech-tag">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </ScrollRevealItem>
             );
           })}

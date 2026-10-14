@@ -332,6 +332,51 @@ button {
   color: var(--text-primary);
 }
 
+/* Experience Accordion Expander Button */
+.experience-expander-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-muted);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  outline: none;
+}
+
+.experience-expander-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.16);
+  transform: translateY(-1px);
+}
+
+.experience-expander-btn:active {
+  transform: scale(0.94);
+}
+
+.experience-expander-btn[aria-expanded="true"] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.screen-box:hover .experience-expander-btn {
+  border-color: var(--border-glow);
+  color: var(--text-secondary);
+}
+
+.screen-box:hover .experience-expander-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* Keyboard Shortcut Key Chip */
 .kbd-chip {
   display: inline-flex;
