@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ShieldCheck, Cookie, X, Check, Lock, Activity, Sparkles } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 import './ConsentManager.css';
@@ -34,14 +34,16 @@ export default function ConsentManager({
 
   const [showBanner, setShowBanner] = useState(!settings.decided);
 
-  useEffect(() => {
+  const [prevSyncKey, setPrevSyncKey] = useState({ isOpen, settings });
+  if (prevSyncKey.isOpen !== isOpen || prevSyncKey.settings !== settings) {
+    setPrevSyncKey({ isOpen, settings });
     if (isOpen) {
       setDraftSettings({
         measurement: settings.measurement,
         personalization: settings.personalization
       });
     }
-  }, [isOpen, settings]);
+  }
 
   const saveConsent = (updated) => {
     const finalSettings = {

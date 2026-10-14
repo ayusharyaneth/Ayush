@@ -217,11 +217,12 @@ export default function Navbar({
 
     updateScrollSpy();
 
+    const timerRef = scrollEndTimerRef;
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleUserScrollInterrupt);
       window.removeEventListener('touchmove', handleUserScrollInterrupt);
-      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
       cancelSmoothScroll();
     };
   }, []);

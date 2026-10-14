@@ -105,9 +105,10 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     handleScroll();
 
+    const timerRef = scrollEndTimerRef;
     return () => {
       window.removeEventListener('scroll', onScroll);
-      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []);
 
