@@ -96,7 +96,7 @@ export default function CommandPalette({
       category: 'Quick Actions',
       id: 'action-copy',
       title: 'Copy Email Address',
-      subtitle: 'eth@ayusharyan.in',
+      subtitle: 'ayush@ayusharyan.dev',
       shortcut: 'C',
       icon: Mail,
       run: () => {
