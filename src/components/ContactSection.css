@@ -1,28 +1,33 @@
 /* ==========================================================================
    EDITORIAL CONTACT SECTION
-   Bold Typography · Lime-Green Graphic Tickets · Atmospheric Canvas
+   Bold Editorial Typography · Graphic Tickets · Dynamic Theme System
    ========================================================================== */
 
-:root {
-  --lime-electric: #ccff00;
-  --lime-glow: rgba(204, 255, 0, 0.45);
-  --lime-soft: rgba(204, 255, 0, 0.12);
-  --lime-dark: #121c04;
-}
-
-/* Base Full-Width Section */
 .editorial-contact-section {
+  --contact-ticket-bg: var(--accent);
+  --contact-ticket-text: #09090b;
   position: relative;
-  padding-top: 48px;
-  padding-bottom: 72px;
+  padding-top: 18px;
+  padding-bottom: 24px;
   overflow: hidden;
-  background: #08080a;
-  color: #f4f4f5;
+  background: transparent;
+  color: var(--text-primary);
   width: 100%;
 }
 
-.theme-light .editorial-contact-section {
-  background: #0d0e12; /* Kept intentionally dark for the editorial high-contrast magazine feel */
+.palette-violet .editorial-contact-section,
+.palette-rose .editorial-contact-section {
+  --contact-ticket-text: #ffffff;
+}
+
+.theme-light .editorial-contact-section,
+[data-theme="light"] .editorial-contact-section {
+  --contact-ticket-text: #ffffff;
+}
+
+.theme-light.palette-monochrome .editorial-contact-section,
+[data-theme="light"].palette-monochrome .editorial-contact-section {
+  --contact-ticket-text: #ffffff;
 }
 
 /* ==========================================================================
@@ -37,33 +42,45 @@
   z-index: 0;
 }
 
-/* Ambient Lime Glow */
-.contact-glow-lime {
+/* Ambient Accent Glow */
+.contact-glow-accent {
   position: absolute;
   top: -10%;
   right: -5%;
-  width: 650px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(204, 255, 0, 0.07) 0%, rgba(204, 255, 0, 0.01) 50%, transparent 70%);
-  filter: blur(40px);
+  width: 500px;
+  height: 420px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.25;
+  filter: blur(50px);
   animation: glowBreathe 12s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
-/* Ambient Deep Blue/Cyan Glow */
-.contact-glow-cyan {
+.theme-light .contact-glow-accent {
+  opacity: 0.14;
+}
+
+/* Ambient Secondary Subtle Glow */
+.contact-glow-secondary {
   position: absolute;
   bottom: -15%;
   left: -5%;
-  width: 600px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.01) 50%, transparent 70%);
+  width: 480px;
+  height: 380px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.16;
   filter: blur(50px);
   animation: glowBreathe 14s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+
+.theme-light .contact-glow-secondary {
+  opacity: 0.08;
 }
 
 @keyframes glowBreathe {
   0% { transform: scale(0.92) translate(0, 0); opacity: 0.7; }
-  100% { transform: scale(1.08) translate(20px, 15px); opacity: 1; }
+  100% { transform: scale(1.08) translate(15px, 10px); opacity: 1; }
 }
 
 /* Rotating Celestial Orbital Ellipse */
@@ -72,16 +89,16 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1100px;
-  height: 600px;
+  width: 1000px;
+  height: 500px;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
 .contact-orbital-ring {
   width: 100%;
   height: 100%;
-  border: 1px dashed rgba(255, 255, 255, 0.06);
+  border: 1px dashed var(--border-line);
   border-radius: 50%;
   transform: rotate(-18deg);
   animation: orbitSpin 80s linear infinite;
@@ -93,8 +110,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--lime-electric);
-  box-shadow: 0 0 10px var(--lime-electric);
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
   top: 15%;
   left: 10%;
 }
@@ -109,11 +126,12 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
   mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
   -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  opacity: 0.7;
 }
 
 /* ==========================================================================
@@ -123,18 +141,19 @@
 .contact-editorial-card {
   position: relative;
   z-index: 1;
-  background: rgba(14, 15, 18, 0.65);
+  background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1.5px dashed rgba(255, 255, 255, 0.12);
-  padding: 84px 54px 72px;
-  border-radius: 0;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  border: 1.5px dashed var(--border-dashed);
+  padding: 36px 36px 30px;
+  border-radius: var(--radius-lg, 16px);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .contact-editorial-card:hover {
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 0 40px -10px rgba(204, 255, 0, 0.06);
+  border-color: var(--accent);
+  box-shadow: 0 0 35px -8px var(--accent-glow);
 }
 
 /* Technical Corner Markers */
@@ -142,10 +161,11 @@
   position: absolute;
   font-family: var(--font-family-mono), monospace;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-dim);
   line-height: 1;
   user-select: none;
   pointer-events: none;
+  opacity: 0.6;
 }
 .contact-corner-tl { top: -6px; left: -6px; }
 .contact-corner-tr { top: -6px; right: -6px; }
@@ -155,14 +175,15 @@
 /* Desktop Vertical Edge Typography */
 .contact-vertical-edge-left {
   position: absolute;
-  left: 16px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%) rotate(-90deg);
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-muted);
+  opacity: 0.55;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -170,14 +191,15 @@
 
 .contact-vertical-edge-right {
   position: absolute;
-  right: 16px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-muted);
+  opacity: 0.55;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -188,7 +210,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
   width: 100%;
 }
 
@@ -197,23 +219,23 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--lime-electric);
-  background: rgba(204, 255, 0, 0.08);
-  border: 1px solid rgba(204, 255, 0, 0.25);
-  padding: 4px 12px;
+  color: var(--accent);
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-border, var(--accent));
+  padding: 3px 10px;
   border-radius: 999px;
 }
 
-.contact-lime-dot {
+.contact-accent-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--lime-electric);
-  box-shadow: 0 0 8px var(--lime-electric);
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
   animation: dotPulse 2s infinite ease-in-out;
 }
 
@@ -224,8 +246,8 @@
 
 .contact-meta-coordinates {
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.7rem;
+  color: var(--text-muted);
   letter-spacing: 0.08em;
 }
 
@@ -236,8 +258,8 @@
 .contact-headline-stage {
   position: relative;
   text-align: center;
-  margin: 12px auto 28px;
-  max-width: 960px;
+  margin: 6px auto 14px;
+  max-width: 820px;
 }
 
 .contact-headline {
@@ -247,11 +269,11 @@
   flex-direction: column;
   align-items: center;
   font-family: var(--font-family-sans), sans-serif;
-  font-size: clamp(3rem, 7.8vw, 6.2rem);
+  font-size: clamp(2.4rem, 5.4vw, 4.2rem);
   font-weight: 800;
-  line-height: 1.04;
+  line-height: 1.06;
   letter-spacing: -0.04em;
-  color: #ffffff;
+  color: var(--text-primary);
   user-select: text;
 }
 
@@ -271,17 +293,17 @@
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.015em;
-  color: #f4f4f5;
+  color: var(--text-primary);
   padding-right: 4px;
 }
 
 .headline-period {
-  color: var(--lime-electric);
-  text-shadow: 0 0 14px var(--lime-glow);
+  color: var(--accent);
+  text-shadow: 0 0 14px var(--accent-glow);
 }
 
 /* ==========================================================================
-   LIME-GREEN GRAPHIC ELEMENTS & TICKETS
+   GRAPHIC ELEMENTS & TICKETS (THEME-SYNCED)
    ========================================================================== */
 
 .contact-stickers-layer {
@@ -307,16 +329,16 @@
 /* STICKER 1: VIP COLLAB TICKET (Top-Right) */
 .sticker-ticket-admit {
   top: 6%;
-  right: 6%;
-  background: var(--lime-electric);
-  color: #09090b;
-  padding: 10px 16px;
+  right: 4%;
+  background: var(--contact-ticket-bg);
+  color: var(--contact-ticket-text);
+  padding: 7px 14px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.6), 0 0 16px rgba(204, 255, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  gap: 3px;
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.3), 0 0 14px var(--accent-glow);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   position: absolute;
   z-index: 3;
 }
@@ -325,43 +347,44 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
 }
 
 .ticket-admit-text {
   font-family: var(--font-family-sans), sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .ticket-star {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .ticket-perforation {
   width: 100%;
   height: 1px;
-  border-bottom: 1.5px dashed rgba(9, 9, 11, 0.35);
-  margin: 3px 0;
+  border-bottom: 1.5px dashed currentColor;
+  opacity: 0.35;
+  margin: 2px 0;
 }
 
 .ticket-barcode-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
 }
 
 .ticket-barcode-svg {
-  height: 16px;
+  height: 14px;
   opacity: 0.85;
 }
 
 .ticket-serial {
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
@@ -374,7 +397,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0e0f12;
+  background: var(--bg-card);
   transform: translateY(-50%);
 }
 .ticket-notch-left { left: -4px; }
@@ -382,47 +405,47 @@
 
 /* STICKER 2: STATUS OVAL PILL (Top-Left) */
 .sticker-status-pill {
-  top: 48%;
+  top: 44%;
   left: 2%;
-  background: #09090b;
-  color: var(--lime-electric);
-  border: 1.5px solid var(--lime-electric);
-  padding: 6px 14px;
+  background: var(--bg-surface);
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  padding: 5px 12px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.7), 0 0 12px rgba(204, 255, 0, 0.15);
+  gap: 7px;
+  box-shadow: var(--shadow-card), 0 0 10px var(--accent-glow);
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   z-index: 3;
 }
 
 .sticker-status-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--lime-electric);
-  box-shadow: 0 0 8px var(--lime-electric);
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
 }
 
 /* STICKER 3: ROTATING CRAFT SEAL (Bottom-Right) */
 .sticker-craft-seal {
-  bottom: 12%;
-  right: 8%;
-  width: 80px;
-  height: 80px;
+  bottom: 8%;
+  right: 5%;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: rgba(204, 255, 0, 0.1);
-  border: 1.5px dashed var(--lime-electric);
+  background: var(--accent-tint);
+  border: 1.5px dashed var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   z-index: 3;
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(204, 255, 0, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .seal-svg-rotating {
@@ -442,14 +465,14 @@
   font-family: var(--font-family-mono), monospace;
   font-size: 0.72rem;
   font-weight: 800;
-  color: var(--lime-electric);
-  text-shadow: 0 0 8px var(--lime-electric);
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent-glow);
 }
 
 /* Sticker Hover Elevations */
 .contact-sticker:hover {
-  transform: scale(1.08) rotate(0deg) !important;
-  box-shadow: 0 16px 36px -2px rgba(0, 0, 0, 0.8), 0 0 24px var(--lime-glow) !important;
+  transform: scale(1.06) rotate(0deg) !important;
+  box-shadow: 0 14px 28px -2px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow) !important;
 }
 
 /* ==========================================================================
@@ -458,16 +481,16 @@
 
 .contact-statement-wrap {
   text-align: center;
-  margin: 18px auto 40px;
-  max-width: 620px;
+  margin: 10px auto 20px;
+  max-width: 580px;
 }
 
 .contact-statement-text {
   font-family: var(--font-family-serif), "Instrument Serif", Georgia, serif;
   font-style: italic;
-  font-size: clamp(1.15rem, 2.3vw, 1.45rem);
-  line-height: 1.52;
-  color: rgba(244, 244, 245, 0.88);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--text-secondary);
   margin: 0;
   letter-spacing: -0.005em;
 }
@@ -480,8 +503,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
-  margin-top: 10px;
+  gap: 16px;
+  margin-top: 2px;
   position: relative;
   z-index: 4;
 }
@@ -491,21 +514,25 @@
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
-  padding: 8px 10px 8px 24px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-line);
+  padding: 7px 8px 7px 20px;
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card);
 }
 
 .contact-primary-cta-group:hover {
-  background: rgba(204, 255, 0, 0.06);
-  border-color: var(--lime-electric);
+  background: var(--accent-tint);
+  border-color: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.5), 0 0 20px rgba(204, 255, 0, 0.2);
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.16), 0 0 20px var(--accent-glow);
+}
+
+.theme-dark .contact-primary-cta-group:hover {
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
 }
 
 .cta-text-block {
@@ -517,10 +544,10 @@
 
 .cta-lead-label {
   font-family: var(--font-family-sans), sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #ffffff;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -528,19 +555,19 @@
 
 .cta-email-sub {
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.74rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.72rem;
+  color: var(--text-muted);
   letter-spacing: 0.02em;
 }
 
 /* Circular Minimal Outlined Arrow Node */
 .contact-arrow-circle {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-  background: #09090b;
-  color: #ffffff;
+  border: 1.5px solid var(--border-line);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -549,11 +576,11 @@
 }
 
 .contact-primary-cta-group:hover .contact-arrow-circle {
-  border-color: var(--lime-electric);
-  background: var(--lime-electric);
-  color: #09090b;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--contact-ticket-text);
   transform: rotate(45deg);
-  box-shadow: 0 0 16px var(--lime-glow);
+  box-shadow: 0 0 16px var(--accent-glow);
 }
 
 .contact-arrow-icon {
@@ -566,31 +593,31 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .contact-social-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 7px;
+  padding: 5px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-primary);
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--text-secondary);
   font-family: var(--font-family-mono), monospace;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .contact-social-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--lime-electric);
-  color: #ffffff;
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--text-primary);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.4), 0 0 10px rgba(204, 255, 0, 0.15);
+  box-shadow: 0 6px 16px -2px rgba(0, 0, 0, 0.12), 0 0 10px var(--accent-glow);
 }
 
 /* ==========================================================================
@@ -604,116 +631,143 @@
   }
 
   .contact-editorial-card {
-    padding: 64px 32px 56px;
+    padding: 28px 22px 24px;
   }
 
   .sticker-ticket-admit {
     right: 2%;
     top: 4%;
-    transform: scale(0.9) !important;
+    transform: scale(0.85) !important;
   }
 
   .sticker-status-pill {
-    left: -2%;
-    top: 50%;
-    transform: scale(0.9) !important;
+    left: 1%;
+    top: 46%;
+    transform: scale(0.85) !important;
   }
 
   .sticker-craft-seal {
-    right: 4%;
-    bottom: 8%;
-    transform: scale(0.85) !important;
+    right: 2%;
+    bottom: 6%;
+    transform: scale(0.8) !important;
   }
 }
 
 @media (max-width: 640px) {
   .editorial-contact-section {
-    padding-top: 32px;
-    padding-bottom: 56px;
+    padding-top: 14px;
+    padding-bottom: 20px;
   }
 
   .contact-editorial-card {
-    padding: 44px 20px 40px;
+    padding: 20px 14px 18px;
   }
 
   .contact-meta-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
 
   .contact-meta-coordinates {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
   }
 
   .contact-headline {
-    font-size: clamp(2.4rem, 10vw, 3.4rem);
+    font-size: clamp(2.0rem, 8.2vw, 2.7rem);
     line-height: 1.08;
   }
 
-  /* Reflow stickers for clean mobile readability */
-  .sticker-ticket-admit {
-    position: static;
-    margin: 0 auto 16px;
-    transform: none !important;
-    display: inline-flex;
-    pointer-events: auto;
+  .contact-statement-wrap {
+    margin: 8px auto 14px;
   }
 
-  .sticker-status-pill {
-    position: static;
-    margin: 16px auto 0;
-    transform: none !important;
-    display: inline-flex;
-    pointer-events: auto;
+  .contact-statement-text {
+    font-size: 0.96rem;
+    line-height: 1.45;
   }
 
-  .sticker-craft-seal {
-    display: none; /* Hide heavy rotating seal on small mobile screens */
-  }
-
+  /* Compact stickers layout for mobile: place ticket and status pill in a tidy row without dead space */
   .contact-stickers-layer {
     position: relative;
     inset: auto;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 12px;
+    justify-content: center;
+    gap: 8px;
+    margin: 4px auto 10px;
   }
 
-  .contact-statement-text {
-    font-size: 1.05rem;
-    line-height: 1.5;
+  .sticker-ticket-admit {
+    position: static;
+    margin: 0;
+    transform: none !important;
+    display: inline-flex;
+    pointer-events: auto;
+    padding: 6px 11px;
+  }
+
+  .ticket-admit-text {
+    font-size: 0.62rem;
+  }
+
+  .ticket-barcode-svg {
+    height: 12px;
+  }
+
+  .ticket-serial {
+    font-size: 0.58rem;
+  }
+
+  .sticker-status-pill {
+    position: static;
+    margin: 0;
+    transform: none !important;
+    display: inline-flex;
+    pointer-events: auto;
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+
+  .sticker-craft-seal {
+    display: none;
+  }
+
+  .contact-action-hub {
+    gap: 12px;
+    margin-top: 0;
   }
 
   .contact-primary-cta-group {
     width: 100%;
     justify-content: space-between;
-    padding: 8px 10px 8px 18px;
+    padding: 6px 8px 6px 14px;
     box-sizing: border-box;
   }
 
   .cta-lead-label {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
 
   .cta-email-sub {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
 
   .contact-arrow-circle {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
   }
 
   .contact-social-row {
-    gap: 8px;
+    gap: 6px;
   }
 
   .contact-social-pill {
     font-size: 0.72rem;
-    padding: 5px 10px;
+    padding: 4px 10px;
   }
 }
 
@@ -721,8 +775,8 @@
 @media (prefers-reduced-motion: reduce) {
   .contact-orbital-ring,
   .seal-svg-rotating,
-  .contact-glow-lime,
-  .contact-glow-cyan {
+  .contact-glow-accent,
+  .contact-glow-secondary {
     animation: none !important;
   }
 
