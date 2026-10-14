@@ -98,8 +98,14 @@ export default function GithubHeatmap({ style = {} }) {
             <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
               Open Source Activity
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontFamily: 'var(--font-family-mono)' }}>
-              {weeksData.totalCommits.toLocaleString()} commits in the last year
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontFamily: 'var(--font-family-mono)', minHeight: '1.2em' }}>
+              {hoveredCell ? (
+                <span>
+                  <strong style={{ color: 'var(--accent)' }}>{hoveredCell.count} commits</strong> on {hoveredCell.date}
+                </span>
+              ) : (
+                `${weeksData.totalCommits.toLocaleString()} commits in the last year`
+              )}
             </div>
           </div>
         </div>
@@ -171,6 +177,7 @@ export default function GithubHeatmap({ style = {} }) {
                       key={dIdx}
                       onMouseEnter={() => setHoveredCell(day)}
                       onMouseLeave={() => setHoveredCell(null)}
+                      title={`${day.count} commits on ${day.date}`}
                       style={{
                         aspectRatio: '1',
                         borderRadius: '2px',
@@ -185,31 +192,6 @@ export default function GithubHeatmap({ style = {} }) {
               ))}
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Tooltip feedback bar */}
-      <div
-        style={{
-          marginTop: '14px',
-          paddingTop: '10px',
-          borderTop: '1px dashed var(--border-dashed)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          fontSize: '0.74rem',
-          fontFamily: 'var(--font-family-mono)',
-          color: 'var(--text-muted)'
-        }}
-      >
-        <div>
-          {hoveredCell ? (
-            <span>
-              <strong style={{ color: 'var(--text-primary)' }}>{hoveredCell.count} commits</strong> on {hoveredCell.date}
-            </span>
-          ) : (
-            <span>Hover over any grid tile to inspect daily commit density</span>
-          )}
         </div>
       </div>
     </div>
