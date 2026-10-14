@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Calendar, GitCommit, Sparkles } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
-export default function GithubHeatmap() {
+export default function GithubHeatmap({ style = {} }) {
   const [hoveredCell, setHoveredCell] = useState(null);
 
   // Generate deterministic 52-week activity dataset
@@ -80,7 +80,7 @@ export default function GithubHeatmap() {
   const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
 
   return (
-    <div className="screen-box" style={{ padding: '24px 28px', marginTop: '32px' }}>
+    <div className="screen-box" style={{ padding: '24px 28px', ...style }}>
       {/* Header Bar */}
       <div
         style={{

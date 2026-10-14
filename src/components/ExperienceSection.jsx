@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import ChevronsUpDownIcon from './ChevronsUpDownIcon';
-import GithubHeatmap from './GithubHeatmap';
 import { sound } from '../utils/soundEffects';
 import { haptic } from '../utils/haptic';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
@@ -209,11 +208,6 @@ export default function ExperienceSection({ experience = [] }) {
             );
           })}
         </ScrollRevealGroup>
-
-        {/* Embedded Interactive 52-Week GitHub Heatmap */}
-        <ScrollReveal variant="fade-up" distance={18} delay={0.12} duration={0.65}>
-          <GithubHeatmap />
-        </ScrollReveal>
       </div>
     </section>
   );
