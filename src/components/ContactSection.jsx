@@ -68,11 +68,6 @@ export default function ContactSection({
     }, 280);
   };
 
-  const handleStickerClick = () => {
-    haptic(35);
-    sound.playPop();
-  };
-
   const socialLinks = [
     { name: 'X / Twitter', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: personal?.chanhCard?.socials?.github || 'https://github.com/ayusharyaneth/' },
