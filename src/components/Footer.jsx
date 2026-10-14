@@ -18,9 +18,9 @@ export default function Footer({ personal = {}, socials = [] }) {
   };
 
   // Resolve social URLs
-  const githubLink = socials.find((s) => s.name?.toLowerCase().includes('github'))?.url || 'https://github.com/ayusharyan';
-  const twitterLink = socials.find((s) => s.name?.toLowerCase().includes('twitter') || s.name?.toLowerCase().includes('x'))?.url || 'https://x.com';
-  const linkedinLink = socials.find((s) => s.name?.toLowerCase().includes('linkedin'))?.url || 'https://linkedin.com';
+  const githubLink = socials.find((s) => s.name?.toLowerCase().includes('github'))?.url || 'https://github.com/ayusharyaneth/';
+  const twitterLink = socials.find((s) => s.name?.toLowerCase().includes('twitter') || s.name?.toLowerCase().includes('x'))?.url || 'https://x.com/ayusharyaneth';
+  const linkedinLink = socials.find((s) => s.name?.toLowerCase().includes('linkedin'))?.url || 'https://www.linkedin.com/in/theayusharyan';
 
   return (
     <footer className="footer-section">

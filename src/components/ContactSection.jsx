@@ -74,9 +74,9 @@ export default function ContactSection({
   };
 
   const socialLinks = [
-    { name: 'X / Twitter', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com' },
-    { name: 'GitHub', icon: GithubIcon, url: personal?.chanhCard?.socials?.github || 'https://github.com' },
-    { name: 'LinkedIn', icon: LinkedinIcon, url: personal?.chanhCard?.socials?.linkedin || 'https://linkedin.com' },
+    { name: 'X / Twitter', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com/ayusharyaneth' },
+    { name: 'GitHub', icon: GithubIcon, url: personal?.chanhCard?.socials?.github || 'https://github.com/ayusharyaneth/' },
+    { name: 'LinkedIn', icon: LinkedinIcon, url: personal?.chanhCard?.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: personal?.chanhCard?.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
   ];
 
