@@ -13,7 +13,6 @@ import {
   LinkedinIcon,
   FigmaIcon,
   DribbbleIcon,
-  LeetCodeIcon,
   BuyMeACoffeeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
@@ -81,7 +80,7 @@ export default function HeroSection({ personal, onCopyEmail }) {
       linkedin: 'https://linkedin.com',
       figma: 'https://figma.com/@ayusharyan',
       dribbble: 'https://dribbble.com/ayusharyan',
-      leetcode: 'https://leetcode.com/ayusharyan_algo'
+      buymeacoffee: 'https://buymeacoffee.com/ayusharyan'
     }
   };
 
@@ -91,7 +90,7 @@ export default function HeroSection({ personal, onCopyEmail }) {
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://linkedin.com' },
     { name: 'Figma', icon: FigmaIcon, url: chanh.socials?.figma || 'https://figma.com/@ayusharyan' },
     { name: 'Dribbble', icon: DribbbleIcon, url: chanh.socials?.dribbble || 'https://dribbble.com/ayusharyan' },
-    { name: 'LeetCode', icon: LeetCodeIcon, url: chanh.socials?.leetcode || 'https://leetcode.com/ayusharyan_algo' }
+    { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyan' }
   ];
 
   return (
