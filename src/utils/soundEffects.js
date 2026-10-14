@@ -1,8 +1,8 @@
-// Web Audio API Synthesizer Sound Engine (Zero external dependencies)
+// Web Audio API Synthesizer Sound Engine (Synthesized in real-time, matching manishtamang.com)
 class SoundEngine {
   constructor() {
     this.ctx = null;
-    this.muted = localStorage.getItem('portfolio-sound-muted') === 'true';
+    this.muted = typeof window !== 'undefined' ? localStorage.getItem('portfolio-sound-muted') === 'true' : false;
   }
 
   init() {
@@ -13,8 +13,9 @@ class SoundEngine {
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
+    return this.ctx;
   }
 
   isMuted() {
@@ -23,107 +24,215 @@ class SoundEngine {
 
   toggleMute() {
     this.muted = !this.muted;
-    localStorage.setItem('portfolio-sound-muted', this.muted);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('portfolio-sound-muted', this.muted);
+    }
     return this.muted;
   }
 
-  // Subtle tactile tick on menu hover
-  playHover() {
+  // Exact Manish Tamang whoosh synthesizer for card hover & deck interaction
+  playWhoosh() {
     if (this.muted) return;
     try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(680, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(820, this.ctx.currentTime + 0.025);
-
-      gain.gain.setValueAtTime(0.015, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.025);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.025);
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const n = ctx.createBufferSource();
+      const a = ctx.createBuffer(1, Math.floor(0.08 * ctx.sampleRate), ctx.sampleRate);
+      const ch = a.getChannelData(0);
+      for (let i = 0; i < ch.length; i++) {
+        const s = Math.sin((i / ch.length) * Math.PI);
+        ch[i] = (2 * Math.random() - 1) * s;
+      }
+      n.buffer = a;
+      const o = ctx.createBiquadFilter();
+      o.type = 'bandpass';
+      o.frequency.setValueAtTime(4000, t);
+      o.frequency.exponentialRampToValueAtTime(1500, t + 0.08);
+      o.Q.value = 1;
+      const l = ctx.createGain();
+      l.gain.value = 0.18;
+      n.connect(o);
+      o.connect(l);
+      l.connect(ctx.destination);
+      n.start(t);
     } catch (_) {}
   }
 
-  // Subtle tactile tap for UI buttons
+  // Exact Manish Tamang pop synthesizer for card clicks & opening modals
+  playPop() {
+    if (this.muted) return;
+    try {
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, t);
+      osc.frequency.exponentialRampToValueAtTime(150, t + 0.04);
+
+      gain.gain.setValueAtTime(0.35, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.05);
+    } catch (_) {}
+  }
+
+  // Exact Manish Tamang tactile click synthesizer
   playClick() {
     if (this.muted) return;
     try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.04);
-
-      gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.04);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.04);
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const n = ctx.createBufferSource();
+      const a = ctx.createBuffer(1, Math.floor(0.008 * ctx.sampleRate), ctx.sampleRate);
+      const ch = a.getChannelData(0);
+      for (let i = 0; i < ch.length; i++) {
+        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 50);
+      }
+      n.buffer = a;
+      const o = ctx.createBiquadFilter();
+      o.type = 'bandpass';
+      o.frequency.value = 4000 + 1000 * Math.random();
+      o.Q.value = 3;
+      const l = ctx.createGain();
+      l.gain.value = 0.45;
+      n.connect(o);
+      o.connect(l);
+      l.connect(ctx.destination);
+      n.start(t);
     } catch (_) {}
   }
 
-  // Crisp switch toggle sound (like light switch or keyboard tick)
+  // Exact Manish Tamang tick synthesizer
+  playTick() {
+    if (this.muted) return;
+    try {
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const n = ctx.createBufferSource();
+      const a = ctx.createBuffer(1, Math.floor(0.004 * ctx.sampleRate), ctx.sampleRate);
+      const ch = a.getChannelData(0);
+      for (let i = 0; i < ch.length; i++) {
+        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 20);
+      }
+      n.buffer = a;
+      const o = ctx.createBiquadFilter();
+      o.type = 'highpass';
+      o.frequency.value = 3000;
+      const l = ctx.createGain();
+      l.gain.value = 0.3;
+      n.connect(o);
+      o.connect(l);
+      l.connect(ctx.destination);
+      n.start(t);
+    } catch (_) {}
+  }
+
+  // Alias for hover to use whoosh/tick
+  playHover() {
+    this.playTick();
+  }
+
+  // Exact Manish Tamang toggle synthesizer
   playToggle() {
     if (this.muted) return;
     try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
+      const n = ctx.createBufferSource();
+      const a = ctx.createBuffer(1, Math.floor(0.012 * ctx.sampleRate), ctx.sampleRate);
+      const ch = a.getChannelData(0);
+      for (let i = 0; i < ch.length; i++) {
+        ch[i] = (2 * Math.random() - 1) * Math.exp(-i / 80);
+      }
+      n.buffer = a;
+      const o = ctx.createBiquadFilter();
+      o.type = 'bandpass';
+      o.frequency.value = 2500;
+      o.Q.value = 4;
+      const l = ctx.createGain();
+      l.gain.value = 0.4;
+      n.connect(o);
+      o.connect(l);
+      l.connect(ctx.destination);
+      n.start(t);
 
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.05);
-
-      gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.05);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start();
-      osc.stop(this.ctx.currentTime + 0.05);
+      const u = ctx.createOscillator();
+      const s = ctx.createGain();
+      u.type = 'sine';
+      u.frequency.setValueAtTime(800, t);
+      u.frequency.exponentialRampToValueAtTime(400, t + 0.03);
+      s.gain.setValueAtTime(0.15, t);
+      s.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+      u.connect(s);
+      s.connect(ctx.destination);
+      u.start(t);
+      u.stop(t + 0.04);
     } catch (_) {}
   }
 
-  // Success chime for "Email Copied"
+  // Exact Manish Tamang success harmonic chime
   playSuccess() {
     if (this.muted) return;
     try {
-      this.init();
-      if (!this.ctx) return;
-      const now = this.ctx.currentTime;
+      const ctx = this.init();
+      if (!ctx) return;
+      const t = ctx.currentTime;
       [523.25, 659.25, 783.99].forEach((freq, idx) => {
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
 
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+        osc1.type = 'triangle';
+        osc1.frequency.value = freq;
+        osc2.type = 'sine';
+        osc2.frequency.value = 2 * freq;
 
-        gain.gain.setValueAtTime(0.03, now + idx * 0.06);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.06 + 0.25);
+        filter.type = 'lowpass';
+        filter.frequency.value = 3000;
 
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
+        const u = t + 0.08 * idx;
+        gain.gain.setValueAtTime(0, u);
+        gain.gain.linearRampToValueAtTime(0.2, u + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, u + 0.15);
 
-        osc.start(now + idx * 0.06);
-        osc.stop(now + idx * 0.06 + 0.25);
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(filter);
+        filter.connect(ctx.destination);
+
+        osc1.start(u);
+        osc2.start(u);
+        osc1.stop(u + 0.15);
+        osc2.stop(u + 0.15);
       });
+
+      const highOsc = ctx.createOscillator();
+      const highGain = ctx.createGain();
+      highOsc.type = 'sine';
+      highOsc.frequency.value = 1046.5;
+      highGain.gain.setValueAtTime(0, t + 0.24);
+      highGain.gain.linearRampToValueAtTime(0.15, t + 0.26);
+      highGain.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+
+      highOsc.connect(highGain);
+      highGain.connect(ctx.destination);
+      highOsc.start(t + 0.24);
+      highOsc.stop(t + 0.45);
     } catch (_) {}
   }
 }
 
 export const sound = new SoundEngine();
+
