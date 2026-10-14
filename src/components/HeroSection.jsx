@@ -351,13 +351,10 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
                       onClick={handleCopyEmailAddress}
                       className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
                       title={emailCopied ? 'Copied to clipboard!' : 'Copy email (or press C)'}
-                      aria-label="Copy email address"
+                      aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}
                     >
                       {emailCopied ? (
-                        <>
-                          <Check size={12} strokeWidth={2.4} className="chanh-copy-check-icon" />
-                          <span className="chanh-copy-feedback-text">Copied!</span>
-                        </>
+                        <Check size={12} strokeWidth={2.4} className="chanh-copy-check-icon" />
                       ) : (
                         <Copy size={12} strokeWidth={1.8} className="chanh-copy-idle-icon" />
                       )}

@@ -211,13 +211,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  width: 22px;
   height: 22px;
-  min-width: 22px;
-  padding: 0 5px;
-  font-family: var(--font-family-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
+  padding: 0;
   color: var(--text-muted);
   background: var(--bg-muted);
   border: 1px solid var(--border-line);
@@ -238,14 +234,13 @@
 }
 
 .chanh-email-copy-btn:active {
-  transform: translateY(0.5px) scale(0.96);
+  transform: translateY(0.5px) scale(0.94);
 }
 
 .chanh-email-copy-btn.copied {
   color: var(--accent);
   background: var(--accent-tint);
   border-color: var(--accent-border);
-  padding: 0 8px;
   box-shadow: 0 0 12px var(--accent-tint);
   animation: chanhPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -255,7 +250,7 @@
     transform: scale(0.92);
   }
   50% {
-    transform: scale(1.06);
+    transform: scale(1.08);
   }
   100% {
     transform: scale(1);
@@ -273,13 +268,6 @@
 .chanh-copy-check-icon {
   color: var(--accent);
   flex-shrink: 0;
-}
-
-.chanh-copy-feedback-text {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--accent);
 }
 
 /* Bottom Divider between Grid and Bio/Actions */
