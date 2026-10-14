@@ -11,11 +11,10 @@ export default function GithubHeatmap({ style = {} }) {
     const daysPerWeek = 7;
     const today = new Date(2026, 9, 11); // October 2026
 
-    // Pseudo-random generator with realistic distribution
-    let seed = 42;
-    const pseudoRandom = () => {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280;
+    // Pure deterministic pseudo-random generator with realistic distribution
+    const pseudoRandom = (idx) => {
+      const x = Math.sin(idx * 12.9898 + 78.233) * 43758.5453;
+      return x - Math.floor(x);
     };
 
     let totalCommits = 0;
@@ -27,22 +26,23 @@ export default function GithubHeatmap({ style = {} }) {
         const cellDate = new Date(today);
         cellDate.setDate(today.getDate() - dayOffset);
 
-        const r = pseudoRandom();
+        const cellIndex = w * 7 + d;
+        const r = pseudoRandom(cellIndex);
         let count = 0;
         let level = 0;
 
         if (r > 0.45) {
           if (r > 0.92) {
-            count = Math.floor(10 + pseudoRandom() * 14);
+            count = Math.floor(10 + pseudoRandom(cellIndex + 500) * 14);
             level = 4;
           } else if (r > 0.78) {
-            count = Math.floor(6 + pseudoRandom() * 5);
+            count = Math.floor(6 + pseudoRandom(cellIndex + 500) * 5);
             level = 3;
           } else if (r > 0.6) {
-            count = Math.floor(3 + pseudoRandom() * 3);
+            count = Math.floor(3 + pseudoRandom(cellIndex + 500) * 3);
             level = 2;
           } else {
-            count = Math.floor(1 + pseudoRandom() * 2);
+            count = Math.floor(1 + pseudoRandom(cellIndex + 500) * 2);
             level = 1;
           }
         }

@@ -6,6 +6,8 @@ import { smoothScrollTo } from '../utils/smoothScroll';
 import { ScrollReveal } from './ScrollReveal';
 import './Footer.css';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer({ personal = {}, socials = [] }) {
   const scrollToTop = () => {
     sound.playClick();
@@ -20,8 +22,6 @@ export default function Footer({ personal = {}, socials = [] }) {
   const twitterLink = socials.find((s) => s.name?.toLowerCase().includes('twitter') || s.name?.toLowerCase().includes('x'))?.url || 'https://x.com';
   const linkedinLink = socials.find((s) => s.name?.toLowerCase().includes('linkedin'))?.url || 'https://linkedin.com';
 
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="footer-section">
       <div className="container">
@@ -32,7 +32,7 @@ export default function Footer({ personal = {}, socials = [] }) {
             {/* Left Column: Attribution */}
             <div className="footer-branding">
               <div className="footer-title">
-                <span className="footer-author-name">© {currentYear} {personal.name || 'Ayush Aryan'}</span>
+                <span className="footer-author-name">© {CURRENT_YEAR} {personal.name || 'Ayush Aryan'}</span>
                 <span className="footer-brand-dot" />
               </div>
 
