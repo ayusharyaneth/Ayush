@@ -10,7 +10,8 @@ import {
   Moon,
   Sun,
   Volume2,
-  VolumeX
+  VolumeX,
+  Heart
 } from 'lucide-react';
 import { sound } from '../utils/soundEffects';
 import { smoothScrollTo } from '../utils/smoothScroll';
@@ -24,7 +25,8 @@ export default function CommandPalette({
   soundMuted,
   setSoundMuted,
   projects = [],
-  onOpenCaseStudy
+  onOpenCaseStudy,
+  onNavigate
 }) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -72,11 +74,11 @@ export default function CommandPalette({
     {
       category: 'Navigation',
       id: 'nav-collection',
-      title: 'Jump to The Collection',
+      title: 'Jump to Collection',
       subtitle: 'Security research, honors & publications',
       icon: Layers,
       run: () => {
-        smoothScrollTo('collection');
+        onNavigate ? onNavigate('home', 'collection') : smoothScrollTo('collection');
         setIsOpen(false);
       }
     },
@@ -87,7 +89,18 @@ export default function CommandPalette({
       subtitle: 'Send an inquiry or book an intro call',
       icon: Mail,
       run: () => {
-        smoothScrollTo('contact');
+        onNavigate ? onNavigate('home', 'contact') : smoothScrollTo('contact');
+        setIsOpen(false);
+      }
+    },
+    {
+      category: 'Navigation',
+      id: 'nav-support',
+      title: 'Jump to Support // Buy Me a Coffee',
+      subtitle: 'UPI, PayPal, GitHub Sponsors & Crypto transfers',
+      icon: Heart,
+      run: () => {
+        onNavigate?.('support');
         setIsOpen(false);
       }
     },

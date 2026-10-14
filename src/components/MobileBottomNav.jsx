@@ -12,11 +12,12 @@ const NAV_ITEMS = [
   { id: 'top', label: 'Home' },
   { id: 'work', label: 'Work' },
   { id: 'experience', label: 'Experience' },
-  { id: 'collection', label: 'The Collection' },
-  { id: 'contact', label: 'Contact', hasArrow: true }
+  { id: 'collection', label: 'Collection' },
+  { id: 'contact', label: 'Contact', hasArrow: false },
+  { id: 'support', label: 'Support' }
 ];
 
-export default function MobileBottomNav({ isCopiedActive = false }) {
+export default function MobileBottomNav({ isCopiedActive = false, currentView = 'home', onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -27,8 +28,9 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
   const isMenuOpen = isOpen && !isCopiedActive;
 
   // Active section display label
-  const activeItem = NAV_ITEMS.find((item) => item.id === activeSection) || NAV_ITEMS[0];
-  const isAtTop = activeSection === 'top';
+  const effectiveActiveSection = currentView === 'support' ? 'support' : activeSection;
+  const activeItem = NAV_ITEMS.find((item) => item.id === effectiveActiveSection) || NAV_ITEMS[0];
+  const isAtTop = effectiveActiveSection === 'top';
 
   // Track scroll progress and active section
   useEffect(() => {
@@ -142,9 +144,19 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
   // Scroll to section handler
   const handleSelectSection = useCallback((targetId) => {
     sound.playClick();
-    setActiveSection(targetId);
     setIsOpen(false);
 
+    if (targetId === 'support') {
+      onNavigate?.('support');
+      return;
+    }
+
+    if (currentView === 'support') {
+      onNavigate?.('home', targetId);
+      return;
+    }
+
+    setActiveSection(targetId);
     isClickScrollingRef.current = true;
 
     smoothScrollTo(targetId, {
@@ -160,7 +172,7 @@ export default function MobileBottomNav({ isCopiedActive = false }) {
     if (window.history && window.history.replaceState) {
       window.history.replaceState(null, '', targetId === 'top' ? '#' : `#${targetId}`);
     }
-  }, []);
+  }, [currentView, onNavigate]);
 
   // Scroll to top button handler
   const handleScrollToTop = useCallback(() => {

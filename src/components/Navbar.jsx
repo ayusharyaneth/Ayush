@@ -16,7 +16,9 @@ export default function Navbar({
   setTheme,
   onOpenCommand,
   onToggleSettings,
-  isSettingsOpen
+  isSettingsOpen,
+  currentView = 'home',
+  onNavigate
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -56,8 +58,10 @@ export default function Navbar({
     let targetElement = null;
     let isUnderline = false;
 
-    if (!isMobileNavHidden && activeSection && navItemRefs.current[activeSection]) {
-      targetElement = navItemRefs.current[activeSection];
+    const activeKey = currentView === 'support' ? 'support' : activeSection;
+
+    if (!isMobileNavHidden && activeKey && navItemRefs.current[activeKey]) {
+      targetElement = navItemRefs.current[activeKey];
       isUnderline = true;
     } else if (logoDotAnchorRef.current) {
       targetElement = logoDotAnchorRef.current;
@@ -93,7 +97,7 @@ export default function Navbar({
       opacity: 1,
       isUnderline
     });
-  }, [activeSection]);
+  }, [activeSection, currentView]);
 
   // Recalculate indicator position on section change or header morph
   useLayoutEffect(() => {
@@ -236,6 +240,11 @@ export default function Navbar({
     e.preventDefault();
     sound.playClick();
 
+    if (currentView === 'support') {
+      onNavigate?.('home', targetId);
+      return;
+    }
+
     const targetSection = targetId === 'top' ? '' : targetId;
     setActiveSection(targetSection);
 
@@ -343,20 +352,20 @@ export default function Navbar({
             href="#collection"
             onClick={(e) => handleNavClick(e, 'collection')}
             onMouseEnter={() => sound.playHover()}
-            className={`navbar-link ${activeSection === 'collection' ? 'active' : ''}`}
+            className={`navbar-link ${currentView === 'home' && activeSection === 'collection' ? 'active' : ''}`}
           >
             <span
               ref={(el) => (navItemRefs.current['collection'] = el)}
               className="navbar-link-text"
             >
-              The Collection
+              Collection
             </span>
           </a>
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, 'contact')}
             onMouseEnter={() => sound.playHover()}
-            className={`navbar-link ${activeSection === 'contact' ? 'active' : ''}`}
+            className={`navbar-link ${currentView === 'home' && activeSection === 'contact' ? 'active' : ''}`}
           >
             <span
               ref={(el) => (navItemRefs.current['contact'] = el)}
@@ -364,7 +373,23 @@ export default function Navbar({
             >
               Contact
             </span>
-            <ArrowUpRight size={13} style={{ opacity: 0.8, flexShrink: 0 }} />
+          </a>
+          <a
+            href="/support"
+            onClick={(e) => {
+              e.preventDefault();
+              sound.playClick();
+              onNavigate?.('support');
+            }}
+            onMouseEnter={() => sound.playHover()}
+            className={`navbar-link ${currentView === 'support' ? 'active' : ''}`}
+          >
+            <span
+              ref={(el) => (navItemRefs.current['support'] = el)}
+              className="navbar-link-text"
+            >
+              Support
+            </span>
           </a>
         </nav>
 
