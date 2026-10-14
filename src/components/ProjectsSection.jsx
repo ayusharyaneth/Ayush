@@ -318,10 +318,12 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                     }}
                   >
                     <img
-                      src={project.image}
+                      src={getResponsiveImageUrl(project.image, 120, 75)}
                       alt={project.title}
                       loading="lazy"
                       decoding="async"
+                      width="42"
+                      height="42"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>
