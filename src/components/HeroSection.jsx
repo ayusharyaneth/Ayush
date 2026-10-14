@@ -18,6 +18,7 @@ import {
   LeetCodeIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
+import { haptic } from '../utils/haptic';
 import { ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 import './HeroSection.css';
 
@@ -36,6 +37,7 @@ export default function HeroSection({ personal, onCopyEmail, onBookCall }) {
       e.preventDefault();
       e.stopPropagation();
     }
+    haptic(45);
     sound.playSuccess();
     onCopyEmail(chanh.email);
     setEmailCopied(true);

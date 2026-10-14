@@ -17,6 +17,7 @@ import ScrollEdgeVignettes from './components/ScrollEdgeVignettes';
 
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
+import { haptic } from './utils/haptic';
 import { initAnchorScrollListener } from './utils/smoothScroll';
 
 export default function App() {
@@ -83,6 +84,7 @@ export default function App() {
     } catch {
       // handled
     }
+    haptic(45);
     sound.playSuccess();
     showToast('Copied', 'copy');
   }, [showToast]);

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Mail, Calendar, ArrowUpRight, Check } from 'lucide-react';
 import SocialCards from './SocialCards';
 import { sound } from '../utils/soundEffects';
+import { haptic } from '../utils/haptic';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from './ScrollReveal';
 
 export default function ContactSection({ personal, socials, onCopyEmail, onBookCall }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
+    haptic(45);
     sound.playSuccess();
     onCopyEmail();
     setCopied(true);
