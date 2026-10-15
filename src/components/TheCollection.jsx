@@ -95,6 +95,7 @@ export default function TheCollection({ collection = [] }) {
                 {/* Accordion Title Trigger Header */}
                 <div
                   onClick={() => toggleSection(idx)}
+                  onMouseEnter={() => sound.playHover()}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -152,6 +153,7 @@ export default function TheCollection({ collection = [] }) {
                   <button
                     type="button"
                     className="collection-expander-btn"
+                    onMouseEnter={() => sound.playHover()}
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleSection(idx);
@@ -192,6 +194,7 @@ export default function TheCollection({ collection = [] }) {
                             <div
                               key={itemIdx}
                               className="collection-item-card"
+                              onMouseEnter={() => sound.playHover()}
                               style={{
                                 padding: '14px 16px',
                                 borderRadius: 'var(--radius-md)',
@@ -234,6 +237,8 @@ export default function TheCollection({ collection = [] }) {
                                     href={item.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    onMouseEnter={() => sound.playHover()}
+                                    onClick={() => sound.playClick()}
                                     style={{ color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', flexShrink: 0 }}
                                     aria-label={`Read ${item.title}`}
                                   >

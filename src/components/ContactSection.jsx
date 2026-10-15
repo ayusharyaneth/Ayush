@@ -153,6 +153,7 @@ export default function ContactSection({
             {/* Functional Outlined Arrow CTA */}
             <div
               onClick={handleActionClick}
+              onMouseEnter={() => sound.playCardHover()}
               className="contact-primary-cta-group"
               role="button"
               tabIndex={0}
@@ -187,6 +188,7 @@ export default function ContactSection({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="contact-social-pill"
+                    onMouseEnter={() => sound.playHover()}
                     onClick={() => sound.playClick()}
                     title={item.name}
                   >

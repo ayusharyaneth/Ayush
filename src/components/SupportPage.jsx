@@ -193,6 +193,7 @@ export default function SupportPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="support-quick-card"
+                    onMouseEnter={() => sound.playCardHover()}
                     onClick={() => sound.playClick()}
                   >
                     <span className="support-quick-icon" aria-hidden="true">
@@ -206,6 +207,7 @@ export default function SupportPage({
                   <button
                     type="button"
                     className={`support-quick-copy ${isCopied ? 'support-quick-copy-copied' : ''}`}
+                    onMouseEnter={() => sound.playHover()}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
@@ -235,6 +237,7 @@ export default function SupportPage({
                 type="button"
                 className="support-select-trigger"
                 aria-expanded={isCoinDropdownOpen}
+                onMouseEnter={() => sound.playHover()}
                 onClick={toggleCoinDropdown}
               >
                 <span className="support-select-trigger-icon" aria-hidden="true">
@@ -260,6 +263,7 @@ export default function SupportPage({
                         role="option"
                         aria-selected={isSelected}
                         className={`support-select-option ${isSelected ? 'support-select-option-selected' : ''}`}
+                        onMouseEnter={() => sound.playHover()}
                         onClick={() => {
                           handleCoinChange(coin.key);
                           setIsCoinDropdownOpen(false);
@@ -285,6 +289,7 @@ export default function SupportPage({
                   type="button"
                   className="support-select-trigger"
                   aria-expanded={isNetworkDropdownOpen}
+                  onMouseEnter={() => sound.playHover()}
                   onClick={toggleNetworkDropdown}
                 >
                   <span>{selectedNetwork}</span>
@@ -307,6 +312,7 @@ export default function SupportPage({
                           role="option"
                           aria-selected={isSelected}
                           className={`support-select-option ${isSelected ? 'support-select-option-selected' : ''}`}
+                          onMouseEnter={() => sound.playHover()}
                           onClick={() => {
                             sound.playClick();
                             setSelectedNetwork(net);
@@ -336,6 +342,7 @@ export default function SupportPage({
                 <button
                   type="button"
                   className={`support-copy-btn ${copiedKey === 'crypto' ? 'support-copy-btn-copied' : ''}`}
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => handleCopy(currentAddress, 'crypto', 'Wallet address')}
                   title={copiedKey === 'crypto' ? 'Address copied!' : 'Copy wallet address'}
                   aria-label="Copy wallet address"
