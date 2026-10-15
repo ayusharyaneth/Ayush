@@ -71,16 +71,16 @@ export default function GithubHeatmap({
     };
   }, [username]);
 
-  // Transform raw contribution days into calendar weeks (starting from 1 Nov 2025)
+  // Transform raw contribution days into calendar weeks (starting from 1 Jan 2026)
   const { weeks, monthLabels, totalCommits } = useMemo(() => {
     const rawContributions = data?.contributions || [];
     if (!rawContributions.length) {
       return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
-    // Filter to start strictly from 1 Nov 2025 (omits empty days prior to this date)
+    // Filter to start strictly from 1 Jan 2026 (omits empty days prior to this date)
     const filteredByDate = rawContributions.filter(
-      (day) => day && day.date >= '2025-11-01'
+      (day) => day && day.date >= '2026-01-01'
     );
 
     // Ensure sorted chronologically
@@ -224,7 +224,7 @@ export default function GithubHeatmap({
                 </span>
               ) : (
                 <span>
-                  <strong>{totalCommits.toLocaleString()} contributions</strong> in the last year
+                  <strong>{totalCommits.toLocaleString()} contributions</strong> in 2026
                 </span>
               )}
             </div>
