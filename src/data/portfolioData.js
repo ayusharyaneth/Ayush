@@ -272,10 +272,10 @@ export const portfolioData = {
         label: "ETH / EVM",
         networks: ["Ethereum", "Arbitrum One", "Base", "Optimism"],
         addresses: {
-          Ethereum: { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Base: { badge: "Base", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Optimism: { badge: "Optimism", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+          Ethereum: { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Base: { badge: "Base", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Optimism: { badge: "Optimism", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
       },
       {
@@ -283,8 +283,8 @@ export const portfolioData = {
         label: "USDT",
         networks: ["Arbitrum One", "ERC-20"],
         addresses: {
-          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+          "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          "ERC-20": { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
       },
       {
@@ -292,8 +292,8 @@ export const portfolioData = {
         label: "USDC",
         networks: ["Arbitrum One", "ERC-20"],
         addresses: {
-          "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+          "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          "ERC-20": { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
       }
     ]
