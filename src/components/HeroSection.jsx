@@ -103,7 +103,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
   };
 
   const socialLinks = [
-    { name: 'X / Twitter', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
+    { name: 'X', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com/ayusharyaneth/' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyaneth' }

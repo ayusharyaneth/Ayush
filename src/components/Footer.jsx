@@ -57,7 +57,7 @@ export default function Footer({ personal = {}, socials = [] }) {
                 <span>GitHub</span>
               </a>
 
-              {/* Minimal Square X / Twitter Button */}
+              {/* Minimal Square X Button */}
               <a
                 href={twitterLink}
                 target="_blank"
@@ -65,8 +65,8 @@ export default function Footer({ personal = {}, socials = [] }) {
                 className="footer-icon-square"
                 onClick={() => sound.playClick()}
                 onMouseEnter={() => sound.playHover()}
-                title="Follow on Twitter / X"
-                aria-label="Twitter / X"
+                title="Follow on X"
+                aria-label="X"
               >
                 <TwitterIcon size={13} />
               </a>

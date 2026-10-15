@@ -64,33 +64,76 @@
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1.5px dashed var(--border-dashed);
+  border: 1.5px dashed var(--hero-bp-border, #444444);
   padding: 24px 28px 20px;
   border-radius: var(--radius-lg, 16px);
-  transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
   box-shadow: var(--shadow-card);
 }
 
-.contact-editorial-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 30px -8px var(--accent-glow);
+/* Card Elevation & Ambient Halo on Hover (Matching Hero Header - No blue glow) */
+.contact-editorial-card:hover,
+.contact-editorial-card.is-hovered {
+  border-color: var(--hero-bp-border-hover, #888888);
+  box-shadow: 0 0 32px -4px var(--hero-card-glow, rgba(255, 255, 255, 0.07)), 0 16px 40px -12px rgba(0, 0, 0, 0.45);
 }
 
-/* Technical Corner Markers */
+.theme-light .contact-editorial-card,
+[data-theme="light"] .contact-editorial-card {
+  border-color: var(--hero-bp-border, rgba(0, 0, 0, 0.16));
+}
+
+.theme-light .contact-editorial-card:hover,
+[data-theme="light"] .contact-editorial-card:hover,
+.theme-light .contact-editorial-card.is-hovered,
+[data-theme="light"] .contact-editorial-card.is-hovered {
+  border-color: var(--hero-bp-border-hover, rgba(0, 0, 0, 0.48));
+  box-shadow: 0 0 32px -4px var(--hero-card-glow, rgba(0, 0, 0, 0.04)), 0 14px 32px -10px rgba(0, 0, 0, 0.08);
+}
+
+/* Technical Corner Markers (+) with Hover Illumination matching Hero */
 .contact-card-corner {
   position: absolute;
   font-family: var(--font-family-mono), monospace;
-  font-size: 10px;
-  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--hero-bp-border, #444444);
   line-height: 1;
   user-select: none;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.75;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+  z-index: 5;
 }
-.contact-corner-tl { top: -5px; left: -5px; }
-.contact-corner-tr { top: -5px; right: -5px; }
-.contact-corner-bl { bottom: -5px; left: -5px; }
-.contact-corner-br { bottom: -5px; right: -5px; }
+.contact-corner-tl { top: -6px; left: -6px; }
+.contact-corner-tr { top: -6px; right: -6px; }
+.contact-corner-bl { bottom: -6px; left: -6px; }
+.contact-corner-br { bottom: -6px; right: -6px; }
+
+.contact-editorial-card:hover .contact-card-corner,
+.contact-editorial-card.is-hovered .contact-card-corner {
+  color: var(--hero-bp-corner-hover, #ffffff);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+  transform: scale(1.15);
+}
+
+.theme-light .contact-editorial-card:hover .contact-card-corner,
+[data-theme="light"] .contact-editorial-card:hover .contact-card-corner,
+.theme-light .contact-editorial-card.is-hovered .contact-card-corner,
+[data-theme="light"] .contact-editorial-card.is-hovered .contact-card-corner {
+  color: var(--hero-bp-corner-hover, #18181b);
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Interactive Cursor Spotlight Radial Glow */
+.contact-card-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.35s ease;
+  border-radius: var(--radius-lg, 16px);
+}
 
 /* Top Meta Row */
 .contact-meta-header {

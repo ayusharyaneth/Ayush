@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
 import {
@@ -23,6 +23,28 @@ export default function ContactSection({
 }) {
   const prefersReducedMotion = useReducedMotion();
   const [copied, setCopied] = useState(false);
+
+  // Blueprint hover highlight & mouse spotlight tracking (same effect as hero header)
+  const contactCardRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleCardMouseMove = (e) => {
+    if (!contactCardRef.current) return;
+    const rect = contactCardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  const handleCardMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleCardMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const contactEmail =
     personal?.chanhCard?.email || personal?.email || 'eth@ayusharyan.in';
@@ -52,7 +74,7 @@ export default function ContactSection({
   };
 
   const socialLinks = [
-    { name: 'X / Twitter', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com/ayusharyaneth' },
+    { name: 'X', icon: TwitterIcon, url: personal?.chanhCard?.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: personal?.chanhCard?.socials?.github || 'https://github.com/ayusharyaneth/' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: personal?.chanhCard?.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: personal?.chanhCard?.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyaneth' }
@@ -69,12 +91,28 @@ export default function ContactSection({
       </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="contact-editorial-card">
+        <div
+          ref={contactCardRef}
+          onMouseMove={handleCardMouseMove}
+          onMouseEnter={handleCardMouseEnter}
+          onMouseLeave={handleCardMouseLeave}
+          className={`contact-editorial-card ${isHovered ? 'is-hovered' : ''}`}
+        >
           {/* Architectural Blueprint Corner Crosshair Indicators */}
           <span className="contact-card-corner contact-corner-tl" aria-hidden="true">+</span>
           <span className="contact-card-corner contact-corner-tr" aria-hidden="true">+</span>
           <span className="contact-card-corner contact-corner-bl" aria-hidden="true">+</span>
           <span className="contact-card-corner contact-corner-br" aria-hidden="true">+</span>
+
+          {/* Interactive Mouse Spotlight Radial Glow (Same effect as hero header) */}
+          <div
+            className="contact-card-spotlight"
+            style={{
+              opacity: isHovered ? 1 : 0,
+              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, var(--hero-spotlight, rgba(255, 255, 255, 0.045)), transparent 65%)`
+            }}
+            aria-hidden="true"
+          />
 
           {/* Top Meta Row */}
           <motion.div
