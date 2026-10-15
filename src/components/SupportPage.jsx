@@ -108,9 +108,11 @@ export default function SupportPage({
   const currentAddress = addressInfo.address || '';
   const currentBadge = addressInfo.badge || selectedNetwork || activeCoin.label || '';
 
-  // Dropdown open states
+  // Dropdown open states & drop-up positioning
   const [isCoinDropdownOpen, setIsCoinDropdownOpen] = useState(false);
   const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
+  const [coinDropUp, setCoinDropUp] = useState(true);
+  const [networkDropUp, setNetworkDropUp] = useState(true);
 
   const coinDropdownRef = useRef(null);
   const networkDropdownRef = useRef(null);
@@ -128,6 +130,40 @@ export default function SupportPage({
     document.addEventListener('pointerdown', handleOutsideClick);
     return () => document.removeEventListener('pointerdown', handleOutsideClick);
   }, []);
+
+  // Ensure page remains steady when dropdowns close
+  useEffect(() => {
+    if (!isCoinDropdownOpen && !isNetworkDropdownOpen) {
+      if (window.scrollY > 0 && window.innerWidth > 700) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    }
+  }, [isCoinDropdownOpen, isNetworkDropdownOpen]);
+
+  const toggleCoinDropdown = () => {
+    sound.playClick();
+    if (!isCoinDropdownOpen && coinDropdownRef.current) {
+      const rect = coinDropdownRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      // Default to drop-up to prevent adding height to document bottom
+      setCoinDropUp(spaceBelow < 210 || spaceAbove > spaceBelow);
+    }
+    setIsCoinDropdownOpen((prev) => !prev);
+    setIsNetworkDropdownOpen(false);
+  };
+
+  const toggleNetworkDropdown = () => {
+    sound.playClick();
+    if (!isNetworkDropdownOpen && networkDropdownRef.current) {
+      const rect = networkDropdownRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      setNetworkDropUp(spaceBelow < 210 || spaceAbove > spaceBelow);
+    }
+    setIsNetworkDropdownOpen((prev) => !prev);
+    setIsCoinDropdownOpen(false);
+  };
 
   // Quick Support Platforms
   const quickPlatforms = (supportData.quickSupport || []).map((item) => {
@@ -205,11 +241,7 @@ export default function SupportPage({
                 type="button"
                 className="support-select-trigger"
                 aria-expanded={isCoinDropdownOpen}
-                onClick={() => {
-                  sound.playClick();
-                  setIsCoinDropdownOpen((prev) => !prev);
-                  setIsNetworkDropdownOpen(false);
-                }}
+                onClick={toggleCoinDropdown}
               >
                 <span className="support-select-trigger-icon" aria-hidden="true">
                   {getCoinIcon(activeCoin.key)}
@@ -219,7 +251,13 @@ export default function SupportPage({
               </button>
 
               {isCoinDropdownOpen && (
-                <ul className="support-select-listbox" role="listbox">
+                <ul
+                  className={`support-select-listbox overflow-y-auto ${coinDropUp ? 'support-select-listbox-dropup' : ''}`}
+                  role="listbox"
+                  data-lenis-prevent
+                  onWheel={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                >
                   {cryptoList.map((coin) => {
                     const isSelected = coin.key === selectedCoinKey;
                     return (
@@ -253,18 +291,20 @@ export default function SupportPage({
                   type="button"
                   className="support-select-trigger"
                   aria-expanded={isNetworkDropdownOpen}
-                  onClick={() => {
-                    sound.playClick();
-                    setIsNetworkDropdownOpen((prev) => !prev);
-                    setIsCoinDropdownOpen(false);
-                  }}
+                  onClick={toggleNetworkDropdown}
                 >
                   <span>{selectedNetwork}</span>
                   <ChevronDown className="support-select-chevron" size={15} />
                 </button>
 
                 {isNetworkDropdownOpen && (
-                  <ul className="support-select-listbox" role="listbox">
+                  <ul
+                    className={`support-select-listbox overflow-y-auto ${networkDropUp ? 'support-select-listbox-dropup' : ''}`}
+                    role="listbox"
+                    data-lenis-prevent
+                    onWheel={(e) => e.stopPropagation()}
+                    onTouchMove={(e) => e.stopPropagation()}
+                  >
                     {availableNetworks.map((net) => {
                       const isSelected = net === selectedNetwork;
                       return (

@@ -236,24 +236,33 @@
   right: 0;
   z-index: 50;
   margin: 0;
-  padding: 6px;
+  padding: 5px;
   list-style: none;
   background: var(--bg-surface);
   border: 1px solid var(--border-line);
   border-radius: var(--radius-md, 8px);
-  box-shadow: var(--shadow-popover);
-  max-height: 240px;
+  box-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-primary);
+  max-height: 190px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   font-family: var(--font-family-sans), sans-serif;
+}
+
+/* Drop-up presentation: opens upwards, preventing document expansion & scrollbars */
+.support-select-listbox-dropup {
+  top: auto;
+  bottom: calc(100% + 4px);
+  box-shadow: 0 -14px 36px -4px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-primary);
 }
 
 .support-select-option {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
+  gap: 8px;
+  padding: 7px 10px;
   border-radius: var(--radius-sm, 6px);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
