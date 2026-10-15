@@ -146,8 +146,11 @@ class SoundEngine {
     } catch {}
   }
 
-  // Alias for hover to use whoosh/tick
+  // Alias for hover to use whoosh/tick with micro-cooldown
   playHover() {
+    const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+    if (this.lastHoverTime && now - this.lastHoverTime < 35) return;
+    this.lastHoverTime = now;
     this.playTick();
   }
 
