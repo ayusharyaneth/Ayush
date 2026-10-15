@@ -174,6 +174,13 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
     }
 
     if (currentView === 'support') {
+      setActiveSection(targetId);
+      isClickScrollingRef.current = true;
+      clearTimeout(scrollEndTimerRef.current);
+      scrollEndTimerRef.current = setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 1400);
+
       onNavigate?.('home', targetId);
       return;
     }

@@ -262,6 +262,13 @@ export default function Navbar({
     }
 
     if (currentView === 'support') {
+      setActiveSection(targetId);
+      isClickScrollingRef.current = true;
+      clearTimeout(scrollEndTimerRef.current);
+      scrollEndTimerRef.current = setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 1400);
+
       onNavigate?.('home', targetId);
       return;
     }
@@ -346,7 +353,7 @@ export default function Navbar({
             href="#work"
             onClick={(e) => handleNavClick(e, 'work')}
             onMouseEnter={() => sound.playHover()}
-            className={`navbar-link ${activeSection === 'work' ? 'active' : ''}`}
+            className={`navbar-link ${currentView === 'home' && activeSection === 'work' ? 'active' : ''}`}
           >
             <span
               ref={(el) => (navItemRefs.current['work'] = el)}
@@ -359,7 +366,7 @@ export default function Navbar({
             href="#experience"
             onClick={(e) => handleNavClick(e, 'experience')}
             onMouseEnter={() => sound.playHover()}
-            className={`navbar-link ${activeSection === 'experience' ? 'active' : ''}`}
+            className={`navbar-link ${currentView === 'home' && activeSection === 'experience' ? 'active' : ''}`}
           >
             <span
               ref={(el) => (navItemRefs.current['experience'] = el)}

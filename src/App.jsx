@@ -22,7 +22,7 @@ const CaseStudyModal = lazy(() => import('./components/CaseStudyModal'));
 import { portfolioData } from './data/portfolioData';
 import { sound } from './utils/soundEffects';
 import { haptic } from './utils/haptic';
-import { initSmoothScroll, initAnchorScrollListener, smoothScrollTo } from './utils/smoothScroll';
+import { initSmoothScroll, initAnchorScrollListener, smoothScrollTo, resizeSmoothScroll } from './utils/smoothScroll';
 
 export default function App() {
   // Theme & Appearance State
@@ -55,6 +55,15 @@ export default function App() {
     return 'home';
   });
 
+  // Synchronize smooth scroll engine dimensions whenever view switches
+  useEffect(() => {
+    resizeSmoothScroll();
+    const timer = setTimeout(() => {
+      resizeSmoothScroll();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [currentView]);
+
   // Handle browser Back/Forward buttons and hash changes
   useEffect(() => {
     const handleLocationChange = () => {
@@ -66,9 +75,10 @@ export default function App() {
         setCurrentView('home');
         if (hash && hash !== '#' && hash !== '#top') {
           const sectionId = hash.replace(/^#/, '');
-          setTimeout(() => {
+          requestAnimationFrame(() => {
+            resizeSmoothScroll();
             smoothScrollTo(sectionId);
-          }, 60);
+          });
         }
       }
     };
@@ -82,23 +92,39 @@ export default function App() {
   }, []);
 
   const navigateTo = useCallback((view, targetSection = '') => {
-    setCurrentView(view);
     if (view === 'support') {
+      setCurrentView('support');
       window.history.pushState(null, '', '/support');
       window.scrollTo({ top: 0, behavior: 'instant' });
-    } else {
-      const cleanSection = targetSection && targetSection !== 'top' ? targetSection : '';
-      const newUrl = cleanSection ? `/#${cleanSection}` : '/';
-      window.history.pushState(null, '', newUrl);
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true });
+      }
+      return;
+    }
 
-      if (cleanSection) {
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            smoothScrollTo(cleanSection);
-          }, 80);
+    // Navigating to 'home'
+    const cleanSection = targetSection && targetSection !== 'top' ? targetSection.replace(/^#/, '') : '';
+    const newUrl = cleanSection ? `/#${cleanSection}` : '/';
+    window.history.pushState(null, '', newUrl);
+
+    setCurrentView('home');
+
+    if (cleanSection) {
+      // Synchronize dimensions and smoothly glide to destination element
+      requestAnimationFrame(() => {
+        resizeSmoothScroll();
+        smoothScrollTo(cleanSection, {
+          onComplete: () => {
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState(null, '', `/#${cleanSection}`);
+            }
+          }
         });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true });
       }
     }
   }, []);
