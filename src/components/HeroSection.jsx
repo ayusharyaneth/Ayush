@@ -133,17 +133,11 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
           stagger={0.08}
           delayChildren={0.04}
         >
-          {/* Architectural Blueprint Dashed Border Lines with Crosshair Overshoots */}
+          {/* Architectural Blueprint Dashed Border Lines with Overshoots */}
           <div className="blueprint-border-line blueprint-line-top" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-bottom" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-left" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-right" aria-hidden="true" />
-
-          {/* Corner Crosshair (+) Markers */}
-          <span className="blueprint-corner blueprint-corner-tl" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-tr" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-bl" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-br" aria-hidden="true">+</span>
 
           {/* Interactive Mouse Spotlight Radial Glow */}
           <div
