@@ -170,14 +170,16 @@ export default function GithubHeatmap({
     if (!day || !containerRef.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const containerRect = containerRef.current.getBoundingClientRect();
+    const scrollLeft = containerRef.current.scrollLeft || 0;
 
     setHoveredCell({
       ...day,
       formattedDate: formatDateLabel(day.date),
-      x: rect.left - containerRect.left + rect.width / 2,
+      x: rect.left - containerRect.left + scrollLeft + rect.width / 2,
       y: rect.top - containerRect.top
     });
   };
+
 
   const handleCellMouseLeave = () => {
     setHoveredCell(null);
@@ -300,7 +302,11 @@ export default function GithubHeatmap({
                     onMouseEnter={(e) => handleCellMouseEnter(e, day)}
                     onMouseLeave={handleCellMouseLeave}
                     onClick={openProfile}
-                  />
+                  >
+                    <title>
+                      {day.count === 0 ? 'No contributions' : `${day.count} contribution${day.count > 1 ? 's' : ''}`} on {formatDateLabel(day.date)}
+                    </title>
+                  </rect>
                 );
               })
             )}
@@ -313,7 +319,7 @@ export default function GithubHeatmap({
             className="github-heatmap-tooltip"
             style={{
               left: `${hoveredCell.x}px`,
-              top: `${hoveredCell.y - 8}px`
+              top: `${Math.max(22, hoveredCell.y - 8)}px`
             }}
           >
             <div className="github-heatmap-tooltip-bubble">
@@ -326,33 +332,7 @@ export default function GithubHeatmap({
           </div>
         )}
       </div>
-
-      {/* Footer Bar (Chanh Dai signature footer) */}
-      <div className="github-contributions-footer">
-        <div className="github-contributions-footer-total">
-          <span>{totalCommits.toLocaleString()} contributions in the last year on </span>
-          <a href={profileUrl} target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          .
-        </div>
-
-        {/* Legend */}
-        <div className="github-legend">
-          <span className="github-legend-label">Less</span>
-          {[0, 1, 2, 3, 4].map((lvl) => (
-            <div
-              key={lvl}
-              className="github-legend-block"
-              style={{
-                background: getCellColor(lvl)
-              }}
-              title={`Level ${lvl}`}
-            />
-          ))}
-          <span className="github-legend-label">More</span>
-        </div>
-      </div>
     </div>
+
   );
 }
