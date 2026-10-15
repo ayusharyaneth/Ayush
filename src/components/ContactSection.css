@@ -64,76 +64,128 @@
   background: var(--bg-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1.5px dashed var(--hero-bp-border, #444444);
-  padding: 24px 28px 20px;
-  border-radius: var(--radius-lg, 16px);
-  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  padding: 32px 36px 28px;
+  transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
   box-shadow: var(--shadow-card);
 }
 
-/* Card Elevation & Ambient Halo on Hover (Matching Hero Header - No blue glow) */
+/* Card Elevation & Ambient Halo on Hover (Exact Hero Header Effect) */
 .contact-editorial-card:hover,
 .contact-editorial-card.is-hovered {
-  border-color: var(--hero-bp-border-hover, #888888);
   box-shadow: 0 0 32px -4px var(--hero-card-glow, rgba(255, 255, 255, 0.07)), 0 16px 40px -12px rgba(0, 0, 0, 0.45);
-}
-
-.theme-light .contact-editorial-card,
-[data-theme="light"] .contact-editorial-card {
-  border-color: var(--hero-bp-border, rgba(0, 0, 0, 0.16));
 }
 
 .theme-light .contact-editorial-card:hover,
 [data-theme="light"] .contact-editorial-card:hover,
 .theme-light .contact-editorial-card.is-hovered,
 [data-theme="light"] .contact-editorial-card.is-hovered {
-  border-color: var(--hero-bp-border-hover, rgba(0, 0, 0, 0.48));
   box-shadow: 0 0 32px -4px var(--hero-card-glow, rgba(0, 0, 0, 0.04)), 0 14px 32px -10px rgba(0, 0, 0, 0.08);
 }
 
-/* Technical Corner Markers (+) with Hover Illumination matching Hero */
-.contact-card-corner {
+/* ==========================================================================
+   ARCHITECTURAL OVERSHOOTING DASHED LINES (Exact Hero Header Blueprint)
+   ========================================================================== */
+
+.contact-editorial-card .blueprint-border-line {
   position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Top Horizontal Line: overshoots left & right by 12px */
+.contact-editorial-card .blueprint-line-top {
+  top: 0;
+  left: -12px;
+  right: -12px;
+  height: 0;
+  border-top: 1.5px dashed var(--hero-bp-border, #444444);
+}
+
+/* Bottom Horizontal Line: overshoots left & right by 12px */
+.contact-editorial-card .blueprint-line-bottom {
+  bottom: 0;
+  left: -12px;
+  right: -12px;
+  height: 0;
+  border-bottom: 1.5px dashed var(--hero-bp-border, #444444);
+}
+
+/* Left Vertical Line: overshoots top & bottom by 12px */
+.contact-editorial-card .blueprint-line-left {
+  left: 0;
+  top: -12px;
+  bottom: -12px;
+  width: 0;
+  border-left: 1.5px dashed var(--hero-bp-border, #444444);
+}
+
+/* Right Vertical Line: overshoots top & bottom by 12px */
+.contact-editorial-card .blueprint-line-right {
+  right: 0;
+  top: -12px;
+  bottom: -12px;
+  width: 0;
+  border-right: 1.5px dashed var(--hero-bp-border, #444444);
+}
+
+/* Smooth Highlight on Hover: all 4 lines illuminate to #888888 */
+.contact-editorial-card:hover .blueprint-border-line,
+.contact-editorial-card.is-hovered .blueprint-border-line {
+  border-color: var(--hero-bp-border-hover, #888888);
+}
+
+/* Corner Crosshair (+) Markers */
+.contact-editorial-card .blueprint-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-family-mono), monospace;
   font-size: 11px;
   font-weight: 500;
-  color: var(--hero-bp-border, #444444);
   line-height: 1;
-  user-select: none;
+  color: var(--hero-bp-border, #444444);
   pointer-events: none;
-  opacity: 0.75;
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+  user-select: none;
   z-index: 5;
+  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
-.contact-corner-tl { top: -6px; left: -6px; }
-.contact-corner-tr { top: -6px; right: -6px; }
-.contact-corner-bl { bottom: -6px; left: -6px; }
-.contact-corner-br { bottom: -6px; right: -6px; }
 
-.contact-editorial-card:hover .contact-card-corner,
-.contact-editorial-card.is-hovered .contact-card-corner {
+.contact-editorial-card .blueprint-corner-tl { top: -7px; left: -7px; }
+.contact-editorial-card .blueprint-corner-tr { top: -7px; right: -7px; }
+.contact-editorial-card .blueprint-corner-bl { bottom: -7px; left: -7px; }
+.contact-editorial-card .blueprint-corner-br { bottom: -7px; right: -7px; }
+
+.contact-editorial-card:hover .blueprint-corner,
+.contact-editorial-card.is-hovered .blueprint-corner {
   color: var(--hero-bp-corner-hover, #ffffff);
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
   transform: scale(1.15);
 }
 
-.theme-light .contact-editorial-card:hover .contact-card-corner,
-[data-theme="light"] .contact-editorial-card:hover .contact-card-corner,
-.theme-light .contact-editorial-card.is-hovered .contact-card-corner,
-[data-theme="light"] .contact-editorial-card.is-hovered .contact-card-corner {
+.theme-light .contact-editorial-card:hover .blueprint-corner,
+[data-theme="light"] .contact-editorial-card:hover .blueprint-corner,
+.theme-light .contact-editorial-card.is-hovered .blueprint-corner,
+[data-theme="light"] .contact-editorial-card.is-hovered .blueprint-corner {
   color: var(--hero-bp-corner-hover, #18181b);
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
 }
 
 /* Interactive Cursor Spotlight Radial Glow */
-.contact-card-spotlight {
+.contact-editorial-card .blueprint-spotlight {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   transition: opacity 0.35s ease;
-  border-radius: var(--radius-lg, 16px);
 }
+
 
 /* Top Meta Row */
 .contact-meta-header {

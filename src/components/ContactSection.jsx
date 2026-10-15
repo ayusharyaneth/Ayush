@@ -96,23 +96,30 @@ export default function ContactSection({
           onMouseMove={handleCardMouseMove}
           onMouseEnter={handleCardMouseEnter}
           onMouseLeave={handleCardMouseLeave}
-          className={`contact-editorial-card ${isHovered ? 'is-hovered' : ''}`}
+          className={`contact-editorial-card blueprint-hero-card ${isHovered ? 'is-hovered' : ''}`}
         >
-          {/* Architectural Blueprint Corner Crosshair Indicators */}
-          <span className="contact-card-corner contact-corner-tl" aria-hidden="true">+</span>
-          <span className="contact-card-corner contact-corner-tr" aria-hidden="true">+</span>
-          <span className="contact-card-corner contact-corner-bl" aria-hidden="true">+</span>
-          <span className="contact-card-corner contact-corner-br" aria-hidden="true">+</span>
+          {/* Architectural Blueprint Dashed Border Lines with Crosshair Overshoots (Exact Hero Header Pattern) */}
+          <div className="blueprint-border-line blueprint-line-top" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-bottom" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-left" aria-hidden="true" />
+          <div className="blueprint-border-line blueprint-line-right" aria-hidden="true" />
 
-          {/* Interactive Mouse Spotlight Radial Glow (Same effect as hero header) */}
+          {/* Corner Crosshair (+) Markers */}
+          <span className="blueprint-corner blueprint-corner-tl" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-tr" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-bl" aria-hidden="true">+</span>
+          <span className="blueprint-corner blueprint-corner-br" aria-hidden="true">+</span>
+
+          {/* Interactive Mouse Spotlight Radial Glow (Exact Hero Header Effect) */}
           <div
-            className="contact-card-spotlight"
+            className="blueprint-spotlight"
             style={{
               opacity: isHovered ? 1 : 0,
               background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, var(--hero-spotlight, rgba(255, 255, 255, 0.045)), transparent 65%)`
             }}
             aria-hidden="true"
           />
+
 
           {/* Top Meta Row */}
           <motion.div
