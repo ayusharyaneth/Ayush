@@ -131,9 +131,9 @@ export default function SupportPage({
 
   // Quick Support Platforms
   const quickPlatforms = (supportData.quickSupport || []).map((item) => {
-    let icon = <BuyMeACoffeeIcon size={20} />;
+    let icon = <BuyMeACoffeeIcon size={18} />;
     if (item.label.includes('PayPal')) {
-      icon = <PayPalIcon size={20} />;
+      icon = <PayPalIcon size={18} />;
     }
     return { ...item, icon };
   });
@@ -184,7 +184,7 @@ export default function SupportPage({
                     title={isCopied ? 'Link copied!' : `Copy ${platform.label} link`}
                     aria-label={`Copy ${platform.label} link`}
                   >
-                    {isCopied ? <Check size={14} /> : <Copy size={14} />}
+                    {isCopied ? <Check size={13} /> : <Copy size={13} />}
                   </button>
                 </div>
               );

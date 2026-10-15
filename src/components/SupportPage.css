@@ -6,7 +6,7 @@
 .support-layout {
   max-width: 760px;
   margin: 0 auto;
-  padding: 24px 20px 48px;
+  padding: 20px 20px 28px;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -16,21 +16,21 @@
 .support-container {
   width: 100%;
   position: relative;
-  padding: 8px 0;
+  padding: 0;
 }
 
 /* Page Header & Slash Badge */
 .support-header-wrap {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .support-title-badge {
   font-family: var(--font-family-mono), monospace;
-  font-size: 1.75rem;
+  font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -42,32 +42,32 @@
 
 .support-description {
   font-family: var(--font-family-serif), "Instrument Serif", Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-style: italic;
   color: var(--text-secondary);
-  margin: 0 0 28px 0;
-  line-height: 1.5;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
 }
 
 /* Section Common Styles */
 .support-section {
-  margin-top: 32px;
+  margin-top: 20px;
 }
 
 .support-section-title {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
   font-family: var(--font-family-sans), sans-serif;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   letter-spacing: -0.01em;
 }
 
 .support-section-desc {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
-  margin-bottom: 14px;
-  line-height: 1.5;
+  margin-bottom: 10px;
+  line-height: 1.4;
   font-family: var(--font-family-sans), sans-serif;
 }
 
@@ -75,7 +75,7 @@
 .support-quick-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .support-quick-card-wrap {
@@ -86,8 +86,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 20px 14px 18px;
+  gap: 5px;
+  padding: 13px 12px 11px;
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -109,7 +109,7 @@
 }
 
 .support-quick-icon {
-  font-size: 22px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,33 +117,33 @@
 }
 
 .support-quick-label {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .support-quick-subtext {
-  font-size: 0.78rem;
+  font-size: 0.73rem;
   color: var(--text-muted);
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 /* Quick Copy Floating Button */
 .support-quick-copy {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 6px;
+  right: 6px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 4px;
   color: var(--text-dim);
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -162,7 +162,7 @@
 .support-select-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .support-select-row-networks {
@@ -175,8 +175,8 @@
 
 .support-select-label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 0.8rem;
+  margin-bottom: 4px;
+  font-size: 0.74rem;
   font-weight: 600;
   color: var(--text-muted);
   font-family: var(--font-family-mono), monospace;
@@ -189,14 +189,14 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 44px;
-  padding: 10px 14px;
+  min-height: 40px;
+  padding: 8px 12px;
   background: var(--bg-card);
   color: var(--text-primary);
   border: 1.5px dashed var(--border-dashed);
   border-radius: var(--radius-md, 8px);
   font-family: var(--font-family-sans), sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -287,8 +287,8 @@
 
 /* Crypto Address Box */
 .support-address-box {
-  margin-top: 16px;
-  padding: 16px 18px;
+  margin-top: 12px;
+  padding: 12px 14px;
   background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -377,11 +377,11 @@
 }
 
 .support-crypto-note {
-  margin-top: 12px;
-  font-size: 0.8rem;
+  margin-top: 10px;
+  font-size: 0.76rem;
   color: var(--text-muted);
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.4;
   font-family: var(--font-family-serif), Georgia, serif;
 }
 
