@@ -281,19 +281,23 @@ export const portfolioData = {
       {
         key: "USDT",
         label: "USDT",
-        networks: ["Arbitrum One", "ERC-20"],
+        networks: ["Ethereum", "Arbitrum One", "Base", "Optimism"],
         addresses: {
+          Ethereum: { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
-          "ERC-20": { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
+          Base: { badge: "Base", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Optimism: { badge: "Optimism", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
       },
       {
         key: "USDC",
         label: "USDC",
-        networks: ["Arbitrum One", "ERC-20"],
+        networks: ["Ethereum", "Arbitrum One", "Base", "Optimism"],
         addresses: {
+          Ethereum: { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
-          "ERC-20": { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
+          Base: { badge: "Base", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Optimism: { badge: "Optimism", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
       }
     ]
