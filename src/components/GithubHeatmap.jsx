@@ -1,197 +1,356 @@
-import React, { useState, useMemo } from 'react';
-import { GithubIcon } from './Icons';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { GithubIcon, ExternalLinkIcon } from './Icons';
+import cachedFallbackData from '../data/githubContributions.json';
+import './GithubHeatmap.css';
 
-export default function GithubHeatmap({ style = {} }) {
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * Format YYYY-MM-DD into "MMM D, YYYY" (e.g. "Oct 15, 2026")
+ * Avoids timezone drift by splitting strings directly.
+ */
+function formatDateLabel(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const year = parseInt(parts[0], 10);
+  const monthIdx = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  return `${MONTH_NAMES[monthIdx]} ${day}, ${year}`;
+}
+
+export default function GithubHeatmap({
+  username = 'ayusharyaneth',
+  profileUrl = 'https://github.com/ayusharyaneth/',
+  style = {}
+}) {
+  const containerRef = useRef(null);
+
+  // Initialize with Ayush's real cached data from storage or fallback JSON
+  const [data, setData] = useState(() => {
+    try {
+      const stored = localStorage.getItem(`github_contrib_${username}`);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.contributions?.length) {
+          return parsed;
+        }
+      }
+    } catch {
+      // Fall through to bundled fallback
+    }
+    return cachedFallbackData;
+  });
+
   const [hoveredCell, setHoveredCell] = useState(null);
 
-  // Generate deterministic 52-week activity dataset
-  const weeksData = useMemo(() => {
-    const weeks = [];
-    const totalWeeks = 52;
-    const daysPerWeek = 7;
-    const today = new Date(2026, 9, 11); // October 2026
-
-    // Pure deterministic pseudo-random generator with realistic distribution
-    const pseudoRandom = (idx) => {
-      const x = Math.sin(idx * 12.9898 + 78.233) * 43758.5453;
-      return x - Math.floor(x);
-    };
-
-    const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    let totalCommits = 0;
-
-    for (let w = totalWeeks - 1; w >= 0; w--) {
-      const days = [];
-      for (let d = 0; d < daysPerWeek; d++) {
-        const dayOffset = w * 7 + (6 - d);
-        const cellDate = new Date(today);
-        cellDate.setDate(today.getDate() - dayOffset);
-
-        const cellIndex = w * 7 + d;
-        const r = pseudoRandom(cellIndex);
-        let count = 0;
-        let level = 0;
-
-        if (r > 0.45) {
-          if (r > 0.92) {
-            count = Math.floor(10 + pseudoRandom(cellIndex + 500) * 14);
-            level = 4;
-          } else if (r > 0.78) {
-            count = Math.floor(6 + pseudoRandom(cellIndex + 500) * 5);
-            level = 3;
-          } else if (r > 0.6) {
-            count = Math.floor(3 + pseudoRandom(cellIndex + 500) * 3);
-            level = 2;
-          } else {
-            count = Math.floor(1 + pseudoRandom(cellIndex + 500) * 2);
-            level = 1;
+  // Fetch fresh live activity from the public GitHub Contributions API
+  useEffect(() => {
+    let isMounted = true;
+    const fetchContributions = async () => {
+      try {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+        if (!res.ok) return;
+        const fresh = await res.json();
+        if (fresh?.contributions?.length && isMounted) {
+          setData(fresh);
+          try {
+            localStorage.setItem(`github_contrib_${username}`, JSON.stringify(fresh));
+          } catch {
+            // Ignore quota errors
           }
         }
-
-        totalCommits += count;
-
-        days.push({
-          date: `${MONTH_NAMES[cellDate.getMonth()]} ${cellDate.getDate()}, ${cellDate.getFullYear()}`,
-          count,
-          level
-        });
+      } catch {
+        // Fallback already loaded, fail silently
       }
-      weeks.push(days);
+    };
+
+    fetchContributions();
+    return () => {
+      isMounted = false;
+    };
+  }, [username]);
+
+  // Transform raw contribution days into 53 weeks (Sunday-Saturday)
+  const { weeks, monthLabels, totalCommits } = useMemo(() => {
+    const rawContributions = data?.contributions || [];
+    if (!rawContributions.length) {
+      return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
-    return { weeks, totalCommits };
-  }, []);
+    // Ensure sorted chronologically
+    const sorted = [...rawContributions].sort((a, b) => a.date.localeCompare(b.date));
 
+    // Pad beginning so week 0 aligns with Sunday (0 = Sun)
+    const firstDate = new Date(`${sorted[0].date}T00:00:00`);
+    const startDayOfWeek = firstDate.getDay();
+
+    const padded = [];
+    for (let i = 0; i < startDayOfWeek; i++) {
+      padded.push(null);
+    }
+    padded.push(...sorted);
+
+    // Group into 7-day columns
+    const weekColumns = [];
+    for (let i = 0; i < padded.length; i += 7) {
+      const chunk = padded.slice(i, i + 7);
+      while (chunk.length < 7) {
+        chunk.push(null);
+      }
+      weekColumns.push(chunk);
+    }
+
+    // Determine month label positions aligned with the week index
+    const rawMonthLabels = [];
+    weekColumns.forEach((week, wIdx) => {
+      const firstValidDay = week.find((day) => day !== null);
+      if (!firstValidDay) return;
+
+      const mIdx = parseInt(firstValidDay.date.split('-')[1], 10) - 1;
+      const monthLabel = MONTH_NAMES[mIdx];
+      const prev = rawMonthLabels[rawMonthLabels.length - 1];
+
+      if (wIdx === 0 || !prev || prev.label !== monthLabel) {
+        rawMonthLabels.push({ weekIndex: wIdx, label: monthLabel });
+      }
+    });
+
+    // Filter month labels to avoid visual overlapping
+    const filteredMonthLabels = rawMonthLabels.filter((item, idx) => {
+      if (idx === 0) {
+        return rawMonthLabels[1] ? rawMonthLabels[1].weekIndex - item.weekIndex >= 2 : true;
+      }
+      if (idx === rawMonthLabels.length - 1) {
+        return weekColumns.length - item.weekIndex >= 2;
+      }
+      return true;
+    });
+
+    // Compute total commits from data.total or by summing counts
+    const computedTotal =
+      data?.total?.lastYear ??
+      sorted.reduce((acc, curr) => acc + (curr.count || 0), 0);
+
+    return {
+      weeks: weekColumns,
+      monthLabels: filteredMonthLabels,
+      totalCommits: computedTotal
+    };
+  }, [data]);
+
+  // Chanh Dai & Portfolio Cyan-Accent Cell Colors
   const getCellColor = (level) => {
     switch (level) {
       case 1:
-        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.25)';
+        return 'rgba(56, 189, 248, 0.28)';
       case 2:
-        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.5)';
+        return 'rgba(56, 189, 248, 0.52)';
       case 3:
-        return 'rgba(var(--accent-rgb, 56, 189, 248), 0.75)';
+        return 'rgba(56, 189, 248, 0.78)';
       case 4:
-        return 'var(--accent)';
+        return 'var(--accent, #38bdf8)';
       default:
-        return 'var(--bg-muted)';
+        return 'rgba(255, 255, 255, 0.05)';
     }
   };
 
-  const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
+  // SVG Dimension Metrics
+  const BLOCK_SIZE = 11;
+  const BLOCK_MARGIN = 3;
+  const BLOCK_RADIUS = 2;
+  const LABEL_HEIGHT = 18;
+  const WEEKDAY_WIDTH = 28;
+
+  const totalWidth = WEEKDAY_WIDTH + weeks.length * (BLOCK_SIZE + BLOCK_MARGIN) - BLOCK_MARGIN;
+  const totalHeight = LABEL_HEIGHT + 7 * (BLOCK_SIZE + BLOCK_MARGIN) - BLOCK_MARGIN;
+
+  // Handle cell hover positioning for floating tooltip
+  const handleCellMouseEnter = (e, day) => {
+    if (!day || !containerRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const containerRect = containerRef.current.getBoundingClientRect();
+
+    setHoveredCell({
+      ...day,
+      formattedDate: formatDateLabel(day.date),
+      x: rect.left - containerRect.left + rect.width / 2,
+      y: rect.top - containerRect.top
+    });
+  };
+
+  const handleCellMouseLeave = () => {
+    setHoveredCell(null);
+  };
+
+  const openProfile = () => {
+    window.open(profileUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
-    <div className="screen-box" style={{ padding: '24px 28px', ...style }}>
+    <div className="github-contributions-card" style={style}>
       {/* Header Bar */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '12px',
-          marginBottom: '20px'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <GithubIcon size={18} style={{ color: 'var(--accent)' }} />
+      <div className="github-contributions-header">
+        <div className="github-contributions-title-group">
+          <div className="github-icon-badge" title="Verified GitHub Activity">
+            <GithubIcon size={18} />
+          </div>
+
           <div>
-            <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-              Open Source Activity
+            <div className="github-contributions-title">
+              <span>Open Source Activity</span>
+              <span className="github-live-badge">
+                <span className="github-live-dot" />
+                Live
+              </span>
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontFamily: 'var(--font-family-mono)', minHeight: '1.2em' }}>
+
+            <div className="github-contributions-subtitle">
               {hoveredCell ? (
                 <span>
-                  <strong style={{ color: 'var(--accent)' }}>{hoveredCell.count} commits</strong> on {hoveredCell.date}
+                  <strong>
+                    {hoveredCell.count === 0 ? 'No contributions' : `${hoveredCell.count} contribution${hoveredCell.count > 1 ? 's' : ''}`}
+                  </strong>{' '}
+                  on {hoveredCell.formattedDate}
                 </span>
               ) : (
-                `${weeksData.totalCommits.toLocaleString()} commits in the last year`
+                <span>
+                  <strong>{totalCommits.toLocaleString()} contributions</strong> in the last year
+                </span>
               )}
             </div>
           </div>
         </div>
 
+        {/* Profile Link Button */}
+        <a
+          href={profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-profile-link"
+          title={`View ${username} on GitHub`}
+        >
+          <GithubIcon size={13} />
+          <span>@{username}</span>
+          <ExternalLinkIcon size={12} style={{ opacity: 0.6 }} />
+        </a>
+      </div>
+
+      {/* Contribution Heatmap Calendar Grid */}
+      <div className="github-calendar-container" ref={containerRef}>
+        <svg
+          className="github-calendar-svg"
+          width={totalWidth}
+          height={totalHeight}
+          viewBox={`0 0 ${totalWidth} ${totalHeight}`}
+        >
+          <title>GitHub Contributions - @{username}</title>
+
+          {/* Month Labels */}
+          <g className="github-month-labels">
+            {monthLabels.map(({ label, weekIndex }) => (
+              <text
+                key={`m-${weekIndex}`}
+                x={WEEKDAY_WIDTH + (BLOCK_SIZE + BLOCK_MARGIN) * weekIndex}
+                y={11}
+                className="github-month-text"
+              >
+                {label}
+              </text>
+            ))}
+          </g>
+
+          {/* Weekday Labels (Mon, Wed, Fri) */}
+          <g className="github-weekday-labels">
+            <text x={0} y={LABEL_HEIGHT + (BLOCK_SIZE + BLOCK_MARGIN) * 1 + 9} className="github-weekday-text">
+              Mon
+            </text>
+            <text x={0} y={LABEL_HEIGHT + (BLOCK_SIZE + BLOCK_MARGIN) * 3 + 9} className="github-weekday-text">
+              Wed
+            </text>
+            <text x={0} y={LABEL_HEIGHT + (BLOCK_SIZE + BLOCK_MARGIN) * 5 + 9} className="github-weekday-text">
+              Fri
+            </text>
+          </g>
+
+          {/* Contribution Cells (53 weeks x 7 days) */}
+          <g className="github-cells">
+            {weeks.map((week, wIdx) =>
+              week.map((day, dIdx) => {
+                if (!day) return null;
+                const posX = WEEKDAY_WIDTH + (BLOCK_SIZE + BLOCK_MARGIN) * wIdx;
+                const posY = LABEL_HEIGHT + (BLOCK_SIZE + BLOCK_MARGIN) * dIdx;
+
+                return (
+                  <rect
+                    key={`${wIdx}-${dIdx}-${day.date}`}
+                    x={posX}
+                    y={posY}
+                    width={BLOCK_SIZE}
+                    height={BLOCK_SIZE}
+                    rx={BLOCK_RADIUS}
+                    ry={BLOCK_RADIUS}
+                    fill={getCellColor(day.level)}
+                    stroke="rgba(255, 255, 255, 0.05)"
+                    strokeWidth="0.5"
+                    className="github-day-block"
+                    data-date={day.date}
+                    data-count={day.count}
+                    data-level={day.level}
+                    onMouseEnter={(e) => handleCellMouseEnter(e, day)}
+                    onMouseLeave={handleCellMouseLeave}
+                    onClick={openProfile}
+                  />
+                );
+              })
+            )}
+          </g>
+        </svg>
+
+        {/* Floating Tooltip Bubble */}
+        {hoveredCell && (
+          <div
+            className="github-heatmap-tooltip"
+            style={{
+              left: `${hoveredCell.x}px`,
+              top: `${hoveredCell.y - 8}px`
+            }}
+          >
+            <div className="github-heatmap-tooltip-bubble">
+              <strong>
+                {hoveredCell.count === 0 ? 'No contributions' : `${hoveredCell.count} contribution${hoveredCell.count > 1 ? 's' : ''}`}
+              </strong>{' '}
+              on {hoveredCell.formattedDate}
+            </div>
+            <div className="github-heatmap-tooltip-arrow" />
+          </div>
+        )}
+      </div>
+
+      {/* Footer Bar (Chanh Dai signature footer) */}
+      <div className="github-contributions-footer">
+        <div className="github-contributions-footer-total">
+          <span>{totalCommits.toLocaleString()} contributions in the last year on </span>
+          <a href={profileUrl} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+          .
+        </div>
+
         {/* Legend */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-          <span>Less</span>
+        <div className="github-legend">
+          <span className="github-legend-label">Less</span>
           {[0, 1, 2, 3, 4].map((lvl) => (
             <div
               key={lvl}
+              className="github-legend-block"
               style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '2px',
-                background: getCellColor(lvl),
-                border: '1px solid var(--border-secondary)'
+                background: getCellColor(lvl)
               }}
+              title={`Level ${lvl}`}
             />
           ))}
-          <span>More</span>
-        </div>
-      </div>
-
-      {/* Contribution Heatmap Grid */}
-      <div style={{ overflowX: 'auto', paddingBottom: '8px' }}>
-        <div style={{ minWidth: '640px' }}>
-          {/* Month Labels */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              paddingLeft: '28px',
-              fontSize: '0.68rem',
-              fontFamily: 'var(--font-family-mono)',
-              color: 'var(--text-muted)',
-              marginBottom: '6px'
-            }}
-          >
-            {months.map((m, idx) => (
-              <span key={idx}>{m}</span>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {/* Weekday Labels */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '84px',
-                fontSize: '0.65rem',
-                fontFamily: 'var(--font-family-mono)',
-                color: 'var(--text-dim)',
-                lineHeight: 1
-              }}
-            >
-              <span>Mon</span>
-              <span>Wed</span>
-              <span>Fri</span>
-            </div>
-
-            {/* Matrix 52 Weeks */}
-            <div style={{ display: 'flex', gap: '3px', flex: 1, position: 'relative' }}>
-              {weeksData.weeks.map((week, wIdx) => (
-                <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '3px', flex: 1 }}>
-                  {week.map((day, dIdx) => (
-                    <div
-                      key={dIdx}
-                      onMouseEnter={() => setHoveredCell(day)}
-                      onMouseLeave={() => setHoveredCell(null)}
-                      title={`${day.count} commits on ${day.date}`}
-                      style={{
-                        aspectRatio: '1',
-                        borderRadius: '2px',
-                        background: getCellColor(day.level),
-                        border: '1px solid var(--border-secondary)',
-                        cursor: 'pointer',
-                        transition: 'transform 0.1s ease'
-                      }}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <span className="github-legend-label">More</span>
         </div>
       </div>
     </div>
