@@ -270,37 +270,29 @@ export const portfolioData = {
       {
         key: "ETH",
         label: "ETH / EVM",
-        networks: ["Ethereum", "Arbitrum One", "Base", "Optimism", "Polygon"],
+        networks: ["Ethereum", "Arbitrum One", "Base", "Optimism"],
         addresses: {
           Ethereum: { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
           "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
           Base: { badge: "Base", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Optimism: { badge: "Optimism", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
+          Optimism: { badge: "Optimism", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
         }
       },
       {
         key: "USDT",
         label: "USDT",
-        networks: ["Arbitrum One", "Polygon", "TRC20", "Solana", "BEP20", "ERC-20"],
+        networks: ["Arbitrum One", "ERC-20"],
         addresses: {
           "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          TRC20: { badge: "TRC-20", address: "TYGQJk85Qhm818RGZtJV8CpMvqeK2JT8Vt" },
-          Solana: { badge: "SOL", address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6" },
-          BEP20: { badge: "BEP-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
           "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
         }
       },
       {
         key: "USDC",
         label: "USDC",
-        networks: ["Arbitrum One", "Polygon", "Solana", "BEP20", "ERC-20"],
+        networks: ["Arbitrum One", "ERC-20"],
         addresses: {
           "Arbitrum One": { badge: "Arbitrum", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Polygon: { badge: "Polygon", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
-          Solana: { badge: "SOL", address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6" },
-          BEP20: { badge: "BEP-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
           "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
         }
       }
