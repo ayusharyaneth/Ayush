@@ -303,24 +303,6 @@ export const portfolioData = {
           BEP20: { badge: "BEP-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" },
           "ERC-20": { badge: "ERC-20", address: "0x24e0fC061734f2d3E0C8DE089e9334D9783Dcfb9" }
         }
-      },
-      {
-        key: "SOL",
-        label: "SOL",
-        badge: "SOL",
-        address: "6u1N5igxZexWJFx2GcrGuJhmhPC1uftq5cPFd1asuEH6"
-      },
-      {
-        key: "BTC",
-        label: "BTC",
-        badge: "BTC",
-        address: "bc1qlvtnllrvcczzuwhng0nhdpuu8hktnu6trantap"
-      },
-      {
-        key: "LTC",
-        label: "LTC",
-        badge: "LTC",
-        address: "ltc1qlvtnllrvcczzuwhng0nhdpuu8hktnu6t8pf093"
       }
     ]
   }
