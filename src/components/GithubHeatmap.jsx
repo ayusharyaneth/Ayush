@@ -71,15 +71,24 @@ export default function GithubHeatmap({
     };
   }, [username]);
 
-  // Transform raw contribution days into 53 weeks (Sunday-Saturday)
+  // Transform raw contribution days into calendar weeks (starting from 1 Nov 2025)
   const { weeks, monthLabels, totalCommits } = useMemo(() => {
     const rawContributions = data?.contributions || [];
     if (!rawContributions.length) {
       return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
+    // Filter to start strictly from 1 Nov 2025 (omits empty days prior to this date)
+    const filteredByDate = rawContributions.filter(
+      (day) => day && day.date >= '2025-11-01'
+    );
+
     // Ensure sorted chronologically
-    const sorted = [...rawContributions].sort((a, b) => a.date.localeCompare(b.date));
+    const sorted = [...filteredByDate].sort((a, b) => a.date.localeCompare(b.date));
+
+    if (!sorted.length) {
+      return { weeks: [], monthLabels: [], totalCommits: 0 };
+    }
 
     // Pad beginning so week 0 aligns with Sunday (0 = Sun)
     const firstDate = new Date(`${sorted[0].date}T00:00:00`);
@@ -127,10 +136,8 @@ export default function GithubHeatmap({
       return true;
     });
 
-    // Compute total commits from data.total or by summing counts
-    const computedTotal =
-      data?.total?.lastYear ??
-      sorted.reduce((acc, curr) => acc + (curr.count || 0), 0);
+    // Compute total commits by summing counts across active period
+    const computedTotal = sorted.reduce((acc, curr) => acc + (curr.count || 0), 0);
 
     return {
       weeks: weekColumns,
