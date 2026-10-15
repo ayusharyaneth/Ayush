@@ -12,6 +12,90 @@ const getResponsiveImageUrl = (url, width, quality = 75) => {
   return url.replace(/w=\d+/, `w=${width}`).replace(/q=\d+/, `q=${quality}`);
 };
 
+const getProjectDateLabel = (project) => {
+  if (project.category === 'Full-Stack') return 'v2.4 • Mac';
+  if (project.category === 'AI & ML') return 'v1.8 • AI Studio';
+  if (project.category === 'Systems') return 'v1.4 • Core';
+  if (project.category === 'Open Source') return 'v3.2 • OSS';
+  return 'v1.0 • Release';
+};
+
+function ProjectCard({ project, idx, isInteractive = true, onSelectProject }) {
+  const dateLabel = getProjectDateLabel(project);
+  const eyebrowNum = project.eyebrow
+    ? project.eyebrow.split('/')[0].trim()
+    : `0${(idx % 4) + 1}`;
+  const metricLabel = project.metrics
+    ? project.metrics.split('·')[0].trim()
+    : project.category;
+
+  return (
+    <div
+      className="project-deck-card group"
+      onMouseEnter={() => isInteractive && sound.playTick()}
+      onClick={() => {
+        sound.playClick();
+        onSelectProject(project);
+      }}
+      role="button"
+      tabIndex={isInteractive ? 0 : -1}
+      aria-label={`Inspect ${project.title}`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          sound.playClick();
+          onSelectProject(project);
+        }
+      }}
+    >
+      {/* Top Banner Image with Ticket / Sketch Aesthetic */}
+      <div className="project-card-image-box">
+        <img
+          src={getResponsiveImageUrl(project.image, 600, 75)}
+          srcSet={`${getResponsiveImageUrl(project.image, 480, 72)} 480w, ${getResponsiveImageUrl(project.image, 800, 75)} 800w, ${project.image} 1200w`}
+          sizes="(max-width: 768px) 92vw, 380px"
+          alt={project.title}
+          className="project-card-img"
+          loading="lazy"
+          decoding="async"
+          width="380"
+          height="110"
+        />
+        <div className="project-card-img-gradient" />
+
+        {/* Top Banner Chip */}
+        <div className="project-card-pill-top">
+          <span>{eyebrowNum}</span>
+          <span className="project-pill-sep">/</span>
+          <span>{project.category}</span>
+        </div>
+
+        {/* Top-Right Arrow Badge */}
+        <div className="project-card-arrow-badge" title="Open Case Study">
+          <ArrowUpRight size={13} />
+        </div>
+
+        {/* Metric Ribbon at bottom of thumbnail */}
+        <div className="project-card-metric-pill">
+          {metricLabel}
+        </div>
+      </div>
+
+      {/* Bottom Body */}
+      <div className="project-card-body">
+        <div className="project-card-meta-row">
+          <span className="project-category-badge">{project.category}</span>
+          <span className="project-date-eyebrow">{dateLabel}</span>
+        </div>
+
+        <h3 className="project-card-title">{project.title}</h3>
+
+        <p className="project-card-desc">{project.description}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [hasManuallyToggled, setHasManuallyToggled] = useState(false);
@@ -39,8 +123,14 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
       ? projects
       : projects.filter((p) => p.category === activeCategory);
 
-  // When All is active in grid view, show the signature 3-card deck; otherwise show filtered
-  const displayDeck = activeCategory === 'All' ? projects.slice(0, 3) : filtered;
+  // Display all cards when All is selected, or filtered cards
+  const displayProjects = filtered;
+
+  // Duplicate items for a continuous, seamless infinite marquee loop
+  const marqueeCards =
+    displayProjects.length <= 4
+      ? [...displayProjects, ...displayProjects]
+      : displayProjects;
 
   return (
     <section id="work" style={{ paddingTop: '32px', paddingBottom: '32px' }}>
@@ -189,98 +279,53 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           </div>
         </ScrollReveal>
 
-        {/* 3-CARD DECK PRESENTATION (Matching manishtamang.com) */}
+        {/* AUTOMATIC SMOOTH SCROLLING DECK PRESENTATION */}
         {viewMode === 'grid' ? (
           <ScrollReveal variant="fade-up" distance={24} duration={0.65}>
             <div className="project-deck-stage screen-box">
-              {/* DESKTOP DECK: 3 Fanned Cards (-rotate-3, rotate-1, rotate-3) */}
-              <div className="project-deck-row">
-                {displayDeck.map((project, idx) => {
-                  const isMulti = displayDeck.length > 1;
-                  const rotationClass = !isMulti
-                    ? 'card-center'
-                    : idx === 0
-                    ? 'card-left'
-                    : idx === 1
-                    ? 'card-center'
-                    : 'card-right';
-                  const dateLabel =
-                    project.category === 'Full-Stack'
-                      ? 'v2.4 • Mac'
-                      : project.category === 'AI & ML'
-                      ? 'v1.8 • AI Studio'
-                      : project.category === 'Systems'
-                      ? 'v1.4 • Core'
-                      : 'v3.2 • OSS';
-
-                  return (
-                    <div
+              {displayProjects.length <= 1 ? (
+                /* Centered spotlight layout if only 1 project matches filter */
+                <div className="project-deck-single-row">
+                  {displayProjects.map((project, idx) => (
+                    <ProjectCard
                       key={project.id}
-                      className={`project-deck-card ${rotationClass} group`}
-                      onMouseEnter={() => sound.playTick()}
-                      onClick={() => {
-                        sound.playClick();
-                        onSelectProject(project);
-                      }}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`Inspect ${project.title}`}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          sound.playClick();
-                          onSelectProject(project);
-                        }
-                      }}
-                    >
-                      {/* Top Banner Image with Ticket / Sketch Aesthetic */}
-                      <div className="project-card-image-box">
-                        <img
-                          src={getResponsiveImageUrl(project.image, 600, 75)}
-                          srcSet={`${getResponsiveImageUrl(project.image, 480, 72)} 480w, ${getResponsiveImageUrl(project.image, 800, 75)} 800w, ${project.image} 1200w`}
-                          sizes="(max-width: 768px) 92vw, 380px"
-                          alt={project.title}
-                          className="project-card-img"
-                          loading="lazy"
-                          decoding="async"
-                          width="380"
-                          height="110"
-                        />
-                        <div className="project-card-img-gradient" />
+                      project={project}
+                      idx={idx}
+                      isInteractive={true}
+                      onSelectProject={onSelectProject}
+                    />
+                  ))}
+                </div>
+              ) : (
+                /* Continuous smooth auto-scrolling deck with all cards */
+                <div className="project-marquee-track">
+                  {/* Primary interactive group */}
+                  <div className="project-marquee-group">
+                    {marqueeCards.map((project, idx) => (
+                      <ProjectCard
+                        key={`m1-${project.id}-${idx}`}
+                        project={project}
+                        idx={idx}
+                        isInteractive={true}
+                        onSelectProject={onSelectProject}
+                      />
+                    ))}
+                  </div>
 
-                        {/* Top Banner Chip */}
-                        <div className="project-card-pill-top">
-                          <span>{project.eyebrow ? project.eyebrow.split('/')[0].trim() : `0${idx + 1}`}</span>
-                          <span className="project-pill-sep">/</span>
-                          <span>{project.category}</span>
-                        </div>
-
-                        {/* Top-Right Arrow Badge */}
-                        <div className="project-card-arrow-badge" title="Open Case Study">
-                          <ArrowUpRight size={13} />
-                        </div>
-
-                        {/* Metric Ribbon at bottom of thumbnail */}
-                        <div className="project-card-metric-pill">
-                          {project.metrics ? project.metrics.split('·')[0].trim() : project.category}
-                        </div>
-                      </div>
-
-                      {/* Bottom Body */}
-                      <div className="project-card-body">
-                        <div className="project-card-meta-row">
-                          <span className="project-category-badge">{project.category}</span>
-                          <span className="project-date-eyebrow">{dateLabel}</span>
-                        </div>
-
-                        <h3 className="project-card-title">{project.title}</h3>
-
-                        <p className="project-card-desc">{project.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                  {/* Duplicate group for seamless infinite animation */}
+                  <div className="project-marquee-group" aria-hidden="true">
+                    {marqueeCards.map((project, idx) => (
+                      <ProjectCard
+                        key={`m2-${project.id}-${idx}`}
+                        project={project}
+                        idx={idx}
+                        isInteractive={false}
+                        onSelectProject={onSelectProject}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </ScrollReveal>
         ) : (
@@ -425,59 +470,74 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           border: 1px solid var(--border-primary);
           box-shadow: var(--shadow-card);
           overflow: hidden;
-          padding: 24px 20px 0 20px;
+          padding: 34px 0 0 0;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-end;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
         }
 
         @media (min-width: 768px) {
           .project-deck-stage {
             min-height: auto;
-            padding: 38px 20px 0 20px;
+            padding: 40px 0 0 0;
           }
         }
 
-        /* Desktop Deck row - Tuck cards into bottom edge */
-        .project-deck-row {
+        /* Continuous Auto-scrolling Marquee Track */
+        .project-marquee-track {
           display: flex;
           flex-direction: row;
-          justify-content: center;
           align-items: flex-end;
-          gap: 12px;
-          width: 100%;
-          margin-top: 0;
-          margin-bottom: -18px; /* Signature reference tuck */
-          padding-bottom: 0;
+          gap: 16px;
+          width: max-content;
+          margin-bottom: -18px; /* Signature reference tuck into bottom edge */
+          padding-bottom: 2px;
           position: relative;
         }
 
-        @media (max-width: 767px) {
-          .project-deck-stage {
-            padding: 18px 12px 18px 12px;
-            min-height: auto;
+        .project-marquee-group {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-end;
+          gap: 16px;
+          flex-shrink: 0;
+          animation: scrollDeckMarquee 34s linear infinite;
+          will-change: transform;
+        }
+
+        /* Pause auto-scroll smoothly on hover or focus */
+        .project-deck-stage:hover .project-marquee-group,
+        .project-deck-stage:focus-within .project-marquee-group {
+          animation-play-state: paused;
+        }
+
+        @keyframes scrollDeckMarquee {
+          from {
+            transform: translateX(0);
           }
-          .project-deck-row {
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 0;
+          to {
+            transform: translateX(calc(-100% - 16px));
           }
-          .project-deck-card {
-            width: 100%;
-            max-width: 260px;
-            height: auto;
-            min-height: 220px;
-            transform: none !important;
-          }
+        }
+
+        /* Single centered card fallback */
+        .project-deck-single-row {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          width: 100%;
+          margin-bottom: -18px;
+          padding-bottom: 2px;
         }
 
         /* Individual Card Dimensions & Bezier */
         .project-deck-card {
           position: relative;
-          width: 215px;
-          height: 236px;
+          width: 220px;
+          height: 242px;
           background: var(--bg-surface);
           border-radius: 12px;
           display: flex;
@@ -487,34 +547,67 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           cursor: pointer;
           user-select: none;
           transform-origin: bottom center;
-          transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1);
+          transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1),
+                      box-shadow 450ms cubic-bezier(0.23, 1, 0.32, 1),
+                      border-color 300ms ease;
           will-change: transform, box-shadow;
           outline: none;
+          flex-shrink: 0;
         }
 
-        /* Base fanned rotations identical to manishtamang.com */
-        .project-deck-card.card-left {
-          transform: rotate(-3deg);
+        /* Tactile paper fanned rotations */
+        .project-deck-card:nth-child(4n + 1) {
+          transform: rotate(-2.5deg);
           z-index: 10;
         }
-
-        .project-deck-card.card-center {
+        .project-deck-card:nth-child(4n + 2) {
           transform: rotate(1deg);
           z-index: 11;
         }
-
-        .project-deck-card.card-right {
+        .project-deck-card:nth-child(4n + 3) {
           transform: rotate(3deg);
           z-index: 12;
         }
+        .project-deck-card:nth-child(4n + 4) {
+          transform: rotate(-1.5deg);
+          z-index: 13;
+        }
 
-        /* Card Hover Behavior: Lift up, un-rotate, scale gently, elevated z-index & shadow without clipping */
+        .project-deck-card.card-center {
+          transform: rotate(0deg);
+          z-index: 10;
+        }
+
+        /* Card Hover Behavior: Lift up, un-rotate, scale gently, elevated z-index & shadow */
         .project-deck-card:hover,
         .project-deck-card:focus-visible {
-          transform: translateY(-14px) scale(1.02) rotate(0deg) !important;
-          z-index: 40 !important;
-          border-color: var(--accent-border) !important;
-          box-shadow: 0 18px 36px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--accent-glow) !important;
+          transform: translateY(-16px) scale(1.03) rotate(0deg) !important;
+          z-index: 50 !important;
+          border-color: var(--accent) !important;
+          box-shadow: 0 20px 42px -8px rgba(0, 0, 0, 0.7), 0 0 16px var(--accent-glow) !important;
+        }
+
+        @media (max-width: 640px) {
+          .project-deck-stage {
+            padding: 24px 0 0 0;
+          }
+          .project-deck-card {
+            width: 196px;
+            height: 232px;
+          }
+          .project-card-image-box {
+            height: 100px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .project-marquee-group {
+            animation: none !important;
+          }
+          .project-deck-stage {
+            overflow-x: auto;
+            scrollbar-width: none;
+          }
         }
 
         /* Card Top Thumbnail */
