@@ -135,6 +135,7 @@ export default function ExperienceSection({ experience = [] }) {
                     <button
                       type="button"
                       className="experience-expander-btn"
+                      onMouseEnter={() => sound.playHover()}
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleExpand(index);

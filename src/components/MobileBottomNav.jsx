@@ -285,6 +285,7 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
                   <button
                     key={item.id}
                     onClick={() => handleSelectSection(item.id)}
+                    onMouseEnter={() => sound.playHover()}
                     className={`mobile-nav-menu-item ${isActive ? 'active' : ''}`}
                     role="menuitem"
                     aria-current={isActive ? 'page' : undefined}
@@ -317,6 +318,7 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
               {/* Scroll Progress / Scroll To Top Circular Button */}
               <button
                 onClick={handleScrollToTop}
+                onMouseEnter={() => sound.playHover()}
                 className="mobile-nav-progress-btn"
                 aria-label="Scroll to top"
                 title="Scroll to top"
@@ -362,6 +364,7 @@ export default function MobileBottomNav({ isCopiedActive = false, currentView = 
               {/* Section Name & Menu Trigger */}
               <button
                 onClick={handleToggleMenu}
+                onMouseEnter={() => sound.playHover()}
                 className="mobile-nav-trigger-btn"
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-nav-panel"
