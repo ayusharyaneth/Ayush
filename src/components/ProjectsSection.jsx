@@ -186,7 +186,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
-                    setHasManuallyToggled(true);
                     setViewMode('grid');
                   }}
                   style={{
@@ -210,7 +209,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
-                    setHasManuallyToggled(true);
                     setViewMode('list');
                   }}
                   style={{
