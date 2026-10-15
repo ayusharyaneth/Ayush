@@ -73,6 +73,7 @@ export default function ExperienceSection({ experience = [] }) {
                 {/* Header Row */}
                 <div
                   onClick={() => toggleExpand(index)}
+                  onMouseEnter={() => sound.playHover()}
                   style={{
                     display: 'flex',
                     alignItems: 'flex-start',

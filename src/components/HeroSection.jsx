@@ -77,7 +77,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
   }, []);
 
   const handleAvatarClick = () => {
-    sound.playClick();
+    sound.playPop();
     setAvatarIndex((prev) => (prev + 1) % avatarPhotos.length);
   };
 
@@ -154,6 +154,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
               <div
                 onClick={handleAvatarClick}
+                onMouseEnter={() => sound.playHover()}
                 className="avatar-container"
                 style={{
                   position: 'relative',
@@ -297,6 +298,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                         rel="noopener noreferrer"
                         className="chanh-social-btn"
                         title={item.name}
+                        onMouseEnter={() => sound.playHover()}
                         onClick={() => sound.playClick()}
                       >
                         <Icon size={14} />
@@ -316,6 +318,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                       title="Support / Buy Me a Coffee"
                       aria-label="Support / Buy Me a Coffee"
                       style={{ cursor: 'pointer' }}
+                      onMouseEnter={() => sound.playHover()}
                       onClick={() => {
                         sound.playClick();
                         onNavigateSupport?.();
@@ -330,6 +333,8 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="chanh-handle"
+                        onMouseEnter={() => sound.playHover()}
+                        onClick={() => sound.playClick()}
                       >
                         {chanh.role1.company}
                       </a>
@@ -347,6 +352,8 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="chanh-handle"
+                        onMouseEnter={() => sound.playHover()}
+                        onClick={() => sound.playClick()}
                       >
                         {chanh.role2.company}
                       </a>
@@ -371,12 +378,15 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                         href={`mailto:${chanh.email}`}
                         className="chanh-link"
                         title={`Send email to ${chanh.email}`}
+                        onMouseEnter={() => sound.playHover()}
+                        onClick={() => sound.playClick()}
                       >
                         {chanh.email}
                       </a>
                       <button
                         type="button"
                         onClick={handleCopyEmailAddress}
+                        onMouseEnter={() => sound.playHover()}
                         className={`chanh-email-copy-btn ${emailCopied ? 'copied' : ''}`}
                         title={emailCopied ? 'Copied' : 'Copy email (or press C)'}
                         aria-label={emailCopied ? 'Email address copied' : 'Copy email address'}

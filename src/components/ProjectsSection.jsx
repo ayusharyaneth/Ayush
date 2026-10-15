@@ -32,9 +32,9 @@ function ProjectCard({ project, idx, onSelectProject }) {
   return (
     <div
       className="project-deck-card group"
-      onMouseEnter={() => sound.playHover()}
+      onMouseEnter={() => sound.playCardHover()}
       onClick={() => {
-        sound.playClick();
+        sound.playPop();
         onSelectProject(project);
       }}
       role="button"
@@ -43,7 +43,7 @@ function ProjectCard({ project, idx, onSelectProject }) {
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          sound.playClick();
+          sound.playPop();
           onSelectProject(project);
         }
       }}
@@ -318,9 +318,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               <div
                 key={project.id}
                 className="screen-box"
-                onMouseEnter={() => sound.playHover()}
+                onMouseEnter={() => sound.playCardHover()}
                 onClick={() => {
-                  sound.playClick();
+                  sound.playPop();
                   onSelectProject(project);
                 }}
 
