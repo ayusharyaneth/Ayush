@@ -138,7 +138,7 @@ export default function ContactSection({
             className="contact-statement-wrap"
           >
             <p className="contact-statement-text">
-              &ldquo;Always excited to discuss founding engineer roles, technical advisory, high-craft design systems, or early-stage 0 &rarr; 1 prototypes.&rdquo;
+              Open to meaningful collaborations, ambitious ideas, and opportunities to build things that make a difference.
             </p>
           </motion.div>
 
