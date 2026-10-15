@@ -10,7 +10,7 @@
   -webkit-backdrop-filter: blur(14px);
   border: 1px dashed #444444;
   border-radius: 14px;
-  padding: 24px 28px;
+  padding: 22px 26px 18px;
   box-shadow: 
     0 10px 30px -10px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -132,10 +132,13 @@
   color: var(--text-muted);
   font-family: var(--font-family-mono, monospace);
   margin-top: 2px;
-  min-height: 1.3em;
+  height: 18px;
+  line-height: 18px;
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .github-contributions-subtitle strong {
@@ -171,8 +174,8 @@
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
+  padding-bottom: 4px;
+  margin-bottom: 0;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -212,30 +215,31 @@
 .github-day-block {
   cursor: pointer;
   shape-rendering: geometricPrecision;
-  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), fill 0.15s ease, filter 0.15s ease;
-  transform-origin: center center;
+  transition: fill 0.15s ease, stroke 0.15s ease, filter 0.15s ease;
 }
 
 .github-day-block:hover {
-  filter: brightness(1.25) drop-shadow(0 0 4px rgba(56, 189, 248, 0.6));
-  transform: scale(1.28);
+  stroke: var(--accent, #38bdf8) !important;
+  stroke-width: 1.5px !important;
+  filter: brightness(1.35) drop-shadow(0 0 4px rgba(56, 189, 248, 0.8));
 }
 
 /* Floating interactive tooltip */
 .github-heatmap-tooltip {
   position: absolute;
   transform: translate(-50%, -100%);
-  pointer-events: none;
+  pointer-events: none !important;
+  user-select: none;
   z-index: 50;
-  transition: opacity 0.12s ease, transform 0.12s ease;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+  transition: opacity 0.1s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
 }
 
 .github-heatmap-tooltip-bubble {
   background: #090a0f;
-  border: 1px solid rgba(56, 189, 248, 0.35);
+  border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: 7px;
-  padding: 6px 10px;
+  padding: 5px 9px;
   font-size: 0.72rem;
   font-family: var(--font-family-mono, monospace);
   white-space: nowrap;
@@ -252,77 +256,19 @@
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid rgba(56, 189, 248, 0.35);
+  border-top: 5px solid rgba(56, 189, 248, 0.4);
   margin: 0 auto;
-}
-
-/* Footer Section */
-.github-contributions-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 14px;
-  padding-top: 10px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.07);
-  font-size: 0.74rem;
-  color: var(--text-muted);
-  font-family: var(--font-family-mono, monospace);
-}
-
-.theme-light .github-contributions-footer {
-  border-top: 1px dashed rgba(0, 0, 0, 0.08);
-}
-
-.github-contributions-footer-total a {
-  color: var(--text-primary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.2s ease;
-}
-
-.github-contributions-footer-total a:hover {
-  color: var(--accent, #38bdf8);
-}
-
-/* Legend */
-.github-legend {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: auto;
-}
-
-.github-legend-label {
-  font-size: 0.68rem;
-  color: var(--text-dim, #71717a);
-  padding: 0 2px;
-}
-
-.github-legend-block {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 640px) {
   .github-contributions-card {
-    padding: 18px 16px;
+    padding: 16px 14px 12px;
   }
   
   .github-contributions-header {
     gap: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .github-contributions-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .github-legend {
-    margin-left: 0;
+    margin-bottom: 14px;
   }
 }
+
