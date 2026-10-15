@@ -98,56 +98,6 @@
   border-color: var(--hero-bp-border-hover);
 }
 
-/* ==========================================================================
-   CORNER CROSSHAIR (+) MARKERS AT ALL 4 INTERSECTIONS
-   ========================================================================== */
-
-.blueprint-corner {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-family-mono), monospace;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--hero-bp-border);
-  pointer-events: none;
-  user-select: none;
-  z-index: 5;
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.blueprint-corner-tl {
-  top: -7px;
-  left: -7px;
-}
-.blueprint-corner-tr {
-  top: -7px;
-  right: -7px;
-}
-.blueprint-corner-bl {
-  bottom: -7px;
-  left: -7px;
-}
-.blueprint-corner-br {
-  bottom: -7px;
-  right: -7px;
-}
-
-.hero-card.blueprint-hero-card:hover .blueprint-corner,
-.hero-card.blueprint-hero-card.is-hovered .blueprint-corner {
-  color: var(--hero-bp-corner-hover);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
-  transform: scale(1.15);
-}
-
-.theme-light .hero-card.blueprint-hero-card:hover .blueprint-corner,
-.theme-light .hero-card.blueprint-hero-card.is-hovered .blueprint-corner {
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
-}
 
 /* ==========================================================================
    INTERACTIVE CURSOR SPOTLIGHT RADIAL GLOW
@@ -519,10 +469,7 @@
     bottom: -8px;
   }
 
-  .blueprint-corner-tl { top: -6px; left: -6px; }
-  .blueprint-corner-tr { top: -6px; right: -6px; }
-  .blueprint-corner-bl { bottom: -6px; left: -6px; }
-  .blueprint-corner-br { bottom: -6px; right: -6px; }
+
 
   .chanh-top-strip {
     flex-direction: row;

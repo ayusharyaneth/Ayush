@@ -138,44 +138,6 @@
   border-color: var(--hero-bp-border-hover, #888888);
 }
 
-/* Corner Crosshair (+) Markers */
-.contact-editorial-card .blueprint-corner {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-family-mono), monospace;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--hero-bp-border, #444444);
-  pointer-events: none;
-  user-select: none;
-  z-index: 5;
-  transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.contact-editorial-card .blueprint-corner-tl { top: -7px; left: -7px; }
-.contact-editorial-card .blueprint-corner-tr { top: -7px; right: -7px; }
-.contact-editorial-card .blueprint-corner-bl { bottom: -7px; left: -7px; }
-.contact-editorial-card .blueprint-corner-br { bottom: -7px; right: -7px; }
-
-.contact-editorial-card:hover .blueprint-corner,
-.contact-editorial-card.is-hovered .blueprint-corner {
-  color: var(--hero-bp-corner-hover, #ffffff);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
-  transform: scale(1.15);
-}
-
-.theme-light .contact-editorial-card:hover .blueprint-corner,
-[data-theme="light"] .contact-editorial-card:hover .blueprint-corner,
-.theme-light .contact-editorial-card.is-hovered .blueprint-corner,
-[data-theme="light"] .contact-editorial-card.is-hovered .blueprint-corner {
-  color: var(--hero-bp-corner-hover, #18181b);
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
-}
 
 /* Interactive Cursor Spotlight Radial Glow */
 .contact-editorial-card .blueprint-spotlight {

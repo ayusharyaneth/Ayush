@@ -98,17 +98,11 @@ export default function ContactSection({
           onMouseLeave={handleCardMouseLeave}
           className={`contact-editorial-card blueprint-hero-card ${isHovered ? 'is-hovered' : ''}`}
         >
-          {/* Architectural Blueprint Dashed Border Lines with Crosshair Overshoots (Exact Hero Header Pattern) */}
+          {/* Architectural Blueprint Dashed Border Lines with Overshoots (Exact Hero Header Pattern) */}
           <div className="blueprint-border-line blueprint-line-top" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-bottom" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-left" aria-hidden="true" />
           <div className="blueprint-border-line blueprint-line-right" aria-hidden="true" />
-
-          {/* Corner Crosshair (+) Markers */}
-          <span className="blueprint-corner blueprint-corner-tl" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-tr" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-bl" aria-hidden="true">+</span>
-          <span className="blueprint-corner blueprint-corner-br" aria-hidden="true">+</span>
 
           {/* Interactive Mouse Spotlight Radial Glow (Exact Hero Header Effect) */}
           <div
