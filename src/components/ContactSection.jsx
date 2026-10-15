@@ -41,7 +41,7 @@ export default function ContactSection({
 
     setCopied(true);
     if (showToast) {
-      showToast(`Email copied: ${contactEmail}`, 'success');
+      showToast('Copied', 'copy');
     }
     setTimeout(() => setCopied(false), 2400);
 
@@ -126,7 +126,7 @@ export default function ContactSection({
             >
               <div className="cta-text-block">
                 <span className="cta-lead-label">
-                  {copied ? 'Email Copied!' : 'Initiate Transmission'}
+                  {copied ? 'Copied' : 'Initiate Transmission'}
                   {copied ? <Check size={14} style={{ color: 'var(--accent)' }} /> : <Sparkles size={14} style={{ color: 'var(--accent)' }} />}
                 </span>
                 <span className="cta-email-sub">{contactEmail}</span>
