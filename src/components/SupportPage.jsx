@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
 import {
   Check,
   Copy,
-  ChevronDown,
-  QrCode
+  ChevronDown
 } from 'lucide-react';
 import {
   PayPalIcon,
@@ -113,7 +111,6 @@ export default function SupportPage({
   // Dropdown open states
   const [isCoinDropdownOpen, setIsCoinDropdownOpen] = useState(false);
   const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
-  const [showQr, setShowQr] = useState(false);
 
   const coinDropdownRef = useRef(null);
   const networkDropdownRef = useRef(null);
@@ -315,40 +312,6 @@ export default function SupportPage({
               </div>
             </div>
 
-            {/* Toggle QR code */}
-            <div className="support-address-actions">
-              <button
-                type="button"
-                className="support-text-btn"
-                onClick={() => {
-                  sound.playPop();
-                  haptic(25);
-                  setShowQr((prev) => !prev);
-                }}
-              >
-                <QrCode size={15} />
-                <span>{showQr ? 'Hide QR' : 'Show QR'}</span>
-              </button>
-            </div>
-
-            {/* QR Code Presentation */}
-            {showQr && currentAddress && (
-              <div className="support-qr-wrapper">
-                <div className="support-qr-canvas-box">
-                  <QRCodeSVG
-                    value={currentAddress}
-                    size={172}
-                    level="M"
-                    marginSize={2}
-                    fgColor="#09090b"
-                    bgColor="#ffffff"
-                  />
-                </div>
-                <span className="support-qr-caption">
-                  Scan to transfer {activeCoin.label} ({currentBadge})
-                </span>
-              </div>
-            )}
           </div>
 
           <p className="support-crypto-note">

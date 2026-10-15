@@ -333,15 +333,6 @@
   user-select: all;
 }
 
-.support-address-actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--border-primary);
-}
-
 /* Copy Action Controls */
 .support-copy-wrap {
   display: inline-flex;
@@ -383,55 +374,6 @@
   font-weight: 600;
   color: var(--accent);
   font-family: var(--font-family-mono), monospace;
-}
-
-.support-text-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: var(--bg-surface);
-  border: 1px dashed var(--border-line);
-  border-radius: var(--radius-sm, 6px);
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.support-text-btn:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-tint);
-}
-
-/* QR Code Container */
-.support-qr-wrapper {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 16px;
-  background: var(--bg-surface);
-  border: 1px dashed var(--border-dashed);
-  border-radius: var(--radius-md, 8px);
-}
-
-.support-qr-canvas-box {
-  display: inline-block;
-  padding: 12px;
-  background: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.support-qr-caption {
-  font-family: var(--font-family-mono), monospace;
-  font-size: 0.72rem;
-  color: var(--text-muted);
 }
 
 .support-crypto-note {
