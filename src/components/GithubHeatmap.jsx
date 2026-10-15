@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { GithubIcon, ExternalLinkIcon } from './Icons';
 import cachedFallbackData from '../data/githubContributions.json';
 import './GithubHeatmap.css';
@@ -24,7 +24,10 @@ export default function GithubHeatmap({
   profileUrl = 'https://github.com/ayusharyaneth/',
   style = {}
 }) {
+  const cardRef = useRef(null);
   const containerRef = useRef(null);
+  const tooltipRef = useRef(null);
+  const [tooltipPos, setTooltipPos] = useState(null);
 
   // Initialize with Ayush's real cached data from storage or fallback JSON
   const [data, setData] = useState(() => {
@@ -172,32 +175,64 @@ export default function GithubHeatmap({
   const totalWidth = WEEKDAY_WIDTH + weeks.length * (BLOCK_SIZE + BLOCK_MARGIN) - BLOCK_MARGIN;
   const totalHeight = LABEL_HEIGHT + 7 * (BLOCK_SIZE + BLOCK_MARGIN) - BLOCK_MARGIN;
 
-  // Handle cell hover positioning for floating tooltip
+  // Handle cell hover positioning for floating tooltip (relative to cardRef)
   const handleCellMouseEnter = (e, day) => {
-    if (!day || !containerRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const scrollLeft = containerRef.current.scrollLeft || 0;
+    if (!day || !cardRef.current) return;
+    const cellRect = e.currentTarget.getBoundingClientRect();
+    const cardRect = cardRef.current.getBoundingClientRect();
 
     setHoveredCell({
       ...day,
       formattedDate: formatDateLabel(day.date),
-      x: rect.left - containerRect.left + scrollLeft + rect.width / 2,
-      y: rect.top - containerRect.top
+      cellCenterX: cellRect.left - cardRect.left + cellRect.width / 2,
+      cellTopY: cellRect.top - cardRect.top
     });
   };
 
-
   const handleCellMouseLeave = () => {
     setHoveredCell(null);
+    setTooltipPos(null);
   };
 
-  const openProfile = () => {
-    window.open(profileUrl, '_blank', 'noopener,noreferrer');
+  // Hide floating tooltip while horizontally scrolling on mobile/smaller screens
+  const handleContainerScroll = () => {
+    if (hoveredCell) {
+      setHoveredCell(null);
+      setTooltipPos(null);
+    }
   };
+
+  // Dynamically clamp tooltip bubble within card edges and align pointer arrow to cell
+  useLayoutEffect(() => {
+    if (!hoveredCell || !cardRef.current || !tooltipRef.current) {
+      setTooltipPos(null);
+      return;
+    }
+
+    const cardRect = cardRef.current.getBoundingClientRect();
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    const tooltipWidth = tooltipRect.width || 190;
+    const halfWidth = tooltipWidth / 2;
+
+    // Keep bubble securely inside the card boundaries with 14px padding
+    const minCenter = halfWidth + 14;
+    const maxCenter = Math.max(minCenter, cardRect.width - halfWidth - 14);
+
+    const clampedCenter = Math.max(minCenter, Math.min(hoveredCell.cellCenterX, maxCenter));
+    const rawArrowOffset = hoveredCell.cellCenterX - clampedCenter;
+    // Keep arrow within bubble borders (with 14px margin from bubble corners)
+    const maxArrowShift = Math.max(0, halfWidth - 14);
+    const arrowOffset = Math.max(-maxArrowShift, Math.min(rawArrowOffset, maxArrowShift));
+
+    setTooltipPos({
+      left: clampedCenter,
+      top: hoveredCell.cellTopY - 6,
+      arrowOffset
+    });
+  }, [hoveredCell]);
 
   return (
-    <div className="github-contributions-card" style={style}>
+    <div className="github-contributions-card" ref={cardRef} style={style}>
       {/* Header Bar */}
       <div className="github-contributions-header">
         <div className="github-contributions-title-group">
@@ -246,7 +281,7 @@ export default function GithubHeatmap({
       </div>
 
       {/* Contribution Heatmap Calendar Grid */}
-      <div className="github-calendar-container" ref={containerRef}>
+      <div className="github-calendar-container" ref={containerRef} onScroll={handleContainerScroll}>
         <svg
           className="github-calendar-svg"
           width={totalWidth}
@@ -282,7 +317,7 @@ export default function GithubHeatmap({
             </text>
           </g>
 
-          {/* Contribution Cells (53 weeks x 7 days) */}
+          {/* Contribution Cells (weeks x 7 days) */}
           <g className="github-cells">
             {weeks.map((week, wIdx) =>
               week.map((day, dIdx) => {
@@ -306,39 +341,43 @@ export default function GithubHeatmap({
                     data-date={day.date}
                     data-count={day.count}
                     data-level={day.level}
+                    aria-label={`${day.count === 0 ? 'No contributions' : `${day.count} contribution${day.count > 1 ? 's' : ''}`} on ${formatDateLabel(day.date)}`}
                     onMouseEnter={(e) => handleCellMouseEnter(e, day)}
                     onMouseLeave={handleCellMouseLeave}
-                    onClick={openProfile}
-                  >
-                    <title>
-                      {day.count === 0 ? 'No contributions' : `${day.count} contribution${day.count > 1 ? 's' : ''}`} on {formatDateLabel(day.date)}
-                    </title>
-                  </rect>
+                  />
                 );
               })
             )}
           </g>
         </svg>
-
-        {/* Floating Tooltip Bubble */}
-        {hoveredCell && (
-          <div
-            className="github-heatmap-tooltip"
-            style={{
-              left: `${hoveredCell.x}px`,
-              top: `${Math.max(22, hoveredCell.y - 8)}px`
-            }}
-          >
-            <div className="github-heatmap-tooltip-bubble">
-              <strong>
-                {hoveredCell.count === 0 ? 'No contributions' : `${hoveredCell.count} contribution${hoveredCell.count > 1 ? 's' : ''}`}
-              </strong>{' '}
-              on {hoveredCell.formattedDate}
-            </div>
-            <div className="github-heatmap-tooltip-arrow" />
-          </div>
-        )}
       </div>
+
+      {/* Floating Tooltip Bubble (positioned relative to cardRef and clamped within card borders) */}
+      {hoveredCell && (
+        <div
+          ref={tooltipRef}
+          className="github-heatmap-tooltip"
+          style={{
+            left: tooltipPos ? `${tooltipPos.left}px` : `${hoveredCell.cellCenterX}px`,
+            top: tooltipPos ? `${tooltipPos.top}px` : `${hoveredCell.cellTopY - 6}px`,
+            opacity: tooltipPos ? 1 : 0,
+            visibility: tooltipPos ? 'visible' : 'hidden'
+          }}
+        >
+          <div className="github-heatmap-tooltip-bubble">
+            <strong>
+              {hoveredCell.count === 0 ? 'No contributions' : `${hoveredCell.count} contribution${hoveredCell.count > 1 ? 's' : ''}`}
+            </strong>{' '}
+            on {hoveredCell.formattedDate}
+          </div>
+          <div
+            className="github-heatmap-tooltip-arrow"
+            style={{
+              transform: tooltipPos ? `translateX(${tooltipPos.arrowOffset}px)` : 'none'
+            }}
+          />
+        </div>
+      )}
     </div>
 
   );

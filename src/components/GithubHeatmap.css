@@ -213,7 +213,7 @@
 }
 
 .github-day-block {
-  cursor: pointer;
+  cursor: default;
   shape-rendering: geometricPrecision;
   transition: fill 0.15s ease, stroke 0.15s ease, filter 0.15s ease;
 }
