@@ -334,6 +334,7 @@ export default function Navbar({
         <a
           href="/"
           onClick={(e) => handleNavClick(e, 'top')}
+          onMouseEnter={() => sound.playHover()}
           className="navbar-brand"
           title="Ayush Aryan Portfolio"
         >
@@ -431,6 +432,7 @@ export default function Navbar({
               sound.playClick();
               onOpenCommand();
             }}
+            onMouseEnter={() => sound.playHover()}
             className="btn-icon"
             style={{ width: '32px', height: '32px' }}
             title="Search (⌘K)"
@@ -442,6 +444,7 @@ export default function Navbar({
           {/* Theme Quick Toggle */}
           <button
             onClick={toggleTheme}
+            onMouseEnter={() => sound.playHover()}
             className="btn-icon"
             style={{ width: '32px', height: '32px' }}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode (D)`}
@@ -456,6 +459,7 @@ export default function Navbar({
               sound.playClick();
               onToggleSettings();
             }}
+            onMouseEnter={() => sound.playHover()}
             className="btn-icon"
             style={{
               width: '32px',

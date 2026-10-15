@@ -5,6 +5,7 @@ import { sound } from '../utils/soundEffects';
 
 export default function CaseStudyModal({ project, onClose }) {
   useEffect(() => {
+    sound.playPop();
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };

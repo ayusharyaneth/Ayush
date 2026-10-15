@@ -43,6 +43,7 @@ export default function CommandPalette({
 
   useEffect(() => {
     if (isOpen) {
+      sound.playPop();
       const timer = setTimeout(() => inputRef.current?.focus(), 50);
       return () => clearTimeout(timer);
     }
@@ -308,7 +309,10 @@ export default function CommandPalette({
                 <div
                   key={item.id}
                   onClick={() => item.run()}
-                  onMouseEnter={() => setSelectedIndex(idx)}
+                  onMouseEnter={() => {
+                    sound.playHover();
+                    setSelectedIndex(idx);
+                  }}
                   style={{
                     display: 'flex',
                     alignItems: 'center',

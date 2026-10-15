@@ -117,6 +117,7 @@ export default function SettingsBar({
             sound.playClick();
             setIsOpen(false);
           }}
+          onMouseEnter={() => sound.playHover()}
           style={{ fontSize: '0.75rem', color: 'var(--text-muted)', padding: '2px 6px', borderRadius: '4px' }}
         >
           Done
@@ -136,6 +137,7 @@ export default function SettingsBar({
               <button
                 key={t.id}
                 onClick={() => handleThemeChange(t.id)}
+                onMouseEnter={() => sound.playHover()}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -170,6 +172,7 @@ export default function SettingsBar({
               <button
                 key={f.id}
                 onClick={() => handleFontChange(f.id)}
+                onMouseEnter={() => sound.playHover()}
                 style={{
                   padding: '6px 4px',
                   borderRadius: 'var(--radius-sm)',
@@ -201,6 +204,7 @@ export default function SettingsBar({
               <button
                 key={p.id}
                 onClick={() => handlePaletteChange(p.id)}
+                onMouseEnter={() => sound.playHover()}
                 title={p.label}
                 style={{
                   width: '32px',
@@ -232,6 +236,7 @@ export default function SettingsBar({
         </div>
         <button
           onClick={handleSoundToggle}
+          onMouseEnter={() => sound.playHover()}
           style={{
             display: 'flex',
             alignItems: 'center',
