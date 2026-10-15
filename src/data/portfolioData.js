@@ -257,7 +257,7 @@ export const portfolioData = {
     quickSupport: [
       {
         label: "PayPal",
-        url: "https://paypal.me/theayusharyan",
+        url: "https://paypal.me/AyushAryanEth",
         subtext: "One-time gift via PayPal"
       },
       {
