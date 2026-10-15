@@ -9,7 +9,8 @@ import {
   BuyMeACoffeeIcon,
   EthereumIcon,
   UsdtIcon,
-  UsdcIcon
+  UsdcIcon,
+  SolanaIcon
 } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { haptic } from '../utils/haptic';
@@ -65,6 +66,8 @@ export default function SupportPage({
         return <UsdtIcon size={18} />;
       case 'USDC':
         return <UsdcIcon size={18} />;
+      case 'SOL':
+        return <SolanaIcon size={18} />;
       default:
         return <EthereumIcon size={18} />;
     }

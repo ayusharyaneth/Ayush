@@ -303,6 +303,12 @@ export const portfolioData = {
           TRC20: { badge: "TRC-20", address: "TKGZQafokVFrWEKEcm6CZoyzFssRfYmYbN" },
           BEP20: { badge: "BEP-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" }
         }
+      },
+      {
+        key: "SOL",
+        label: "SOL",
+        badge: "SOL",
+        address: "Yctpjzezrtg8PzcDQBHxszSJofnb7x3RuL1CQke6EGu"
       }
     ]
   }
