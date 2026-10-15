@@ -1,0 +1,328 @@
+/* ==========================================================================
+   GitHub Contributions Heatmap Component (Chanh Dai aesthetic)
+   Live data from https://github-contributions-api.jogruber.de/v4/ayusharyaneth
+   ========================================================================== */
+
+.github-contributions-card {
+  position: relative;
+  background: rgba(15, 17, 23, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px dashed #444444;
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.theme-light .github-contributions-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px dashed #d1d5db;
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.08);
+}
+
+.github-contributions-card:hover {
+  border-color: #888888;
+  box-shadow: 
+    0 14px 36px -10px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(56, 189, 248, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.theme-light .github-contributions-card:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.12);
+}
+
+/* Subtle corner technical blueprint accents */
+.github-contributions-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.25), transparent);
+  pointer-events: none;
+}
+
+/* Header */
+.github-contributions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.github-contributions-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.github-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: var(--accent, #38bdf8);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+}
+
+.github-contributions-card:hover .github-icon-badge {
+  transform: scale(1.05);
+  background: rgba(56, 189, 248, 0.14);
+}
+
+.github-contributions-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.github-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-family: var(--font-family-mono, monospace);
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+}
+
+.github-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+  animation: livePulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.github-contributions-subtitle {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-family: var(--font-family-mono, monospace);
+  margin-top: 2px;
+  min-height: 1.3em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.github-contributions-subtitle strong {
+  color: var(--accent, #38bdf8);
+  font-weight: 600;
+}
+
+/* Header profile link button */
+.github-profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-family: var(--font-family-mono, monospace);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-secondary, rgba(255, 255, 255, 0.08));
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.github-profile-link:hover {
+  color: var(--text-primary);
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Calendar Container */
+.github-calendar-container {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom minimal scrollbar */
+.github-calendar-container::-webkit-scrollbar {
+  height: 5px;
+}
+
+.github-calendar-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.github-calendar-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.github-calendar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.35);
+}
+
+/* SVG Chart */
+.github-calendar-svg {
+  display: block;
+  overflow: visible;
+  font-family: var(--font-family-mono, monospace);
+}
+
+.github-month-text,
+.github-weekday-text {
+  font-size: 9px;
+  fill: var(--text-muted, #71717a);
+  user-select: none;
+}
+
+.github-day-block {
+  cursor: pointer;
+  shape-rendering: geometricPrecision;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), fill 0.15s ease, filter 0.15s ease;
+  transform-origin: center center;
+}
+
+.github-day-block:hover {
+  filter: brightness(1.25) drop-shadow(0 0 4px rgba(56, 189, 248, 0.6));
+  transform: scale(1.28);
+}
+
+/* Floating interactive tooltip */
+.github-heatmap-tooltip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+  z-index: 50;
+  transition: opacity 0.12s ease, transform 0.12s ease;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.5));
+}
+
+.github-heatmap-tooltip-bubble {
+  background: #090a0f;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 7px;
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-family: var(--font-family-mono, monospace);
+  white-space: nowrap;
+  color: #f1f5f9;
+  line-height: 1.25;
+}
+
+.github-heatmap-tooltip-bubble strong {
+  color: var(--accent, #38bdf8);
+}
+
+.github-heatmap-tooltip-arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(56, 189, 248, 0.35);
+  margin: 0 auto;
+}
+
+/* Footer Section */
+.github-contributions-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.07);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-family: var(--font-family-mono, monospace);
+}
+
+.theme-light .github-contributions-footer {
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.github-contributions-footer-total a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.github-contributions-footer-total a:hover {
+  color: var(--accent, #38bdf8);
+}
+
+/* Legend */
+.github-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.github-legend-label {
+  font-size: 0.68rem;
+  color: var(--text-dim, #71717a);
+  padding: 0 2px;
+}
+
+.github-legend-block {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .github-contributions-card {
+    padding: 18px 16px;
+  }
+  
+  .github-contributions-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .github-contributions-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .github-legend {
+    margin-left: 0;
+  }
+}
