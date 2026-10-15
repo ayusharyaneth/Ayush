@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { GithubIcon, ExternalLinkIcon } from './Icons';
+import { sound } from '../utils/soundEffects';
 import cachedFallbackData from '../data/githubContributions.json';
 import './GithubHeatmap.css';
 
@@ -178,6 +179,7 @@ export default function GithubHeatmap({
   // Handle cell hover positioning for floating tooltip (relative to cardRef)
   const handleCellMouseEnter = (e, day) => {
     if (!day || !cardRef.current) return;
+    sound.playHover();
     const cellRect = e.currentTarget.getBoundingClientRect();
     const cardRect = cardRef.current.getBoundingClientRect();
 
@@ -273,6 +275,8 @@ export default function GithubHeatmap({
           rel="noopener noreferrer"
           className="github-profile-link"
           title={`View ${username} on GitHub`}
+          onMouseEnter={() => sound.playHover()}
+          onClick={() => sound.playClick()}
         >
           <GithubIcon size={13} />
           <span>@{username}</span>
