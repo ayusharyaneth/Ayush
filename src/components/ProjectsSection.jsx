@@ -20,7 +20,7 @@ const getProjectDateLabel = (project) => {
   return 'v1.0 • Release';
 };
 
-function ProjectCard({ project, idx, isInteractive = true, onSelectProject }) {
+function ProjectCard({ project, idx, onSelectProject }) {
   const dateLabel = getProjectDateLabel(project);
   const eyebrowNum = project.eyebrow
     ? project.eyebrow.split('/')[0].trim()
@@ -32,22 +32,23 @@ function ProjectCard({ project, idx, isInteractive = true, onSelectProject }) {
   return (
     <div
       className="project-deck-card group"
-      onMouseEnter={() => isInteractive && sound.playTick()}
+      onMouseEnter={() => sound.playCardHover()}
       onClick={() => {
-        sound.playClick();
+        sound.playPop();
         onSelectProject(project);
       }}
       role="button"
-      tabIndex={isInteractive ? 0 : -1}
+      tabIndex={0}
       aria-label={`Inspect ${project.title}`}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          sound.playClick();
+          sound.playPop();
           onSelectProject(project);
         }
       }}
     >
+
       {/* Top Banner Image with Ticket / Sketch Aesthetic */}
       <div className="project-card-image-box">
         <img
@@ -291,7 +292,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                       key={project.id}
                       project={project}
                       idx={idx}
-                      isInteractive={true}
                       onSelectProject={onSelectProject}
                     />
                   ))}
@@ -306,7 +306,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                         key={`m1-${project.id}-${idx}`}
                         project={project}
                         idx={idx}
-                        isInteractive={true}
                         onSelectProject={onSelectProject}
                       />
                     ))}
@@ -319,7 +318,6 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                         key={`m2-${project.id}-${idx}`}
                         project={project}
                         idx={idx}
-                        isInteractive={false}
                         onSelectProject={onSelectProject}
                       />
                     ))}
@@ -335,11 +333,12 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               <div
                 key={project.id}
                 className="screen-box"
-                onMouseEnter={() => sound.playTick()}
+                onMouseEnter={() => sound.playCardHover()}
                 onClick={() => {
-                  sound.playClick();
+                  sound.playPop();
                   onSelectProject(project);
                 }}
+
                 style={{
                   padding: '18px 22px',
                   display: 'flex',
@@ -470,19 +469,19 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
           border: 1px solid var(--border-primary);
           box-shadow: var(--shadow-card);
           overflow: hidden;
-          padding: 34px 0 0 0;
+          padding: 34px 0 32px 0;
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: flex-end;
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+          justify-content: center;
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
         }
 
         @media (min-width: 768px) {
           .project-deck-stage {
             min-height: auto;
-            padding: 40px 0 0 0;
+            padding: 38px 0 36px 0;
           }
         }
 
@@ -490,19 +489,17 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         .project-marquee-track {
           display: flex;
           flex-direction: row;
-          align-items: flex-end;
-          gap: 16px;
+          align-items: center;
+          gap: 20px;
           width: max-content;
-          margin-bottom: -18px; /* Signature reference tuck into bottom edge */
-          padding-bottom: 2px;
           position: relative;
         }
 
         .project-marquee-group {
           display: flex;
           flex-direction: row;
-          align-items: flex-end;
-          gap: 16px;
+          align-items: center;
+          gap: 20px;
           flex-shrink: 0;
           animation: scrollDeckMarquee 34s linear infinite;
           will-change: transform;
@@ -519,7 +516,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
             transform: translateX(0);
           }
           to {
-            transform: translateX(calc(-100% - 16px));
+            transform: translateX(calc(-100% - 20px));
           }
         }
 
@@ -527,76 +524,51 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         .project-deck-single-row {
           display: flex;
           justify-content: center;
-          align-items: flex-end;
+          align-items: center;
           width: 100%;
-          margin-bottom: -18px;
-          padding-bottom: 2px;
+          padding: 6px 0;
         }
 
         /* Individual Card Dimensions & Bezier */
         .project-deck-card {
           position: relative;
-          width: 220px;
-          height: 242px;
+          width: 260px;
+          height: 295px;
           background: var(--bg-surface);
-          border-radius: 12px;
+          border-radius: 13px;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.4);
           border: 1px solid var(--border-primary);
           cursor: pointer;
           user-select: none;
-          transform-origin: bottom center;
-          transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1),
-                      box-shadow 450ms cubic-bezier(0.23, 1, 0.32, 1),
-                      border-color 300ms ease;
+          transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 250ms ease;
           will-change: transform, box-shadow;
           outline: none;
           flex-shrink: 0;
         }
 
-        /* Tactile paper fanned rotations */
-        .project-deck-card:nth-child(4n + 1) {
-          transform: rotate(-2.5deg);
-          z-index: 10;
-        }
-        .project-deck-card:nth-child(4n + 2) {
-          transform: rotate(1deg);
-          z-index: 11;
-        }
-        .project-deck-card:nth-child(4n + 3) {
-          transform: rotate(3deg);
-          z-index: 12;
-        }
-        .project-deck-card:nth-child(4n + 4) {
-          transform: rotate(-1.5deg);
-          z-index: 13;
-        }
-
-        .project-deck-card.card-center {
-          transform: rotate(0deg);
-          z-index: 10;
-        }
-
-        /* Card Hover Behavior: Lift up, un-rotate, scale gently, elevated z-index & shadow */
+        /* Card Hover Behavior: Lift up, scale gently, elevated z-index & shadow */
         .project-deck-card:hover,
         .project-deck-card:focus-visible {
-          transform: translateY(-16px) scale(1.03) rotate(0deg) !important;
+          transform: translateY(-10px) scale(1.02) !important;
           z-index: 50 !important;
           border-color: var(--accent) !important;
-          box-shadow: 0 20px 42px -8px rgba(0, 0, 0, 0.7), 0 0 16px var(--accent-glow) !important;
+          box-shadow: 0 18px 38px -8px rgba(0, 0, 0, 0.65), 0 0 16px var(--accent-glow) !important;
         }
 
         @media (max-width: 640px) {
           .project-deck-stage {
-            padding: 24px 0 0 0;
+            padding: 24px 0 22px 0;
           }
           .project-deck-card {
-            width: 196px;
-            height: 232px;
+            width: 224px;
+            height: 275px;
           }
           .project-card-image-box {
-            height: 100px;
+            height: 115px;
           }
         }
 
@@ -614,9 +586,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         .project-card-image-box {
           position: relative;
           width: 100%;
-          height: 110px;
-          border-top-left-radius: 11px;
-          border-top-right-radius: 11px;
+          height: 125px;
+          border-top-left-radius: 12px;
+          border-top-right-radius: 12px;
           overflow: hidden;
           background: var(--bg-muted);
         }
@@ -707,13 +679,13 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
 
         /* Bottom Body */
         .project-card-body {
-          padding: 10px 13px 8px 13px;
+          padding: 12px 14px 12px 14px;
           flex: 1;
           display: flex;
           flex-direction: column;
           background: var(--bg-surface);
-          border-bottom-left-radius: 11px;
-          border-bottom-right-radius: 11px;
+          border-bottom-left-radius: 12px;
+          border-bottom-right-radius: 12px;
           border-top: 1px solid var(--border-secondary);
         }
 
@@ -746,12 +718,12 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
 
         .project-card-title {
           font-family: var(--font-heading);
-          font-size: 0.90rem;
+          font-size: 0.96rem;
           font-weight: 600;
           line-height: 1.25;
           color: var(--text-primary);
           margin-top: 2px;
-          margin-bottom: 4px;
+          margin-bottom: 5px;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
@@ -759,16 +731,17 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
         }
 
         .project-card-desc {
-          font-size: 0.70rem;
+          font-size: 0.72rem;
           color: var(--text-secondary);
-          line-height: 1.35;
+          line-height: 1.4;
           margin-bottom: 0;
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
-          opacity: 0.85;
+          opacity: 0.88;
         }
+
       `}</style>
     </section>
   );
