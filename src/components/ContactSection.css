@@ -30,7 +30,7 @@
 }
 
 /* ==========================================================================
-   ATMOSPHERIC LIGHTING & ORBITAL BACKGROUND
+   ATMOSPHERIC LIGHTING & BACKGROUND
    ========================================================================== */
 
 .contact-atmosphere {
@@ -39,85 +39,6 @@
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
-}
-
-/* Ambient Accent Glow */
-.contact-glow-accent {
-  position: absolute;
-  top: -10%;
-  right: -5%;
-  width: 440px;
-  height: 360px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  opacity: 0.22;
-  filter: blur(50px);
-  animation: glowBreathe 12s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.theme-light .contact-glow-accent {
-  opacity: 0.12;
-}
-
-/* Ambient Secondary Subtle Glow */
-.contact-glow-secondary {
-  position: absolute;
-  bottom: -15%;
-  left: -5%;
-  width: 420px;
-  height: 320px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  opacity: 0.14;
-  filter: blur(50px);
-  animation: glowBreathe 14s ease-in-out infinite alternate-reverse;
-  pointer-events: none;
-}
-
-.theme-light .contact-glow-secondary {
-  opacity: 0.07;
-}
-
-@keyframes glowBreathe {
-  0% { transform: scale(0.92) translate(0, 0); opacity: 0.7; }
-  100% { transform: scale(1.08) translate(12px, 8px); opacity: 1; }
-}
-
-/* Rotating Celestial Orbital Ellipse */
-.contact-orbital-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 880px;
-  height: 420px;
-  pointer-events: none;
-  opacity: 0.38;
-}
-
-.contact-orbital-ring {
-  width: 100%;
-  height: 100%;
-  border: 1px dashed var(--border-line);
-  border-radius: 50%;
-  transform: rotate(-18deg);
-  animation: orbitSpin 80s linear infinite;
-  position: relative;
-}
-
-.contact-orbital-node {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
-  top: 15%;
-  left: 10%;
-}
-
-@keyframes orbitSpin {
-  from { transform: rotate(-18deg); }
-  to { transform: rotate(342deg); }
 }
 
 /* Hairline Grid Accent Overlay */
@@ -218,72 +139,20 @@
 }
 
 /* ==========================================================================
-   OVERSIZED EDITORIAL HEADLINE (REFINED COMPACT PROPORTIONS)
-   ========================================================================== */
-
-.contact-headline-stage {
-  position: relative;
-  text-align: center;
-  margin: 4px auto 10px;
-  max-width: 680px;
-}
-
-.contact-headline {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--font-family-sans), sans-serif;
-  font-size: clamp(1.85rem, 3.8vw, 2.9rem);
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  color: var(--text-primary);
-  user-select: text;
-}
-
-.headline-mask {
-  overflow: hidden;
-  display: inline-block;
-  padding: 1px 6px;
-}
-
-.headline-line {
-  display: inline-block;
-  will-change: transform, opacity;
-}
-
-.headline-serif-italic {
-  font-family: var(--font-family-serif), "Instrument Serif", Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.015em;
-  color: var(--text-primary);
-  padding-right: 4px;
-}
-
-.headline-period {
-  color: var(--accent);
-  text-shadow: 0 0 12px var(--accent-glow);
-}
-
-
-/* ==========================================================================
-   SUPPORTING STATEMENT (Italic Serif - Compact)
+   SUPPORTING STATEMENT (Italic Serif - Compact & Snug)
    ========================================================================== */
 
 .contact-statement-wrap {
   text-align: center;
-  margin: 6px auto 14px;
-  max-width: 500px;
+  margin: 10px auto 16px;
+  max-width: 520px;
 }
 
 .contact-statement-text {
   font-family: var(--font-family-serif), "Instrument Serif", Georgia, serif;
   font-style: italic;
-  font-size: clamp(0.92rem, 1.4vw, 1.05rem);
-  line-height: 1.45;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.5;
   color: var(--text-secondary);
   margin: 0;
   letter-spacing: -0.005em;

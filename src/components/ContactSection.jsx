@@ -63,17 +63,9 @@ export default function ContactSection({
 
   return (
     <section id="contact" className="editorial-contact-section">
-      {/* Atmospheric Ambient Lighting & Rotating Celestial Orbit */}
+      {/* Atmospheric Hairline Grid Accent Overlay */}
       <div className="contact-atmosphere" aria-hidden="true">
-        <div className="contact-glow-accent" />
-        <div className="contact-glow-secondary" />
         <div className="contact-grid-pattern" />
-
-        <div className="contact-orbital-wrapper">
-          <div className="contact-orbital-ring">
-            <span className="contact-orbital-node" />
-          </div>
-        </div>
       </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -89,7 +81,7 @@ export default function ContactSection({
             initial={prefersReducedMotion ? {} : { opacity: 0, y: 14 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: easeSmooth }}
+            transition={{ duration: 0.5, ease: easeSmooth }}
             className="contact-meta-header"
           >
             <div className="contact-badge-label">
@@ -98,56 +90,12 @@ export default function ContactSection({
             </div>
           </motion.div>
 
-          {/* Oversized Cinematic Editorial Headline */}
-          <div className="contact-headline-stage">
-            <h2 className="contact-headline">
-              {/* Line 1: "Let's make" */}
-              <span className="headline-mask">
-                <motion.span
-                  initial={prefersReducedMotion ? {} : { y: '115%', opacity: 0 }}
-                  whileInView={prefersReducedMotion ? {} : { y: '0%', opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.75, delay: 0.12, ease: easeSmooth }}
-                  className="headline-line"
-                >
-                  Let&rsquo;s make
-                </motion.span>
-              </span>
-
-              {/* Line 2: "great work" (Italic Serif) */}
-              <span className="headline-mask">
-                <motion.span
-                  initial={prefersReducedMotion ? {} : { y: '115%', opacity: 0 }}
-                  whileInView={prefersReducedMotion ? {} : { y: '0%', opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.75, delay: 0.25, ease: easeSmooth }}
-                  className="headline-line headline-serif-italic"
-                >
-                  great work
-                </motion.span>
-              </span>
-
-              {/* Line 3: "together." */}
-              <span className="headline-mask">
-                <motion.span
-                  initial={prefersReducedMotion ? {} : { y: '115%', opacity: 0 }}
-                  whileInView={prefersReducedMotion ? {} : { y: '0%', opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.75, delay: 0.38, ease: easeSmooth }}
-                  className="headline-line"
-                >
-                  together<span className="headline-period">.</span>
-                </motion.span>
-              </span>
-            </h2>
-          </div>
-
           {/* Elegant Italic Serif Supporting Statement */}
           <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 18 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 14 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.65, delay: 0.52, ease: easeSmooth }}
+            transition={{ duration: 0.55, delay: 0.1, ease: easeSmooth }}
             className="contact-statement-wrap"
           >
             <p className="contact-statement-text">
@@ -157,10 +105,10 @@ export default function ContactSection({
 
           {/* Primary Action Hub: Minimal Outlined Arrow CTA + Compact Social Row */}
           <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 22 }}
+            initial={prefersReducedMotion ? {} : { opacity: 0, y: 16 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.65, delay: 0.64, ease: easeSmooth }}
+            transition={{ duration: 0.55, delay: 0.18, ease: easeSmooth }}
             className="contact-action-hub"
           >
             {/* Functional Outlined Arrow CTA */}
