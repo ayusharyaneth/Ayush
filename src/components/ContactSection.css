@@ -315,21 +315,14 @@
     font-size: 0.6rem;
   }
 
-  .contact-headline {
-    font-size: clamp(1.65rem, 6.8vw, 2.2rem);
-    line-height: 1.06;
-  }
-
   .contact-statement-wrap {
-    margin: 4px auto 10px;
+    margin: 6px auto 12px;
   }
 
   .contact-statement-text {
     font-size: 0.88rem;
     line-height: 1.4;
   }
-
-
 
   .contact-action-hub {
     gap: 10px;
@@ -366,11 +359,3 @@
   }
 }
 
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-  .contact-orbital-ring,
-  .contact-glow-accent,
-  .contact-glow-secondary {
-    animation: none !important;
-  }
-}
