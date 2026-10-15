@@ -32,9 +32,9 @@ function ProjectCard({ project, idx, onSelectProject }) {
   return (
     <div
       className="project-deck-card group"
-      onMouseEnter={() => sound.playCardHover()}
+      onMouseEnter={() => sound.playHover()}
       onClick={() => {
-        sound.playPop();
+        sound.playClick();
         onSelectProject(project);
       }}
       role="button"
@@ -43,7 +43,7 @@ function ProjectCard({ project, idx, onSelectProject }) {
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          sound.playPop();
+          sound.playClick();
           onSelectProject(project);
         }
       }}
@@ -199,6 +199,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                 }}
               >
                 <button
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
                     setHasManuallyToggled(true);
@@ -222,6 +223,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                   <LayoutGrid size={15} />
                 </button>
                 <button
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
                     setHasManuallyToggled(true);
@@ -268,6 +270,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
                 <button
                   key={cat}
                   className={`project-cat-pill ${active ? 'active' : ''}`}
+                  onMouseEnter={() => sound.playHover()}
                   onClick={() => {
                     sound.playClick();
                     setActiveCategory(cat);
@@ -333,9 +336,9 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               <div
                 key={project.id}
                 className="screen-box"
-                onMouseEnter={() => sound.playCardHover()}
+                onMouseEnter={() => sound.playHover()}
                 onClick={() => {
-                  sound.playPop();
+                  sound.playClick();
                   onSelectProject(project);
                 }}
 

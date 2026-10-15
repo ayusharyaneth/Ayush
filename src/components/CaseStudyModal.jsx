@@ -65,6 +65,7 @@ export default function CaseStudyModal({ project, onClose }) {
           </div>
 
           <button
+            onMouseEnter={() => sound.playHover()}
             onClick={() => {
               sound.playClick();
               onClose();
@@ -168,6 +169,7 @@ export default function CaseStudyModal({ project, onClose }) {
               href={project.githubUrl}
               target="_blank"
               rel="noreferrer"
+              onMouseEnter={() => sound.playHover()}
               onClick={() => sound.playClick()}
               className="btn-secondary"
             >
@@ -180,6 +182,7 @@ export default function CaseStudyModal({ project, onClose }) {
               href={project.demoUrl}
               target="_blank"
               rel="noreferrer"
+              onMouseEnter={() => sound.playHover()}
               onClick={() => sound.playClick()}
               className="btn-primary"
             >
