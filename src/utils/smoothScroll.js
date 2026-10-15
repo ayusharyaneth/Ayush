@@ -75,6 +75,7 @@ export function initSmoothScroll() {
     // - smoothWheel: true
     // - syncTouch: false (native responsive touch feel)
     // - autoRaf: true (built-in RAF loop)
+    // - naiveDimensions: true (dynamically evaluates real-time document height without 250ms debounce)
     // - prevent: ignores wheel on modals, popovers, and inner scrollable regions
     const lenis = new Lenis({
       duration: 1.1,
@@ -82,6 +83,7 @@ export function initSmoothScroll() {
       smoothWheel: true,
       syncTouch: false,
       autoRaf: true,
+      naiveDimensions: true,
       anchors: false, // delegated to initAnchorScrollListener for responsive header offsets
       prevent: (node) => {
         if (!node || !(node instanceof Element)) return false;
@@ -108,13 +110,31 @@ export function initSmoothScroll() {
 }
 
 /**
+ * Forces smooth scroll engine to immediately recalculate document dimensions.
+ * Crucial when route or view changes drastically alter document height (e.g. support -> home).
+ */
+export function resizeSmoothScroll() {
+  if (lenisInstance) {
+    try {
+      lenisInstance.resize();
+    } catch {
+      // safe fallback
+    }
+  }
+}
+
+/**
  * Cancels any in-progress smooth scroll immediately.
  */
 export function cancelSmoothScroll() {
   if (lenisInstance) {
-    // Halts active programmatic scroll smoothly
-    lenisInstance.stop();
-    lenisInstance.start();
+    try {
+      // Halts active programmatic scroll smoothly
+      lenisInstance.stop();
+      lenisInstance.start();
+    } catch {
+      // safe fallback
+    }
   }
   if (activeAnimationId !== null) {
     cancelAnimationFrame(activeAnimationId);
@@ -151,153 +171,218 @@ export function smoothScrollTo(target, options = {}) {
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Reduced motion: jump immediately
-    if (prefersReducedMotion || options.immediate) {
+    // Resolve target: handles strings ('#work' or 'work'), numbers, and DOM elements
+    // If an element is not yet in the DOM (e.g. React view change), polls for it up to 1200ms
+    const resolveTarget = () => {
       if (typeof target === 'number') {
-        window.scrollTo({ top: target, behavior: 'auto' });
-      } else if (target === 'top' || target === '#top' || target === '#') {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-      } else {
-        const elementId = typeof target === 'string' ? target.replace(/^#/, '') : null;
-        const element = elementId
-          ? document.getElementById(elementId)
-          : (target instanceof HTMLElement ? target : null);
-
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          window.scrollTo({ top: rect.top + window.scrollY - headerOffset, behavior: 'auto' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'auto' });
-        }
+        return Promise.resolve(target);
       }
-      options.onComplete?.();
-      resolve();
-      return;
-    }
-
-    // PRIMARY PATH: Lenis Smooth Scroll Engine (ossium.in)
-    if (lenisInstance) {
-      let resolvedTarget;
-      let computedOffset = -headerOffset;
-
-      if (typeof target === 'number') {
-        resolvedTarget = target;
-        computedOffset = 0;
-      } else if (target === 'top' || target === '#top' || target === '#') {
-        resolvedTarget = 0;
-        computedOffset = 0;
-      } else if (typeof target === 'string') {
+      if (target === 'top' || target === '#top' || target === '#' || target === '' || !target) {
+        return Promise.resolve(0);
+      }
+      if (target instanceof HTMLElement) {
+        return Promise.resolve(target);
+      }
+      if (typeof target === 'string') {
         const elementId = target.replace(/^#/, '');
-        resolvedTarget = document.getElementById(elementId) || target;
-      } else {
-        resolvedTarget = target;
-      }
+        if (elementId === 'top' || elementId === 'home' || elementId === '') {
+          return Promise.resolve(0);
+        }
 
-      lenisInstance.scrollTo(resolvedTarget, {
-        offset: computedOffset,
-        duration: options.duration ? options.duration / 1000 : 1.1,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        immediate: false,
-        onComplete: () => {
+        const immediate = document.getElementById(elementId);
+        if (immediate) {
+          return Promise.resolve(immediate);
+        }
+
+        return new Promise((res) => {
+          const startTime = performance.now();
+          const poll = () => {
+            const el = document.getElementById(elementId);
+            if (el) {
+              res(el);
+              return;
+            }
+            if (performance.now() - startTime >= 1200) {
+              res(null);
+              return;
+            }
+            requestAnimationFrame(poll);
+          };
+          requestAnimationFrame(poll);
+        });
+      }
+      return Promise.resolve(null);
+    };
+
+    resolveTarget().then((resolved) => {
+      // Refresh Lenis bounds & document dimensions before calculating target
+      resizeSmoothScroll();
+
+      // 1. Top / 0 scroll
+      if (resolved === 0) {
+        if (prefersReducedMotion || options.immediate) {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+          if (lenisInstance) {
+            try {
+              lenisInstance.scrollTo(0, { immediate: true });
+            } catch {
+              // safe fallback
+            }
+          }
           options.onComplete?.();
           resolve();
+          return;
         }
-      });
-      return;
-    }
 
-    // FALLBACK PATH: Physics-based Cubic Bezier Animation Loop
-    let targetY = 0;
-    if (typeof target === 'number') {
-      targetY = target;
-    } else if (target === 'top' || target === '#top' || target === '#') {
-      targetY = 0;
-    } else {
-      const elementId = typeof target === 'string' ? target.replace(/^#/, '') : null;
-      const element = elementId
-        ? document.getElementById(elementId)
-        : (target instanceof HTMLElement ? target : null);
+        if (lenisInstance) {
+          lenisInstance.scrollTo(0, {
+            offset: 0,
+            duration: options.duration ? options.duration / 1000 : 1.1,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            immediate: false,
+            force: true,
+            onComplete: () => {
+              options.onComplete?.();
+              resolve();
+            }
+          });
+          return;
+        }
 
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        targetY = rect.top + window.scrollY - headerOffset;
-      } else {
-        targetY = 0;
+        runFallbackScroll(0, options, resolve);
+        return;
       }
-    }
 
-    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    targetY = Math.max(0, Math.min(targetY, maxScroll));
-
-    const startY = window.scrollY;
-    const distance = targetY - startY;
-
-    if (Math.abs(distance) < 2) {
-      options.onComplete?.();
-      resolve();
-      return;
-    }
-
-    cancelSmoothScroll();
-
-    const duration = options.duration || Math.min(
-      850,
-      Math.max(450, Math.round(Math.sqrt(Math.abs(distance)) * 22))
-    );
-
-    let startTime = null;
-    const root = document.documentElement;
-    const prevScrollBehavior = root.style.scrollBehavior;
-    root.style.scrollBehavior = 'auto';
-
-    const cleanup = () => {
-      window.removeEventListener('wheel', handleInterrupt);
-      window.removeEventListener('touchmove', handleInterrupt);
-      window.removeEventListener('keydown', handleKeyInterrupt);
-      root.style.scrollBehavior = prevScrollBehavior;
-      activeAnimationId = null;
-      activeInterruptHandler = null;
-    };
-
-    const handleInterrupt = () => {
-      cleanup();
-      options.onInterrupt?.();
-      resolve();
-    };
-
-    const handleKeyInterrupt = (e) => {
-      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
-        handleInterrupt();
-      }
-    };
-
-    window.addEventListener('wheel', handleInterrupt, { passive: true });
-    window.addEventListener('touchmove', handleInterrupt, { passive: true });
-    window.addEventListener('keydown', handleKeyInterrupt, { passive: true });
-
-    activeInterruptHandler = handleInterrupt;
-
-    const step = (currentTime) => {
-      if (!startTime) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(1, elapsed / duration);
-      const easedProgress = easeInOutCubic(progress);
-
-      const currentY = Math.round(startY + distance * easedProgress);
-      window.scrollTo(0, currentY);
-
-      if (progress < 1) {
-        activeAnimationId = requestAnimationFrame(step);
-      } else {
-        window.scrollTo(0, targetY);
-        cleanup();
+      // If target resolution completely failed, log and gracefully exit without jumping to 0
+      if (resolved === null) {
+        console.warn('[SmoothScroll] Target could not be found in DOM:', target);
         options.onComplete?.();
         resolve();
+        return;
       }
-    };
 
-    activeAnimationId = requestAnimationFrame(step);
+      // 2. Reduced motion or immediate jump
+      if (prefersReducedMotion || options.immediate) {
+        let destY = 0;
+        if (typeof resolved === 'number') {
+          destY = resolved;
+        } else if (resolved instanceof HTMLElement) {
+          const rect = resolved.getBoundingClientRect();
+          destY = rect.top + window.scrollY - headerOffset;
+        }
+        window.scrollTo({ top: Math.max(0, destY), behavior: 'auto' });
+        if (lenisInstance) {
+          try {
+            lenisInstance.scrollTo(resolved, { immediate: true, offset: -headerOffset, force: true });
+          } catch {
+            // safe fallback
+          }
+        }
+        options.onComplete?.();
+        resolve();
+        return;
+      }
+
+      // 3. PRIMARY PATH: Lenis Smooth Scroll Engine (ossium.in)
+      if (lenisInstance) {
+        lenisInstance.scrollTo(resolved, {
+          offset: typeof resolved === 'number' ? 0 : -headerOffset,
+          duration: options.duration ? options.duration / 1000 : 1.1,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          immediate: false,
+          force: true,
+          onComplete: () => {
+            options.onComplete?.();
+            resolve();
+          }
+        });
+        return;
+      }
+
+      // 4. FALLBACK PATH: Physics-based Cubic Bezier Animation Loop
+      let destY = 0;
+      if (typeof resolved === 'number') {
+        destY = resolved;
+      } else if (resolved instanceof HTMLElement) {
+        const rect = resolved.getBoundingClientRect();
+        destY = rect.top + window.scrollY - headerOffset;
+      }
+      runFallbackScroll(destY, options, resolve);
+    });
   });
+}
+
+function runFallbackScroll(targetY, options, resolve) {
+  const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  const clampedTargetY = Math.max(0, Math.min(targetY, maxScroll));
+  const startY = window.scrollY;
+  const distance = clampedTargetY - startY;
+
+  if (Math.abs(distance) < 2) {
+    options.onComplete?.();
+    resolve();
+    return;
+  }
+
+  cancelSmoothScroll();
+
+  const duration = options.duration || Math.min(
+    850,
+    Math.max(450, Math.round(Math.sqrt(Math.abs(distance)) * 22))
+  );
+
+  let startTime = null;
+  const root = document.documentElement;
+  const prevScrollBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = 'auto';
+
+  const cleanup = () => {
+    window.removeEventListener('wheel', handleInterrupt);
+    window.removeEventListener('touchmove', handleInterrupt);
+    window.removeEventListener('keydown', handleKeyInterrupt);
+    root.style.scrollBehavior = prevScrollBehavior;
+    activeAnimationId = null;
+    activeInterruptHandler = null;
+  };
+
+  const handleInterrupt = () => {
+    cleanup();
+    options.onInterrupt?.();
+    resolve();
+  };
+
+  const handleKeyInterrupt = (e) => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', 'Space'].includes(e.code)) {
+      handleInterrupt();
+    }
+  };
+
+  window.addEventListener('wheel', handleInterrupt, { passive: true });
+  window.addEventListener('touchmove', handleInterrupt, { passive: true });
+  window.addEventListener('keydown', handleKeyInterrupt, { passive: true });
+
+  activeInterruptHandler = handleInterrupt;
+
+  const step = (currentTime) => {
+    if (!startTime) startTime = currentTime;
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    const easedProgress = easeInOutCubic(progress);
+
+    const currentY = Math.round(startY + distance * easedProgress);
+    window.scrollTo(0, currentY);
+
+    if (progress < 1) {
+      activeAnimationId = requestAnimationFrame(step);
+    } else {
+      window.scrollTo(0, clampedTargetY);
+      cleanup();
+      options.onComplete?.();
+      resolve();
+    }
+  };
+
+  activeAnimationId = requestAnimationFrame(step);
 }
 
 /**
