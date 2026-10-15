@@ -99,23 +99,7 @@ function ProjectCard({ project, idx, onSelectProject }) {
 
 export default function ProjectsSection({ projects = [], onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [hasManuallyToggled, setHasManuallyToggled] = useState(false);
-  const [viewMode, setViewMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768 ? 'list' : 'grid';
-    }
-    return 'grid';
-  });
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (!hasManuallyToggled && typeof window !== 'undefined') {
-        setViewMode(window.innerWidth < 768 ? 'list' : 'grid');
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [hasManuallyToggled]);
+  const [viewMode, setViewMode] = useState('grid');
 
   const categories = ['All', 'Full-Stack', 'AI & ML', 'Systems', 'Open Source'];
 
