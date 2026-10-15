@@ -287,26 +287,28 @@ export const portfolioData = {
       {
         key: "USDC",
         label: "USDC",
-        networks: ["Arbitrum One", "Base", "BEP20", "Ethereum", "Optimism", "TRC20"],
+        networks: ["Arbitrum One", "Base", "BEP20", "Ethereum", "Optimism", "Polygon", "TRC20"],
         addresses: {
           "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Base: { badge: "Base", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           BEP20: { badge: "BEP-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Ethereum: { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Optimism: { badge: "Optimism", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Polygon: { badge: "Polygon", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           TRC20: { badge: "TRC-20", address: "TKGZQafokVFrWEKEcm6CZoyzFssRfYmYbN" }
         }
       },
       {
         key: "USDT",
         label: "USDT",
-        networks: ["Arbitrum One", "Base", "BEP20", "Ethereum", "Optimism", "TRC20"],
+        networks: ["Arbitrum One", "Base", "BEP20", "Ethereum", "Optimism", "Polygon", "TRC20"],
         addresses: {
           "Arbitrum One": { badge: "Arbitrum", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Base: { badge: "Base", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           BEP20: { badge: "BEP-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Ethereum: { badge: "ERC-20", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           Optimism: { badge: "Optimism", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
+          Polygon: { badge: "Polygon", address: "0xbEE165dED55593372C40C0Bfb6580d36B8d7F44d" },
           TRC20: { badge: "TRC-20", address: "TKGZQafokVFrWEKEcm6CZoyzFssRfYmYbN" }
         }
       }
