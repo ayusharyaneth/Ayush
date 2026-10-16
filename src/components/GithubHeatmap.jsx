@@ -75,16 +75,16 @@ export default function GithubHeatmap({
     };
   }, [username]);
 
-  // Transform raw contribution days into calendar weeks (starting from 1 Jan 2026)
+  // Transform raw contribution days into calendar weeks (starting from 1 Feb 2026)
   const { weeks, monthLabels, totalCommits } = useMemo(() => {
     const rawContributions = data?.contributions || [];
     if (!rawContributions.length) {
       return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
-    // Filter to start strictly from 1 Jan 2026 (omits empty days prior to this date)
+    // Filter to start strictly from 1 Feb 2026
     const filteredByDate = rawContributions.filter(
-      (day) => day && day.date >= '2026-01-01'
+      (day) => day && day.date >= '2026-02-01'
     );
 
     // Ensure sorted chronologically
@@ -94,7 +94,7 @@ export default function GithubHeatmap({
       return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
-    // Pad beginning so week 0 starts from row 0 (filling all 7 rows starting at the top)
+    // Pad beginning if needed so week 0 starts from row 0 (Sunday)
     const firstDate = new Date(`${sorted[0].date}T00:00:00`);
     const startDayOfWeek = firstDate.getDay();
 
@@ -124,8 +124,7 @@ export default function GithubHeatmap({
     // Determine month label positions aligned with the week index
     const rawMonthLabels = [];
     weekColumns.forEach((week, wIdx) => {
-      const janDay = week.find((day) => day && day.date.startsWith('2026-01'));
-      const activeDay = (wIdx === 0 && janDay) ? janDay : week.find((day) => day !== null);
+      const activeDay = week.find((day) => day !== null);
       if (!activeDay) return;
 
       const mIdx = parseInt(activeDay.date.split('-')[1], 10) - 1;
@@ -148,9 +147,9 @@ export default function GithubHeatmap({
       return true;
     });
 
-    // Compute total commits by summing counts across 2026
+    // Compute total commits by summing counts from 1 Feb 2026
     const computedTotal = sorted
-      .filter((day) => day && day.date >= '2026-01-01')
+      .filter((day) => day && day.date >= '2026-02-01')
       .reduce((acc, curr) => acc + (curr.count || 0), 0);
 
     return {
