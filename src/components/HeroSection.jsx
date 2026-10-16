@@ -190,8 +190,8 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                   <img
                     src="/avatars/avatar-primary-128.png"
                     srcSet="/avatars/avatar-primary-128.png 1x, /avatars/avatar-primary-256.png 2x"
-                    width="64"
-                    height="64"
+                    width="78"
+                    height="78"
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
@@ -214,8 +214,8 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                   <img
                     src="/avatars/avatar-secondary-128.png"
                     srcSet="/avatars/avatar-secondary-128.png 1x, /avatars/avatar-secondary-256.png 2x"
-                    width="64"
-                    height="64"
+                    width="78"
+                    height="78"
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
@@ -236,8 +236,8 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                   {/* QR Code Image (Toggled by QR Button) */}
                   <img
                     src={personal?.qrCode || "/qr-code.webp"}
-                    width="64"
-                    height="64"
+                    width="78"
+                    height="78"
                     loading="lazy"
                     alt="QR Code"
                     style={{
@@ -256,19 +256,19 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                     <div
                       style={{
                         position: 'absolute',
-                        bottom: '2px',
-                        right: '2px',
-                        width: '14px',
-                        height: '14px',
+                        bottom: '3px',
+                        right: '3px',
+                        width: '16px',
+                        height: '16px',
                         borderRadius: '50%',
                         background: 'var(--accent)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 0 6px var(--accent)'
+                        boxShadow: '0 0 8px var(--accent)'
                       }}
                     >
-                      <span style={{ fontSize: '8px', color: '#000', fontWeight: 'bold' }}>✦</span>
+                      <span style={{ fontSize: '9px', color: '#000', fontWeight: 'bold' }}>✦</span>
                     </div>
                   )}
                 </div>
