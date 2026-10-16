@@ -501,4 +501,194 @@
   }
 }
 
+/* ==========================================================================
+   HERO AVATAR & QR CODE TOGGLE BUTTON (manishx.in reference)
+   ========================================================================== */
+
+.hero-avatar-wrapper {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.avatar-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid var(--border-glow);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.avatar-container:hover {
+  transform: scale(1.02);
+  border-color: var(--accent);
+}
+
+/* QR Toggle Button at top-right of DP */
+.qr-toggle-btn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1.5px solid #444444;
+  border-radius: 9999px;
+  font-size: 13px;
+  color: #ffffff;
+  background: #1a1b1c;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.qr-toggle-btn:hover {
+  background: #2a2b2c;
+  border-color: #888888;
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.qr-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-light .qr-toggle-btn {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #18181b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.theme-light .qr-toggle-btn:hover {
+  background: #f4f4f5;
+  border-color: rgba(0, 0, 0, 0.45);
+  color: #000000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* QR Code Modal Overlay */
+.qr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px;
+  animation: qrFadeIn 0.2s ease-out;
+}
+
+.qr-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-line);
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: qrModalScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-light .qr-modal-card {
+  background: #ffffff;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.qr-modal-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.qr-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.qr-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border-secondary);
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.qr-modal-close:hover {
+  color: var(--text-primary);
+  border-color: var(--border-line);
+  background: var(--bg-surface);
+}
+
+.qr-modal-image-wrapper {
+  width: 200px;
+  height: 200px;
+  background: #18181b;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-line);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.qr-modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.qr-modal-caption {
+  font-family: var(--font-family-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-top: 14px;
+  margin-bottom: 0;
+  line-height: 1.45;
+}
+
+@keyframes qrFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes qrModalScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
 

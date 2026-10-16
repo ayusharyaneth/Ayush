@@ -5,7 +5,10 @@ import {
   Check,
   Lightbulb,
   MapPin,
-  Mail
+  Mail,
+  QrCode,
+  User,
+  X
 } from 'lucide-react';
 import {
   TwitterIcon,
@@ -26,6 +29,10 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
     '/avatars/avatar-primary.png',
     '/avatars/avatar-secondary.png'
   ];
+
+  // QR code display toggle state (matching manishx.in reference)
+  const [showQr, setShowQr] = useState(false);
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false);
 
   const [emailCopied, setEmailCopied] = useState(false);
 
@@ -63,10 +70,14 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
     setTimeout(() => setEmailCopied(false), 2000);
   };
 
-  // Keyboard shortcut listener to reflect 'C' keypress on the copy button
+  // Keyboard shortcut listener to reflect 'C' keypress on the copy button and 'Esc' for modal
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const tag = e.target.tagName.toLowerCase();
+      if (e.key === 'Escape' && isQrModalOpen) {
+        setIsQrModalOpen(false);
+        return;
+      }
+      const tag = e.target.tagName?.toLowerCase();
       if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
       if (!e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'c') {
         setEmailCopied(true);
@@ -75,11 +86,24 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isQrModalOpen]);
 
   const handleAvatarClick = () => {
     sound.playPop();
-    setAvatarIndex((prev) => (prev + 1) % avatarPhotos.length);
+    if (showQr) {
+      setIsQrModalOpen(true);
+    } else {
+      setAvatarIndex((prev) => (prev + 1) % avatarPhotos.length);
+    }
+  };
+
+  const handleQrToggle = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    sound.playPop();
+    setShowQr((prev) => !prev);
   };
 
   const chanh = personal?.chanhCard || {
@@ -152,90 +176,114 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
             aria-hidden="true"
           />
 
-          {/* Profile Bar with Dual Avatar Reveal */}
+          {/* Profile Bar with Dual Avatar Reveal & QR Code Toggle */}
           <ScrollRevealItem distance={16}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '22px' }}>
-              <div
-                onClick={handleAvatarClick}
-                onMouseEnter={() => sound.playHover()}
-                className="avatar-container"
-                style={{
-                  position: 'relative',
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  border: '2px solid var(--border-glow)',
-                  boxShadow: 'var(--shadow-card)'
-                }}
-                title="Click to switch photo"
-              >
-                {/* Photo 1 (Default / Opening Pic) */}
-                <img
-                  src="/avatars/avatar-primary-128.png"
-                  srcSet="/avatars/avatar-primary-128.png 1x, /avatars/avatar-primary-256.png 2x"
-                  width="64"
-                  height="64"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/avatars/avatar-primary.png';
-                  }}
-                  alt={personal.name}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    position: 'absolute',
-                    inset: 0,
-                    opacity: avatarIndex === 0 ? 1 : 0,
-                    transition: 'opacity 0.3s ease, transform 0.4s ease'
-                  }}
-                />
-                {/* Photo 2 (Secondary / Clicked Pic) */}
-                <img
-                  src="/avatars/avatar-secondary-128.png"
-                  srcSet="/avatars/avatar-secondary-128.png 1x, /avatars/avatar-secondary-256.png 2x"
-                  width="64"
-                  height="64"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = '/avatars/avatar-secondary.png';
-                  }}
-                  alt={`${personal.name} avatar secondary`}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    position: 'absolute',
-                    inset: 0,
-                    opacity: avatarIndex === 1 ? 1 : 0,
-                    transition: 'opacity 0.3s ease, transform 0.4s ease'
-                  }}
-                />
-                {/* Click Badge */}
+              <div className="hero-avatar-wrapper">
                 <div
-                  style={{
-                    position: 'absolute',
-                    bottom: '2px',
-                    right: '2px',
-                    width: '14px',
-                    height: '14px',
-                    borderRadius: '50%',
-                    background: 'var(--accent)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 0 6px var(--accent)'
-                  }}
+                  onClick={handleAvatarClick}
+                  onMouseEnter={() => sound.playHover()}
+                  className="avatar-container"
+                  title={showQr ? "Click to enlarge QR Code" : "Click to switch photo"}
                 >
-                  <span style={{ fontSize: '8px', color: '#000', fontWeight: 'bold' }}>✦</span>
+                  {/* Photo 1 (Default / Opening Pic) */}
+                  <img
+                    src="/avatars/avatar-primary-128.png"
+                    srcSet="/avatars/avatar-primary-128.png 1x, /avatars/avatar-primary-256.png 2x"
+                    width="64"
+                    height="64"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/avatars/avatar-primary.png';
+                    }}
+                    alt={personal.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      inset: 0,
+                      opacity: !showQr && avatarIndex === 0 ? 1 : 0,
+                      transition: 'opacity 0.3s ease, transform 0.4s ease'
+                    }}
+                  />
+                  {/* Photo 2 (Secondary / Clicked Pic) */}
+                  <img
+                    src="/avatars/avatar-secondary-128.png"
+                    srcSet="/avatars/avatar-secondary-128.png 1x, /avatars/avatar-secondary-256.png 2x"
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/avatars/avatar-secondary.png';
+                    }}
+                    alt={`${personal.name} avatar secondary`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      inset: 0,
+                      opacity: !showQr && avatarIndex === 1 ? 1 : 0,
+                      transition: 'opacity 0.3s ease, transform 0.4s ease'
+                    }}
+                  />
+                  {/* QR Code Image (Toggled by QR Button) */}
+                  <img
+                    src={personal?.qrCode || "/qr-code.webp"}
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                    alt="QR Code"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundColor: '#18181b',
+                      opacity: showQr ? 1 : 0,
+                      transition: 'opacity 0.3s ease, transform 0.4s ease'
+                    }}
+                  />
+                  {/* Click Badge (hidden while displaying QR) */}
+                  {!showQr && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: '2px',
+                        right: '2px',
+                        width: '14px',
+                        height: '14px',
+                        borderRadius: '50%',
+                        background: 'var(--accent)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 0 6px var(--accent)'
+                      }}
+                    >
+                      <span style={{ fontSize: '8px', color: '#000', fontWeight: 'bold' }}>✦</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* QR Toggle Button at top of DP (manishx.in reference) */}
+                <button
+                  type="button"
+                  onClick={handleQrToggle}
+                  onMouseEnter={() => sound.playHover()}
+                  className="qr-toggle-btn"
+                  title={showQr ? "Switch back to photo" : "Show QR Code"}
+                  aria-label={showQr ? "Switch back to photo" : "Show QR Code"}
+                >
+                  {showQr ? <User size={13} strokeWidth={2.2} /> : <QrCode size={13} strokeWidth={2.2} />}
+                </button>
               </div>
 
               <div>
@@ -415,6 +463,50 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
           </ScrollRevealItem>
         </ScrollRevealGroup>
       </div>
+
+      {/* QR Code Modal for High-Res Phone Scanning */}
+      {isQrModalOpen && (
+        <div
+          className="qr-modal-backdrop"
+          onClick={() => {
+            sound.playPop();
+            setIsQrModalOpen(false);
+          }}
+        >
+          <div
+            className="qr-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="qr-modal-header">
+              <div className="qr-modal-title">
+                <QrCode size={16} style={{ color: 'var(--accent)' }} />
+                <span>Scan QR Code</span>
+              </div>
+              <button
+                type="button"
+                className="qr-modal-close"
+                onClick={() => {
+                  sound.playPop();
+                  setIsQrModalOpen(false);
+                }}
+                aria-label="Close QR Modal"
+              >
+                <X size={15} />
+              </button>
+            </div>
+            <div className="qr-modal-image-wrapper">
+              <img
+                src={personal?.qrCode || "/qr-code.webp"}
+                alt="QR Code"
+                className="qr-modal-img"
+              />
+            </div>
+            <p className="qr-modal-caption">
+              Scan with your mobile camera to quickly connect.
+            </p>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @media (max-width: 640px) {
