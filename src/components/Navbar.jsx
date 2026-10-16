@@ -445,12 +445,14 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             onMouseEnter={() => sound.playHover()}
-            className="btn-icon"
+            className="btn-icon theme-toggle-btn"
             style={{ width: '32px', height: '32px' }}
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode (D)`}
             aria-label="Toggle color theme"
           >
-            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            <span className={`theme-toggle-icon ${theme === 'dark' ? 'is-dark' : 'is-light'}`}>
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </span>
           </button>
 
           {/* Interface Customizer Modal Button */}
