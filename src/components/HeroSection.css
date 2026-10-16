@@ -529,6 +529,26 @@
   border: 2px solid var(--border-glow);
   box-shadow: var(--shadow-card);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  background-color: #18181b;
+}
+
+.theme-light .avatar-container {
+  background-color: #ffffff;
+}
+
+/* Dual Theme Avatar QR Switching */
+.hero-qr-code-light {
+  display: none !important;
+}
+.hero-qr-code-dark {
+  display: block !important;
+}
+
+.theme-light .hero-qr-code-light {
+  display: block !important;
+}
+.theme-light .hero-qr-code-dark {
+  display: none !important;
 }
 
 .avatar-container:hover {
@@ -671,11 +691,32 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
+.theme-light .qr-modal-image-wrapper {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
 .qr-modal-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: 8px;
+}
+
+/* Dual Theme Modal QR Switching */
+.qr-modal-img-light {
+  display: none !important;
+}
+.qr-modal-img-dark {
+  display: block !important;
+}
+
+.theme-light .qr-modal-img-light {
+  display: block !important;
+}
+.theme-light .qr-modal-img-dark {
+  display: none !important;
 }
 
 .qr-modal-caption {
