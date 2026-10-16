@@ -94,13 +94,20 @@ export default function GithubHeatmap({
       return { weeks: [], monthLabels: [], totalCommits: 0 };
     }
 
-    // Pad beginning so week 0 aligns with Sunday (0 = Sun)
+    // Pad beginning so week 0 starts from row 0 (filling all 7 rows starting at the top)
     const firstDate = new Date(`${sorted[0].date}T00:00:00`);
     const startDayOfWeek = firstDate.getDay();
 
     const padded = [];
-    for (let i = 0; i < startDayOfWeek; i++) {
-      padded.push(null);
+    for (let i = startDayOfWeek; i > 0; i--) {
+      const padDate = new Date(firstDate);
+      padDate.setDate(padDate.getDate() - i);
+      const yyyy = padDate.getFullYear();
+      const mm = String(padDate.getMonth() + 1).padStart(2, '0');
+      const dd = String(padDate.getDate()).padStart(2, '0');
+      const dateStr = `${yyyy}-${mm}-${dd}`;
+      const existing = rawContributions.find((d) => d && d.date === dateStr);
+      padded.push(existing || { date: dateStr, count: 0, level: 0 });
     }
     padded.push(...sorted);
 
@@ -117,10 +124,11 @@ export default function GithubHeatmap({
     // Determine month label positions aligned with the week index
     const rawMonthLabels = [];
     weekColumns.forEach((week, wIdx) => {
-      const firstValidDay = week.find((day) => day !== null);
-      if (!firstValidDay) return;
+      const janDay = week.find((day) => day && day.date.startsWith('2026-01'));
+      const activeDay = (wIdx === 0 && janDay) ? janDay : week.find((day) => day !== null);
+      if (!activeDay) return;
 
-      const mIdx = parseInt(firstValidDay.date.split('-')[1], 10) - 1;
+      const mIdx = parseInt(activeDay.date.split('-')[1], 10) - 1;
       const monthLabel = MONTH_NAMES[mIdx];
       const prev = rawMonthLabels[rawMonthLabels.length - 1];
 
@@ -140,8 +148,10 @@ export default function GithubHeatmap({
       return true;
     });
 
-    // Compute total commits by summing counts across active period
-    const computedTotal = sorted.reduce((acc, curr) => acc + (curr.count || 0), 0);
+    // Compute total commits by summing counts across 2026
+    const computedTotal = sorted
+      .filter((day) => day && day.date >= '2026-01-01')
+      .reduce((acc, curr) => acc + (curr.count || 0), 0);
 
     return {
       weeks: weekColumns,
