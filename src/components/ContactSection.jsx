@@ -155,7 +155,7 @@ export default function ContactSection({
             {/* Functional Outlined Arrow CTA */}
             <div
               onClick={handleActionClick}
-              onMouseEnter={() => sound.playCardHover()}
+              onMouseEnter={() => sound.playHover()}
               className="contact-primary-cta-group"
               role="button"
               tabIndex={0}

@@ -193,7 +193,7 @@ export default function SupportPage({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="support-quick-card"
-                    onMouseEnter={() => sound.playCardHover()}
+                    onMouseEnter={() => sound.playHover()}
                     onClick={() => sound.playClick()}
                   >
                     <span className="support-quick-icon" aria-hidden="true">

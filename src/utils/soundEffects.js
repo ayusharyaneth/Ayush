@@ -154,39 +154,9 @@ class SoundEngine {
     this.playTick();
   }
 
-  // Tactile resonant card hover sound (warm acoustic transient + soft spatial whoosh)
+  // Tactile card hover sound (matches navigation item hover sound)
   playCardHover() {
-    if (this.muted) return;
-    const now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
-    if (this.lastCardHover && now - this.lastCardHover < 60) return; // Prevent stuttering across child elements
-    this.lastCardHover = now;
-
-    try {
-      const ctx = this.init();
-      if (!ctx) return;
-      if (ctx.state === 'suspended') {
-        ctx.resume().catch(() => {});
-      }
-      const t = ctx.currentTime;
-
-      // Tactile resonant pop transient
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(340, t);
-      osc.frequency.exponentialRampToValueAtTime(160, t + 0.035);
-
-      gain.gain.setValueAtTime(0.24, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start(t);
-      osc.stop(t + 0.04);
-
-      // Complementary soft whoosh sweep
-      this.playWhoosh();
-    } catch {}
+    this.playHover();
   }
 
 
