@@ -147,21 +147,21 @@ export default function App() {
     localStorage.setItem('portfolio-palette', palette);
   }, [theme, font, palette]);
 
-  // Animated Theme Switcher using View Transitions API (Circle Blur Top Left - Chanh Dai)
+  // Instant, buttery smooth Theme Switcher (Zero-latency visual update on regular clicks)
   const handleThemeChange = useCallback((nextTheme) => {
     const targetTheme = typeof nextTheme === 'function' ? nextTheme(theme) : nextTheme;
     if (targetTheme === theme) return;
 
-    const applyTheme = () => {
-      setTheme(targetTheme);
-    };
-
-    if (typeof document !== 'undefined' && document.startViewTransition) {
-      document.startViewTransition(applyTheme);
-    } else {
-      applyTheme();
+    // Apply directly to the root element immediately so visual feedback is instant
+    if (typeof document !== 'undefined') {
+      const html = document.documentElement;
+      html.className = `theme-${targetTheme} font-${font} palette-${palette}`;
+      html.style.colorScheme = targetTheme === 'dark' ? 'dark' : 'light';
+      localStorage.setItem('portfolio-theme', targetTheme);
     }
-  }, [theme]);
+
+    setTheme(targetTheme);
+  }, [theme, font, palette]);
 
   const showToast = useCallback((message, type = 'info') => {
     setToast({ message, type });
