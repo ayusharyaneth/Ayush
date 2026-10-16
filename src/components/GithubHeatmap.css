@@ -16,12 +16,16 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
   overflow: hidden;
+  --github-cell-empty: rgba(255, 255, 255, 0.05);
+  --github-cell-stroke: rgba(255, 255, 255, 0.05);
 }
 
 .theme-light .github-contributions-card {
   background: rgba(255, 255, 255, 0.85);
   border: 1px dashed #d1d5db;
   box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.08);
+  --github-cell-empty: #e4e7eb;
+  --github-cell-stroke: rgba(0, 0, 0, 0.06);
 }
 
 .github-contributions-card:hover {
@@ -218,10 +222,21 @@
   transition: fill 0.15s ease, stroke 0.15s ease, filter 0.15s ease;
 }
 
+.theme-light .github-day-block[data-level="0"] {
+  fill: var(--github-cell-empty, #e4e7eb);
+  stroke: var(--github-cell-stroke, rgba(0, 0, 0, 0.06));
+}
+
 .github-day-block:hover {
   stroke: var(--accent, #38bdf8) !important;
   stroke-width: 1.5px !important;
   filter: brightness(1.35) drop-shadow(0 0 4px rgba(56, 189, 248, 0.8));
+}
+
+.theme-light .github-day-block:hover {
+  stroke: var(--accent, #0284c7) !important;
+  stroke-width: 1.5px !important;
+  filter: brightness(0.94) drop-shadow(0 1px 3px rgba(2, 132, 199, 0.25));
 }
 
 /* Floating interactive tooltip */

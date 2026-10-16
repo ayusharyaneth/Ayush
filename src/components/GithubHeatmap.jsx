@@ -171,7 +171,7 @@ export default function GithubHeatmap({
       case 4:
         return 'var(--accent, #38bdf8)';
       default:
-        return 'rgba(255, 255, 255, 0.05)';
+        return 'var(--github-cell-empty, rgba(255, 255, 255, 0.05))';
     }
   };
 
@@ -188,7 +188,6 @@ export default function GithubHeatmap({
   // Handle cell hover positioning for floating tooltip (relative to cardRef)
   const handleCellMouseEnter = (e, day) => {
     if (!day || !cardRef.current) return;
-    sound.playHover();
     const cellRect = e.currentTarget.getBoundingClientRect();
     const cardRect = cardRef.current.getBoundingClientRect();
 
@@ -348,7 +347,7 @@ export default function GithubHeatmap({
                     rx={BLOCK_RADIUS}
                     ry={BLOCK_RADIUS}
                     fill={getCellColor(day.level)}
-                    stroke="rgba(255, 255, 255, 0.05)"
+                    stroke="var(--github-cell-stroke, rgba(255, 255, 255, 0.05))"
                     strokeWidth="0.5"
                     className="github-day-block"
                     data-date={day.date}
