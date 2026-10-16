@@ -10,6 +10,7 @@ import {
 import {
   TwitterIcon,
   GithubIcon,
+  TelegramIcon,
   LinkedinIcon,
   BuyMeACoffeeIcon
 } from './Icons';
@@ -97,6 +98,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
     socials: {
       twitter: 'https://x.com/ayusharyaneth',
       github: 'https://github.com/ayusharyaneth/',
+      telegram: 'https://t.me/ayusharyaneth',
       linkedin: 'https://www.linkedin.com/in/theayusharyan',
       buymeacoffee: 'https://buymeacoffee.com/ayusharyaneth'
     }
@@ -105,6 +107,7 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
   const socialLinks = [
     { name: 'X', icon: TwitterIcon, url: chanh.socials?.twitter || 'https://x.com/ayusharyaneth' },
     { name: 'GitHub', icon: GithubIcon, url: chanh.socials?.github || 'https://github.com/ayusharyaneth/' },
+    { name: 'Telegram', icon: TelegramIcon, url: chanh.socials?.telegram || 'https://t.me/ayusharyaneth' },
     { name: 'LinkedIn', icon: LinkedinIcon, url: chanh.socials?.linkedin || 'https://www.linkedin.com/in/theayusharyan' },
     { name: 'Buy Me a Coffee', icon: BuyMeACoffeeIcon, url: chanh.socials?.buymeacoffee || 'https://buymeacoffee.com/ayusharyaneth' }
   ];

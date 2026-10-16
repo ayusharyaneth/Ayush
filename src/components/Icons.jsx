@@ -37,6 +37,22 @@ export function TwitterIcon({ size = 16, className = '', style = {}, ...props })
   );
 }
 
+export function TelegramIcon({ size = 16, className = '', style = {}, ...props }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      style={{ display: 'inline-block', verticalAlign: 'middle', ...style }}
+      {...props}
+    >
+      <path d="M21.6 3.2a1.2 1.2 0 0 0-1.2.1L2.4 11.5c-1.1.5-1.1 1.2-.2 1.5l4.6 1.4 10.7-6.8c.5-.3.9-.1.6.2l-8.7 7.8-.3 4.4c.4 0 .6-.2.9-.5l2.2-2.1 4.5 3.3c.8.5 1.4.2 1.6-.7l3-14.2c.3-1.1-.4-1.6-1.4-1.2z" />
+    </svg>
+  );
+}
+
 export function LinkedinIcon({ size = 16, className = '', style = {}, ...props }) {
   return (
     <svg

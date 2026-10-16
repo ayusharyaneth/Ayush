@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
-import { GithubIcon, TwitterIcon, LinkedinIcon } from './Icons';
+import { GithubIcon, TwitterIcon, TelegramIcon } from './Icons';
 import { sound } from '../utils/soundEffects';
 import { smoothScrollTo } from '../utils/smoothScroll';
 import { ScrollReveal } from './ScrollReveal';
@@ -20,7 +20,7 @@ export default function Footer({ personal = {}, socials = [] }) {
   // Resolve social URLs
   const githubLink = socials.find((s) => s.name?.toLowerCase().includes('github'))?.url || 'https://github.com/ayusharyaneth/';
   const twitterLink = socials.find((s) => s.name?.toLowerCase().includes('twitter') || s.name?.toLowerCase().includes('x'))?.url || 'https://x.com/ayusharyaneth';
-  const linkedinLink = socials.find((s) => s.name?.toLowerCase().includes('linkedin'))?.url || 'https://www.linkedin.com/in/theayusharyan';
+  const telegramLink = socials.find((s) => s.name?.toLowerCase().includes('telegram'))?.url || personal?.chanhCard?.socials?.telegram || 'https://t.me/ayusharyaneth';
 
   return (
     <footer className="footer-section">
@@ -71,18 +71,18 @@ export default function Footer({ personal = {}, socials = [] }) {
                 <TwitterIcon size={13} />
               </a>
 
-              {/* Minimal Square LinkedIn Button */}
+              {/* Minimal Square Telegram Button */}
               <a
-                href={linkedinLink}
+                href={telegramLink}
                 target="_blank"
                 rel="noreferrer"
                 className="footer-icon-square"
                 onClick={() => sound.playClick()}
                 onMouseEnter={() => sound.playHover()}
-                title="Connect on LinkedIn"
-                aria-label="LinkedIn"
+                title="Chat on Telegram (@ayusharyaneth)"
+                aria-label="Telegram"
               >
-                <LinkedinIcon size={14} />
+                <TelegramIcon size={14} />
               </a>
 
               {/* Back to Top Button right beside LinkedIn */}

@@ -37,6 +37,7 @@ export const portfolioData = {
       socials: {
         twitter: "https://x.com/ayusharyaneth",
         github: "https://github.com/ayusharyaneth/",
+        telegram: "https://t.me/ayusharyaneth",
         linkedin: "https://www.linkedin.com/in/theayusharyan",
         buymeacoffee: "https://buymeacoffee.com/ayusharyaneth",
         producthunt: "https://www.producthunt.com/@ayusharyan"
@@ -73,6 +74,13 @@ export const portfolioData = {
       url: "https://x.com/ayusharyaneth",
       stats: { primary: "18.5k followers", secondary: "Daily design & code" },
       bio: "Sharing micro-interactions, UI teardowns, and engineering architectures."
+    },
+    {
+      name: "Telegram",
+      username: "@ayusharyaneth",
+      url: "https://t.me/ayusharyaneth",
+      stats: { primary: "Direct Chat", secondary: "Fastest response" },
+      bio: "Direct messaging, quick discussions, and advisory consultations."
     },
     {
       name: "LinkedIn",
