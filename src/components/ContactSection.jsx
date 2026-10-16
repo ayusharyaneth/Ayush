@@ -193,9 +193,10 @@ export default function ContactSection({
                     onMouseEnter={() => sound.playHover()}
                     onClick={() => sound.playClick()}
                     title={item.name}
+                    aria-label={item.name}
                   >
                     <Icon size={14} />
-                    <span>{item.name}</span>
+                    <span className="contact-social-label">{item.name}</span>
                   </a>
                 );
               })}

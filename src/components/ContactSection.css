@@ -346,73 +346,130 @@
 
 @media (max-width: 960px) {
   .contact-editorial-card {
-    padding: 20px 18px 18px;
+    padding: 24px 20px 20px;
   }
 }
 
 @media (max-width: 640px) {
   .editorial-contact-section {
-    padding-top: 8px;
-    padding-bottom: 14px;
+    padding-top: 10px;
+    padding-bottom: 20px;
   }
 
   .contact-editorial-card {
-    padding: 16px 14px 14px;
+    padding: 22px 16px 20px;
   }
 
+  /* Architectural Blueprint Dashed Border Lines (Contained for mobile) */
+  .contact-editorial-card .blueprint-line-top,
+  .contact-editorial-card .blueprint-line-bottom {
+    left: -8px;
+    right: -8px;
+  }
+
+  .contact-editorial-card .blueprint-line-left,
+  .contact-editorial-card .blueprint-line-right {
+    top: -8px;
+    bottom: -8px;
+  }
+
+  /* Centered and balanced meta badge */
   .contact-meta-header {
-    flex-direction: row;
+    display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 6px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    width: 100%;
   }
 
-  .contact-meta-coordinates {
-    font-size: 0.6rem;
+  .contact-badge-label {
+    font-size: 0.64rem;
+    padding: 2px 8px;
   }
 
+  /* Editorial Serif statement */
   .contact-statement-wrap {
-    margin: 6px auto 12px;
+    margin: 0 auto 16px;
+    max-width: 380px;
+    text-align: center;
   }
 
   .contact-statement-text {
-    font-size: 0.88rem;
-    line-height: 1.4;
+    font-size: clamp(0.92rem, 3.8vw, 1.02rem);
+    line-height: 1.52;
   }
 
+  /* Centered Action Hub */
   .contact-action-hub {
-    gap: 10px;
+    gap: 14px;
     margin-top: 0;
+    width: 100%;
   }
 
+  /* Primary CTA Pill: Compact, proportional, centered */
   .contact-primary-cta-group {
     width: 100%;
+    max-width: 330px;
+    margin: 0 auto;
     justify-content: space-between;
-    padding: 5px 6px 5px 12px;
+    padding: 6px 8px 6px 14px;
     box-sizing: border-box;
+    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.2);
   }
 
   .cta-lead-label {
-    font-size: 0.82rem;
+    font-size: 0.84rem;
   }
 
   .cta-email-sub {
-    font-size: 0.64rem;
+    font-size: 0.68rem;
   }
 
   .contact-arrow-circle {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
 
+  /* Social row: Single elegant centered row of balanced icon buttons */
   .contact-social-row {
-    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2px;
+    width: 100%;
   }
 
   .contact-social-pill {
-    font-size: 0.68rem;
-    padding: 3px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-line);
+    color: var(--text-secondary);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .contact-social-pill:hover,
+  .contact-social-pill:active {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .contact-social-pill svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .contact-social-label {
+    display: none;
   }
 }
 
