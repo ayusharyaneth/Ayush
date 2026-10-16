@@ -32,7 +32,7 @@ function ProjectCard({ project, idx, onSelectProject }) {
   return (
     <div
       className="project-deck-card group"
-      onMouseEnter={() => sound.playCardHover()}
+      onMouseEnter={() => sound.playHover()}
       onClick={() => {
         sound.playPop();
         onSelectProject(project);
@@ -318,7 +318,7 @@ export default function ProjectsSection({ projects = [], onSelectProject }) {
               <div
                 key={project.id}
                 className="screen-box"
-                onMouseEnter={() => sound.playCardHover()}
+                onMouseEnter={() => sound.playHover()}
                 onClick={() => {
                   sound.playPop();
                   onSelectProject(project);
