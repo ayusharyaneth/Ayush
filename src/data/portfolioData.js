@@ -18,7 +18,9 @@ export const portfolioData = {
     email: "ayush@ayusharyan.dev",
     calLink: "https://cal.com/ayusharyan/intro",
     statusText: "Available for select opportunities & advisory",
-    qrCode: "/qr-code.webp",
+    qrCode: "/qr-dark.png",
+    qrCodeDark: "/qr-dark.png",
+    qrCodeLight: "/qr-light.png",
     chanhCard: {
       role1: {
         title: "Design Engineer",

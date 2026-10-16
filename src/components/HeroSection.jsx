@@ -233,20 +233,37 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
                       transition: 'opacity 0.3s ease, transform 0.4s ease'
                     }}
                   />
-                  {/* QR Code Image (Toggled by QR Button) */}
+                  {/* QR Code Images (Dark & Light Mode) */}
                   <img
-                    src={personal?.qrCode || "/qr-code.webp"}
+                    src={personal?.qrCodeDark || personal?.qrCode || "/qr-dark.png"}
                     width="78"
                     height="78"
                     loading="lazy"
                     alt="QR Code"
+                    className="hero-qr-code-img hero-qr-code-dark"
                     style={{
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
                       position: 'absolute',
                       inset: 0,
-                      backgroundColor: '#18181b',
+                      opacity: showQr ? 1 : 0,
+                      transition: 'opacity 0.3s ease, transform 0.4s ease'
+                    }}
+                  />
+                  <img
+                    src={personal?.qrCodeLight || "/qr-light.png"}
+                    width="78"
+                    height="78"
+                    loading="lazy"
+                    alt="QR Code"
+                    className="hero-qr-code-img hero-qr-code-light"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      inset: 0,
                       opacity: showQr ? 1 : 0,
                       transition: 'opacity 0.3s ease, transform 0.4s ease'
                     }}
@@ -496,9 +513,14 @@ export default function HeroSection({ personal, onCopyEmail, onNavigateSupport }
             </div>
             <div className="qr-modal-image-wrapper">
               <img
-                src={personal?.qrCode || "/qr-code.webp"}
-                alt="QR Code"
-                className="qr-modal-img"
+                src={personal?.qrCodeDark || personal?.qrCode || "/qr-dark.png"}
+                alt="QR Code (Dark)"
+                className="qr-modal-img qr-modal-img-dark"
+              />
+              <img
+                src={personal?.qrCodeLight || "/qr-light.png"}
+                alt="QR Code (Light)"
+                className="qr-modal-img qr-modal-img-light"
               />
             </div>
             <p className="qr-modal-caption">
