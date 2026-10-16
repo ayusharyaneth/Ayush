@@ -149,19 +149,21 @@ export default function App() {
 
   // Instant, buttery smooth Theme Switcher (Zero-latency visual update on regular clicks)
   const handleThemeChange = useCallback((nextTheme) => {
-    const targetTheme = typeof nextTheme === 'function' ? nextTheme(theme) : nextTheme;
-    if (targetTheme === theme) return;
+    setTheme((currentTheme) => {
+      const targetTheme = typeof nextTheme === 'function' ? nextTheme(currentTheme) : nextTheme;
+      if (targetTheme === currentTheme) return currentTheme;
 
-    // Apply directly to the root element immediately so visual feedback is instant
-    if (typeof document !== 'undefined') {
-      const html = document.documentElement;
-      html.className = `theme-${targetTheme} font-${font} palette-${palette}`;
-      html.style.colorScheme = targetTheme === 'dark' ? 'dark' : 'light';
-      localStorage.setItem('portfolio-theme', targetTheme);
-    }
+      // Apply directly to the root element immediately so visual feedback is instant
+      if (typeof document !== 'undefined') {
+        const html = document.documentElement;
+        html.className = `theme-${targetTheme} font-${font} palette-${palette}`;
+        html.style.colorScheme = targetTheme === 'dark' ? 'dark' : 'light';
+        localStorage.setItem('portfolio-theme', targetTheme);
+      }
 
-    setTheme(targetTheme);
-  }, [theme, font, palette]);
+      return targetTheme;
+    });
+  }, [font, palette]);
 
   const showToast = useCallback((message, type = 'info') => {
     setToast({ message, type });
